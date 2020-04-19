@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,7 @@
 		CEF23A95244C8EB100D02FD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23A94244C8EB100D02FD7 /* AppDelegate.swift */; };
 		CEF23A9E244C8EB100D02FD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF23A9D244C8EB100D02FD7 /* Assets.xcassets */; };
 		CEF23AA1244C8EB100D02FD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEF23A9F244C8EB100D02FD7 /* LaunchScreen.storyboard */; };
+		CEF23AAC244C97F000D02FD7 /* Balam in Frameworks */ = {isa = PBXBuildFile; productRef = CEF23AAB244C97F000D02FD7 /* Balam */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEF23AAC244C97F000D02FD7 /* Balam in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,10 +75,10 @@
 		CEF23A7F244C8EA200D02FD7 /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				CEF23A8A244C8EA200D02FD7 /* mac.entitlements */,
+				CEF23A89244C8EA200D02FD7 /* Info.plist */,
 				CEF23A80244C8EA200D02FD7 /* App.swift */,
 				CEF23A84244C8EA200D02FD7 /* Assets.xcassets */,
-				CEF23A89244C8EA200D02FD7 /* Info.plist */,
-				CEF23A8A244C8EA200D02FD7 /* mac.entitlements */,
 			);
 			path = mac;
 			sourceTree = "<group>";
@@ -84,10 +86,10 @@
 		CEF23A93244C8EB100D02FD7 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				CEF23AA2244C8EB100D02FD7 /* Info.plist */,
 				CEF23A94244C8EB100D02FD7 /* AppDelegate.swift */,
 				CEF23A9D244C8EB100D02FD7 /* Assets.xcassets */,
 				CEF23A9F244C8EB100D02FD7 /* LaunchScreen.storyboard */,
-				CEF23AA2244C8EB100D02FD7 /* Info.plist */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -115,6 +117,9 @@
 			dependencies = (
 			);
 			name = mac;
+			packageProductDependencies = (
+				CEF23AAB244C97F000D02FD7 /* Balam */,
+			);
 			productName = mac;
 			productReference = CEF23A7D244C8EA200D02FD7 /* neonlines.app */;
 			productType = "com.apple.product-type.application";
@@ -162,6 +167,9 @@
 				Base,
 			);
 			mainGroup = CEF23A72244C8E6F00D02FD7;
+			packageReferences = (
+				CEF23AAA244C97F000D02FD7 /* XCRemoteSwiftPackageReference "balam" */,
+			);
 			productRefGroup = CEF23A7E244C8EA200D02FD7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -537,6 +545,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CEF23AAA244C97F000D02FD7 /* XCRemoteSwiftPackageReference "balam" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/catverse/balam.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CEF23AAB244C97F000D02FD7 /* Balam */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEF23AAA244C97F000D02FD7 /* XCRemoteSwiftPackageReference "balam" */;
+			productName = Balam;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CEF23A73244C8E6F00D02FD7 /* Project object */;
 }
