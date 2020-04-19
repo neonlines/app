@@ -5,11 +5,8 @@ extension GKComponent {
         let sprite = SKSpriteNode(texture: .init(imageNamed: "node"), size: .init(width: 32, height: 32))
         
         fileprivate func move(delta: CGPoint) {
-            move(position: .init(x: sprite.position.x + delta.x, y: sprite.position.y + delta.y))
-        }
-        
-        private func move(position: CGPoint) {
-            sprite.run(.move(to: position, duration: 0.2), withKey: "move")
+            sprite.position = .init(x: sprite.position.x + delta.x, y: sprite.position.y + delta.y)
+            print(sprite.position.y)
         }
     }
     
@@ -19,7 +16,7 @@ extension GKComponent {
         override func update(deltaTime: TimeInterval) {
             timer -= deltaTime
             if timer <= 0 {
-                timer = 0.2
+                timer = 0.02
                 entity!.component(ofType: Sprite.self)!.move(delta: .init(x: 0, y: 10))
             }
         }

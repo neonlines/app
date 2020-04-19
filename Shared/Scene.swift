@@ -29,10 +29,10 @@ extension SKScene {
             let player = GKEntity.Node()
             entities.insert(player)
             let camera = SKCameraNode()
-            camera.constraints = [.distance(.init(upperLimit: 100), to: player.component(ofType: GKComponent.Sprite.self)!.sprite)]
+            camera.constraints = [.distance(.init(upperLimit: 150), to: player.component(ofType: GKComponent.Sprite.self)!.sprite)]
             addChild(camera)
-            self.camera = camera
             addChild(player.component(ofType: GKComponent.Sprite.self)!.sprite)
+            self.camera = camera
         }
         
         override func update(_ delta: TimeInterval) {
