@@ -38,6 +38,12 @@ extension SKScene {
         override func update(_ delta: TimeInterval) {
             entities.forEach { $0.update(deltaTime: delta) }
         }
+        
+        func path(_ position: CGPoint) {
+            let path = GKEntity.Path(position)
+            entities.insert(path)
+            addChild(path.component(ofType: GKComponent.Sprite.self)!.sprite)
+        }
     }
 
 }

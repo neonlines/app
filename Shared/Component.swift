@@ -2,11 +2,16 @@ import GameplayKit
 
 extension GKComponent {
     final class Sprite: GKComponent {
-        let sprite = SKSpriteNode(texture: .init(imageNamed: "node"), size: .init(width: 32, height: 32))
+        let sprite: SKSpriteNode
         
-        fileprivate func move(delta: CGPoint) {
+        required init?(coder: NSCoder) { nil }
+        init(_ name: String, size: CGFloat) {
+            sprite = .init(texture: .init(imageNamed: name), size: .init(width: size, height: size))
+            super.init()
+        }
+        
+        fileprivate func move(_ delta: CGPoint) {
             sprite.position = .init(x: sprite.position.x + delta.x, y: sprite.position.y + delta.y)
-            print(sprite.position.y)
         }
     }
     
@@ -17,8 +22,15 @@ extension GKComponent {
             timer -= deltaTime
             if timer <= 0 {
                 timer = 0.02
-                entity!.component(ofType: Sprite.self)!.move(delta: .init(x: 0, y: 10))
+                entity!.component(ofType: Sprite.self)!.move(.init(x: 0, y: 10))
+                entity!.component(ofType: Draw.self)!.draw()
             }
+        }
+    }
+    
+    final class Draw: GKComponent {
+        fileprivate func draw() {
+            (entity!.component(ofType: Sprite.self)!.sprite.scene as! SKScene.Play).path(entity!.component(ofType: Sprite.self)!.sprite.position)
         }
     }
 }
