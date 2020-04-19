@@ -27,7 +27,7 @@ class State: GKState {
     final class Start: State {
         override func didEnter(from: GKState?) {
             super.didEnter(from: from)
-            let scene = StartScene()
+            let scene = Scene.Start()
             scene.delegate = view
             view.presentScene(scene, transition: .fade(withDuration: 3))
         }
@@ -35,7 +35,7 @@ class State: GKState {
         override func control() {
             guard let _ = press.popLast() else { return }
             
-            let scene = PlayScene()
+            let scene = Scene.Play()
             scene.delegate = view
             view.presentScene(scene, transition: .fade(withDuration: 1.5))
             stateMachine!.enter(Play.self)
