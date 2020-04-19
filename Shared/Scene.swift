@@ -1,11 +1,13 @@
 import GameplayKit
 
-class Scene: SKScene {
-    required init?(coder: NSCoder) { nil }
-    override init() {
-        super.init(size: .zero)
-        anchorPoint = .init(x: 0.5, y: 0.5)
-        scaleMode = .resizeFill
+extension SKScene {
+    class Scene: SKScene {
+        required init?(coder: NSCoder) { nil }
+        override init() {
+            super.init(size: .zero)
+            anchorPoint = .init(x: 0.5, y: 0.5)
+            scaleMode = .resizeFill
+        }
     }
     
     final class Start: Scene {
@@ -19,19 +21,20 @@ class Scene: SKScene {
             press.run(.repeatForever(.sequence([.fadeIn(withDuration: 0.5), .wait(forDuration: 1), .fadeOut(withDuration: 0.5)])))
         }
     }
-    
+        
     final class Play: Scene {
         private var entities = Set<GKEntity>()
         
         override func didMove(to: SKView) {
-            let player = Node()
+            let player = GKEntity.Node()
             entities.insert(player)
             let camera = SKCameraNode()
-            camera.constraints = [.distance(.init(upperLimit: 100), to: player.component(ofType: Sprite.self)!.sprite)]
+            camera.constraints = [.distance(.init(upperLimit: 100), to: player.component(ofType: GKComponent.Sprite.self)!.sprite)]
             addChild(camera)
             self.camera = camera
-            addChild(player.component(ofType: Sprite.self)!.sprite)
+            addChild(player.component(ofType: GKComponent.Sprite.self)!.sprite)
 //            player.component(ofType: SpriteWalk.self)!.move(memory.game.location.position)
         }
     }
+
 }

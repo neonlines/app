@@ -9,8 +9,8 @@ final class View: SKView, SKSceneDelegate {
         super.init(frame: .zero)
         ignoresSiblingOrder = true
         
-        state = .init(states: [State.Start(self), State.Play(self)])
-        state.enter(State.Start.self)
+        state = .init(states: [.Start(self), .Play(self)])
+        state.enter(GKState.Start.self)
     }
     
     func update(_ time: TimeInterval, for: SKScene) {
@@ -19,6 +19,6 @@ final class View: SKView, SKSceneDelegate {
     }
     
     override func mouseUp(with: NSEvent) {
-        (state.currentState as! State).press.insert(with.location(in: scene!), at: 0)
+        (state.currentState as! GKState.State).press.insert(with.location(in: scene!), at: 0)
     }
 }
