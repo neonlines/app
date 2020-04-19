@@ -7,6 +7,7 @@ extension SKScene {
             super.init(size: .zero)
             anchorPoint = .init(x: 0.5, y: 0.5)
             scaleMode = .resizeFill
+            backgroundColor = .windowBackgroundColor
         }
     }
     
@@ -14,7 +15,7 @@ extension SKScene {
         override func didMove(to: SKView) {
             let press = SKLabelNode(attributedText: .init(string: .key("Press.start"),
                                                           attributes: [.font: NSFont.systemFont(ofSize: 18, weight: .bold),
-                                                                       .foregroundColor: NSColor.white]))
+                                                                       .foregroundColor: NSColor.labelColor]))
             press.alpha = 0
             press.verticalAlignmentMode = .center
             addChild(press)
@@ -28,8 +29,13 @@ extension SKScene {
         override func didMove(to: SKView) {
             let player = GKEntity.Node()
             entities.insert(player)
+            
+            let wheel = GKEntity.Wheel()
+            entities.insert(wheel)
+            
             let camera = SKCameraNode()
             camera.constraints = [.distance(.init(upperLimit: 150), to: player.component(ofType: GKComponent.Sprite.self)!.sprite)]
+            camera.addChild(wheel.component(ofType: GKComponent.Sprite.self)!.sprite)
             addChild(camera)
             addChild(player.component(ofType: GKComponent.Sprite.self)!.sprite)
             self.camera = camera
@@ -44,6 +50,10 @@ extension SKScene {
             entities.insert(path)
             addChild(path.component(ofType: GKComponent.Sprite.self)!.sprite)
         }
+        
+        func remove(_ path: GKEntity.Path) {
+            entities.remove(path)
+            path.component(ofType: GKComponent.Sprite.self)!.sprite.removeFromParent()
+        }
     }
-
 }

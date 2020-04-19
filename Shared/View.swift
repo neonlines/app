@@ -4,6 +4,8 @@ final class View: SKView, SKSceneDelegate {
     private(set) var state: GKStateMachine!
     private var time = TimeInterval()
     
+    override var mouseDownCanMoveWindow: Bool { true }
+    
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(frame: .zero)

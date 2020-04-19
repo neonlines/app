@@ -39,7 +39,7 @@ extension GKState {
             
             let scene = SKScene.Play()
             scene.delegate = view
-            view.presentScene(scene, transition: .fade(withDuration: 1.5))
+            view.presentScene(scene, transition: .crossFade(withDuration: 1.5))
             stateMachine!.enter(Play.self)
         }
     }
