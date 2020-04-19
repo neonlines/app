@@ -45,9 +45,9 @@ extension GKState {
     }
 
     final class Play: State {
-        override func didEnter(from: GKState?) {
-            super.didEnter(from: from)
-            
+        override func update(deltaTime: TimeInterval) {
+            super.update(deltaTime: deltaTime)
+            view.scene!.update(deltaTime)
         }
         
         override func control() {

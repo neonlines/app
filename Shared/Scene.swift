@@ -33,7 +33,10 @@ extension SKScene {
             addChild(camera)
             self.camera = camera
             addChild(player.component(ofType: GKComponent.Sprite.self)!.sprite)
-//            player.component(ofType: SpriteWalk.self)!.move(memory.game.location.position)
+        }
+        
+        override func update(_ delta: TimeInterval) {
+            entities.forEach { $0.update(deltaTime: delta) }
         }
     }
 

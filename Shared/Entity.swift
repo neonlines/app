@@ -6,7 +6,7 @@ extension GKEntity {
         override init() {
             super.init()
             addComponent(.Sprite())
+            addComponent(.Speed())
         }
     }
-
 }
