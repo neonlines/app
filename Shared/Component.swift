@@ -15,6 +15,21 @@ extension GKComponent {
         }
     }
     
+    final class Body: GKComponent {
+        let body: SKPhysicsBody
+        
+        required init?(coder: NSCoder) { nil }
+        init(radius: CGFloat) {
+            body = .init(circleOfRadius: radius)
+            super.init()
+            body.affectedByGravity = false
+        }
+        
+        override func didAddToEntity() {
+            entity!.component(ofType: Sprite.self)!.sprite.physicsBody = body
+        }
+    }
+    
     final class Speed: GKComponent {
         private var timer = TimeInterval()
         
@@ -22,13 +37,15 @@ extension GKComponent {
             timer -= deltaTime
             if timer <= 0 {
                 timer = 0.02
-                entity!.component(ofType: Sprite.self)!.move(.init(x: 0, y: 10))
+                entity!.component(ofType: Body.self)!.body.velocity.dy = 100
                 entity!.component(ofType: Draw.self)!.draw()
             }
         }
     }
     
     final class Draw: GKComponent {
+        private var last: CGPoint?
+        
         fileprivate func draw() {
             (entity!.component(ofType: Sprite.self)!.sprite.scene as! SKScene.Play).path(entity!.component(ofType: Sprite.self)!.sprite.position)
         }
@@ -52,7 +69,7 @@ extension GKComponent {
     
     final class Wheel: GKComponent {
         func rotate(_ radians: CGFloat) {
-            entity!.component(ofType: Sprite.self)!.sprite.zRotation -= radians
+            entity!.component(ofType: Body.self)!.body.velocity.dx += radians * 100
         }
     }
 }

@@ -6,6 +6,7 @@ extension GKEntity {
         override init() {
             super.init()
             addComponent(.Sprite("node", size: 32))
+            addComponent(.Body(radius: 16))
             addComponent(.Draw())
             addComponent(.Speed())
             addComponent(.Wheel())

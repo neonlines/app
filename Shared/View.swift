@@ -13,6 +13,7 @@ final class View: SKView, SKSceneDelegate {
         ignoresSiblingOrder = true
         showsFPS = true
         showsNodeCount = true
+        showsPhysics = true
         
         state = .init(states: [.Start(self), .Play(self)])
         state.enter(GKState.Start.self)
