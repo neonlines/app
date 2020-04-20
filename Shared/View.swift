@@ -3,6 +3,7 @@ import GameplayKit
 final class View: SKView, SKSceneDelegate {
     private(set) var state: GKStateMachine!
     private var time = TimeInterval()
+    private var drag = Drag.no
     
     override var mouseDownCanMoveWindow: Bool { true }
     
@@ -23,17 +24,43 @@ final class View: SKView, SKSceneDelegate {
     }
     
     override func mouseDown(with: NSEvent) {
-        print(convert(with))
-        if valid(convert(with)) {
-//            drag = .start(x: 0, y: 0)
-            print("valid")
+        if convert(with).valid {
+            drag = .start(x: 0, y: 0)
         } else {
-            print("not")
+            drag = .no
+        }
+    }
+    
+    override func mouseDragged(with: NSEvent) {
+        let point = convert(with)
+        if point.valid {
+            NSCursor.pointingHand.set()
+            switch drag {
+            case .drag:
+                print(atan2(point.x, point.y))
+            case .start(var x, var y):
+                x += with.deltaX
+                y += with.deltaY
+                if abs(x) + abs(y) > 15 {
+                    drag = .drag
+                } else {
+                    drag = .start(x: x, y: y)
+                }
+            default: break
+            }
+        } else {
+            switch drag {
+            case .start(_, _):
+                drag = .no
+            default: break
+            }
         }
     }
     
     override func mouseUp(with: NSEvent) {
         (state.currentState as! GKState.State).press.insert(with.location(in: scene!), at: 0)
+        drag = .no
+        NSCursor.arrow.set()
     }
     
     private func convert(_ event: NSEvent) -> CGPoint {
@@ -41,9 +68,11 @@ final class View: SKView, SKSceneDelegate {
             .init(x: $0.x - frame.midX, y: $0.y - frame.midY + 150)
         } (convert(event.locationInWindow, from: nil))
     }
-    
-    private func valid(_ point: CGPoint) -> Bool {
-        let distance = pow(point.x, 2) + pow(point.y, 2)
+}
+
+private extension CGPoint {
+    var valid: Bool {
+        let distance = pow(x, 2) + pow(y, 2)
         return distance > 900 && distance < 19_600
     }
 }
