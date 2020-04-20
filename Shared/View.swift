@@ -25,8 +25,9 @@ final class View: SKView, SKSceneDelegate {
     }
     
     override func mouseDown(with: NSEvent) {
-        if convert(with).valid {
-            drag = .start(x: 0, y: 0)
+        let point = convert(with)
+        if point.valid {
+            drag = .start(x: 0, y: 0, origin: point.radians)
         } else {
             drag = .no
         }
@@ -37,22 +38,21 @@ final class View: SKView, SKSceneDelegate {
         if point.valid {
             NSCursor.pointingHand.set()
             switch drag {
-            case .drag:
-                (state.currentState as! GKState.State).drag.append(point.radians)
-            case .start(var x, var y):
+            case .drag(let origin):
+                (scene as? SKScene.Play)?.rotate(point.radians - origin)
+            case .start(var x, var y, let origin):
                 x += with.deltaX
                 y += with.deltaY
                 if abs(x) + abs(y) > 15 {
-                    drag = .drag
+                    drag = .drag(origin: origin)
                 } else {
-                    drag = .start(x: x, y: y)
-                    (state.currentState as! GKState.State).drag = [point.radians]
+                    drag = .start(x: x, y: y, origin: origin)
                 }
             default: break
             }
         } else {
             switch drag {
-            case .start(_, _):
+            case .start:
                 drag = .no
             default: break
             }
@@ -61,7 +61,6 @@ final class View: SKView, SKSceneDelegate {
     
     override func mouseUp(with: NSEvent) {
         (state.currentState as! GKState.State).press.insert(with.location(in: scene!), at: 0)
-        (state.currentState as! GKState.State).drag = []
         drag = .no
         NSCursor.arrow.set()
     }

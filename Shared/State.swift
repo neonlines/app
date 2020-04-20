@@ -3,7 +3,6 @@ import GameplayKit
 extension GKState {
     class State: GKState {
         var press = [CGPoint]()
-        var drag = [CGFloat]()
         fileprivate weak var view: View!
         private var timer = TimeInterval()
         
@@ -49,12 +48,6 @@ extension GKState {
         override func update(deltaTime: TimeInterval) {
             super.update(deltaTime: deltaTime)
             view.scene!.update(deltaTime)
-        }
-        
-        override func control() {
-            guard drag.count > 1 else { return }
-            (view.scene as! SKScene.Play).rotate(drag.last! - drag.first!)
-            drag.removeFirst(drag.count - 1)
         }
     }
 }

@@ -9,10 +9,6 @@ extension GKComponent {
             sprite = .init(texture: .init(imageNamed: name), size: .init(width: size, height: size))
             super.init()
         }
-        
-        fileprivate func move(_ delta: CGPoint) {
-            sprite.position = .init(x: sprite.position.x + delta.x, y: sprite.position.y + delta.y)
-        }
     }
     
     final class Body: GKComponent {
@@ -31,13 +27,14 @@ extension GKComponent {
     }
     
     final class Speed: GKComponent {
+        var velocity = CGVector(dx: 0, dy: 100)
         private var timer = TimeInterval()
         
         override func update(deltaTime: TimeInterval) {
             timer -= deltaTime
             if timer <= 0 {
                 timer = 0.02
-                entity!.component(ofType: Body.self)!.body.velocity.dy = 100
+                entity!.component(ofType: Body.self)!.body.velocity = velocity
                 entity!.component(ofType: Draw.self)!.draw()
             }
         }
@@ -62,14 +59,15 @@ extension GKComponent {
                     (entity!.component(ofType: Sprite.self)!.sprite.scene as! SKScene.Play).remove(entity as! GKEntity.Path)
                     return
                 }
-                entity!.component(ofType: Sprite.self)!.sprite.alpha -= 0.01
+                entity!.component(ofType: Sprite.self)!.sprite.alpha -= 0.005
             }
         }
     }
     
     final class Wheel: GKComponent {
         func rotate(_ radians: CGFloat) {
-            entity!.component(ofType: Body.self)!.body.velocity.dx += radians * 100
+            entity!.component(ofType: Speed.self)!.velocity.dy = cos(radians) * 200
+            entity!.component(ofType: Speed.self)!.velocity.dx = sin(radians) * 200
         }
     }
 }
