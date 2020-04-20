@@ -8,6 +8,7 @@ extension GKEntity {
             addComponent(.Sprite("node", size: 32))
             addComponent(.Draw())
             addComponent(.Speed())
+            addComponent(.Wheel())
         }
     }
     

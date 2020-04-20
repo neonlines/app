@@ -37,7 +37,7 @@ final class View: SKView, SKSceneDelegate {
             NSCursor.pointingHand.set()
             switch drag {
             case .drag:
-                print(atan2(point.x, point.y))
+                (state.currentState as! GKState.State).drag.append(point.radians)
             case .start(var x, var y):
                 x += with.deltaX
                 y += with.deltaY
@@ -45,6 +45,7 @@ final class View: SKView, SKSceneDelegate {
                     drag = .drag
                 } else {
                     drag = .start(x: x, y: y)
+                    (state.currentState as! GKState.State).drag = [point.radians]
                 }
             default: break
             }
@@ -59,6 +60,7 @@ final class View: SKView, SKSceneDelegate {
     
     override func mouseUp(with: NSEvent) {
         (state.currentState as! GKState.State).press.insert(with.location(in: scene!), at: 0)
+        (state.currentState as! GKState.State).drag = []
         drag = .no
         NSCursor.arrow.set()
     }
@@ -74,5 +76,9 @@ private extension CGPoint {
     var valid: Bool {
         let distance = pow(x, 2) + pow(y, 2)
         return distance > 900 && distance < 19_600
+    }
+    
+    var radians: CGFloat {
+        atan2(x, y)
     }
 }

@@ -49,4 +49,10 @@ extension GKComponent {
             }
         }
     }
+    
+    final class Wheel: GKComponent {
+        func rotate(_ radians: CGFloat) {
+            entity!.component(ofType: Sprite.self)!.sprite.zRotation -= radians
+        }
+    }
 }

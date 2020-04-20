@@ -24,11 +24,13 @@ extension SKScene {
     }
         
     final class Play: Scene {
+        private weak var player: GKEntity.Node!
         private var entities = Set<GKEntity>()
         
         override func didMove(to: SKView) {
             let player = GKEntity.Node()
             entities.insert(player)
+            self.player = player
             
             let wheel = GKEntity.Wheel()
             entities.insert(wheel)
@@ -54,6 +56,10 @@ extension SKScene {
         func remove(_ path: GKEntity.Path) {
             entities.remove(path)
             path.component(ofType: GKComponent.Sprite.self)!.sprite.removeFromParent()
+        }
+        
+        func rotate(_ radians: CGFloat) {
+            player.component(ofType: GKComponent.Wheel.self)!.rotate(radians)
         }
     }
 }
