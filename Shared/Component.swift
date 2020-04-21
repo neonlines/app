@@ -66,8 +66,9 @@ extension GKComponent {
     
     final class Wheel: GKComponent {
         func rotate(_ radians: CGFloat) {
-            entity!.component(ofType: Speed.self)!.velocity.dy = cos(radians) * 200
-            entity!.component(ofType: Speed.self)!.velocity.dx = sin(radians) * 200
+            entity!.component(ofType: Speed.self)!.velocity.dy = cos(radians) * 300
+            entity!.component(ofType: Speed.self)!.velocity.dx = sin(radians) * 300
+            entity!.component(ofType: Sprite.self)!.sprite.zRotation = radians
         }
     }
 }

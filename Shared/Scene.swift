@@ -36,7 +36,8 @@ extension SKScene {
             entities.insert(wheel)
             
             let camera = SKCameraNode()
-            camera.constraints = [.distance(.init(upperLimit: 150), to: player.component(ofType: GKComponent.Sprite.self)!.sprite)]
+            camera.constraints = [.orient(to: player.component(ofType: GKComponent.Sprite.self)!.sprite, offset: .init(constantValue: .pi / -2)),
+                                  .distance(.init(upperLimit: 150), to: player.component(ofType: GKComponent.Sprite.self)!.sprite)]
             camera.addChild(wheel.component(ofType: GKComponent.Sprite.self)!.sprite)
             addChild(camera)
             addChild(player.component(ofType: GKComponent.Sprite.self)!.sprite)
