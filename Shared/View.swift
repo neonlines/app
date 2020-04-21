@@ -27,7 +27,8 @@ final class View: SKView, SKSceneDelegate {
     override func mouseDown(with: NSEvent) {
         let point = convert(with)
         if point.valid {
-            drag = .start(x: 0, y: 0, origin: point.radians)
+            drag = .drag(origin: point.radians)
+            (scene as? SKScene.Play)?.startRotation()
         } else {
             drag = .no
         }
@@ -40,15 +41,6 @@ final class View: SKView, SKSceneDelegate {
             switch drag {
             case .drag(let origin):
                 (scene as? SKScene.Play)?.rotate(point.radians - origin)
-            case .start(var x, var y, let origin):
-                x += with.deltaX
-                y += with.deltaY
-                if abs(x) + abs(y) > 15 {
-                    drag = .drag(origin: origin)
-                    (scene as? SKScene.Play)?.startRotation()
-                } else {
-                    drag = .start(x: x, y: y, origin: origin)
-                }
             default: break
             }
         } else {
