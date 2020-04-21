@@ -45,17 +45,14 @@ final class View: SKView, SKSceneDelegate {
                 y += with.deltaY
                 if abs(x) + abs(y) > 15 {
                     drag = .drag(origin: origin)
+                    (scene as? SKScene.Play)?.startRotation()
                 } else {
                     drag = .start(x: x, y: y, origin: origin)
                 }
             default: break
             }
         } else {
-            switch drag {
-            case .start:
-                drag = .no
-            default: break
-            }
+            drag = .no
         }
     }
     

@@ -59,6 +59,10 @@ extension SKScene {
             path.component(ofType: GKComponent.Sprite.self)!.sprite.removeFromParent()
         }
         
+        func startRotation() {
+            player.component(ofType: GKComponent.Wheel.self)!.start()
+        }
+        
         func rotate(_ radians: CGFloat) {
             player.component(ofType: GKComponent.Wheel.self)!.rotate(radians)
         }
