@@ -27,7 +27,7 @@ extension GKComponent {
     }
     
     final class Speed: GKComponent {
-        var velocity = CGVector(dx: 0, dy: 100)
+        var velocity = CGVector(dx: 0, dy: 500)
         private var timer = TimeInterval()
         
         override func update(deltaTime: TimeInterval) {
@@ -67,6 +67,7 @@ extension GKComponent {
     final class Wheel: GKComponent {
         var origin = CGFloat()
         var radians = CGFloat()
+        let maxSpeed = CGFloat(500)
         
         func start() {
             origin = radians
@@ -74,7 +75,11 @@ extension GKComponent {
         
         func rotate(_ radians: CGFloat) {
             self.radians = origin + radians
-            entity!.component(ofType: Speed.self)!.velocity = .init(dx: sin(self.radians) * 300, dy: cos(self.radians) * 300)
+            let dx = sin(self.radians)
+            let dy = cos(self.radians)
+            let speedY = (1 - abs(dx)) * maxSpeed
+            let speedX = maxSpeed - speedY
+            entity!.component(ofType: Speed.self)!.velocity = .init(dx: dx * speedX, dy: dy * speedY)
             entity!.component(ofType: Sprite.self)!.sprite.zRotation = self.radians
         }
     }
