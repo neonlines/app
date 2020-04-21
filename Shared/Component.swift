@@ -12,7 +12,6 @@ extension GKComponent {
         
         override func didAddToEntity() {
             guard let colour = entity!.component(ofType: Colour.self)?.colour else { return }
-            
             sprite.color = colour
             sprite.colorBlendFactor = 1
         }
@@ -50,28 +49,34 @@ extension GKComponent {
         override func update(deltaTime: TimeInterval) {
             timer -= deltaTime
             if timer <= 0 {
-                timer = 0.06
+                timer = 0.03
                 entity!.component(ofType: Body.self)!.body.velocity = velocity
             }
         }
     }
     
     final class Path: GKComponent {
-        let sprite = SKShapeNode(path: CGMutablePath())
-        private var path = CGMutablePath()
+        let sprite = SKShapeNode()
+        private var points = [CGPoint]()
         private var timer = TimeInterval()
         
         override func didAddToEntity() {
-            path.move(to: .zero)
-            sprite.lineWidth = 10
-            sprite.strokeColor = entity!.component(ofType: Colour.self)!.colour.withAlphaComponent(0.5)
+            sprite.lineWidth = 16
+            sprite.lineCap = .round
+            sprite.strokeColor = entity!.component(ofType: Colour.self)!.colour
+            sprite.alpha = 0.75
         }
         
         override func update(deltaTime: TimeInterval) {
             timer -= deltaTime
             if timer <= 0 {
-                timer = 0.03
-                path.addLine(to: entity!.component(ofType: Sprite.self)!.sprite.position)
+                timer = 0.02
+                points.append(entity!.component(ofType: Sprite.self)!.sprite.position)
+                if points.count > 500 {
+                    points = points.suffix(500)
+                }
+                let path = CGMutablePath()
+                path.addLines(between: points)
                 sprite.path = path
             }
         }
