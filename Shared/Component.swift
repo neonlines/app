@@ -41,10 +41,25 @@ extension GKComponent {
     }
     
     final class Draw: GKComponent {
-        private var last: CGPoint?
+        var path = CGMutablePath()
+        var sprite = SKShapeNode(path: CGMutablePath())
+        override func didAddToEntity() {
+            path.move(to: .zero)
+            
+            sprite.strokeColor = .white
+            sprite.lineWidth = 10
+            
+            
+            
+        }
         
         fileprivate func draw() {
-            (entity!.component(ofType: Sprite.self)!.sprite.scene as! SKScene.Play).path(entity!.component(ofType: Sprite.self)!.sprite.position)
+            if sprite.parent == nil {
+                entity!.component(ofType: Sprite.self)!.sprite.scene!.addChild(sprite)
+            }
+            path.addLine(to: entity!.component(ofType: Sprite.self)!.sprite.position)
+            sprite.path = path
+//            (entity!.component(ofType: Sprite.self)!.sprite.scene as! SKScene.Play).path(entity!.component(ofType: Sprite.self)!.sprite.position)
         }
     }
     
