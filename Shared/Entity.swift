@@ -5,21 +5,12 @@ extension GKEntity {
         required init?(coder: NSCoder) { nil }
         override init() {
             super.init()
+            addComponent(.Colour(.blue))
             addComponent(.Sprite("node", size: 32))
             addComponent(.Body(radius: 16))
-            addComponent(.Draw())
+            addComponent(.Path())
             addComponent(.Speed())
             addComponent(.Wheel())
-        }
-    }
-    
-    final class Path: GKEntity {
-        required init?(coder: NSCoder) { nil }
-        init(_ position: CGPoint) {
-            super.init()
-            addComponent(.Sprite("path", size: 10))
-            addComponent(.Fade())
-            component(ofType: GKComponent.Sprite.self)!.sprite.position = position
         }
     }
     

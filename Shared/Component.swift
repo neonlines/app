@@ -9,6 +9,23 @@ extension GKComponent {
             sprite = .init(texture: .init(imageNamed: name), size: .init(width: size, height: size))
             super.init()
         }
+        
+        override func didAddToEntity() {
+            guard let colour = entity!.component(ofType: Colour.self)?.colour else { return }
+            
+            sprite.color = colour
+            sprite.colorBlendFactor = 1
+        }
+    }
+    
+    final class Colour: GKComponent {
+        let colour: SKColor
+        
+        required init?(coder: NSCoder) { nil }
+        init(_ colour: SKColor) {
+            self.colour = colour
+            super.init()
+        }
     }
     
     final class Body: GKComponent {
@@ -33,48 +50,29 @@ extension GKComponent {
         override func update(deltaTime: TimeInterval) {
             timer -= deltaTime
             if timer <= 0 {
-                timer = 0.02
+                timer = 0.06
                 entity!.component(ofType: Body.self)!.body.velocity = velocity
-                entity!.component(ofType: Draw.self)!.draw()
             }
         }
     }
     
-    final class Draw: GKComponent {
-        var path = CGMutablePath()
-        var sprite = SKShapeNode(path: CGMutablePath())
+    final class Path: GKComponent {
+        let sprite = SKShapeNode(path: CGMutablePath())
+        private var path = CGMutablePath()
+        private var timer = TimeInterval()
+        
         override func didAddToEntity() {
             path.move(to: .zero)
-            
-            sprite.strokeColor = .white
             sprite.lineWidth = 10
-            
-            
-            
+            sprite.strokeColor = entity!.component(ofType: Colour.self)!.colour.withAlphaComponent(0.5)
         }
-        
-        fileprivate func draw() {
-            if sprite.parent == nil {
-                entity!.component(ofType: Sprite.self)!.sprite.scene!.addChild(sprite)
-            }
-            path.addLine(to: entity!.component(ofType: Sprite.self)!.sprite.position)
-            sprite.path = path
-//            (entity!.component(ofType: Sprite.self)!.sprite.scene as! SKScene.Play).path(entity!.component(ofType: Sprite.self)!.sprite.position)
-        }
-    }
-    
-    final class Fade: GKComponent {
-        private var timer = TimeInterval()
         
         override func update(deltaTime: TimeInterval) {
             timer -= deltaTime
             if timer <= 0 {
-                timer = 0.02
-                guard entity!.component(ofType: Sprite.self)!.sprite.alpha > 0 else {
-                    (entity!.component(ofType: Sprite.self)!.sprite.scene as! SKScene.Play).remove(entity as! GKEntity.Path)
-                    return
-                }
-                entity!.component(ofType: Sprite.self)!.sprite.alpha -= 0.005
+                timer = 0.03
+                path.addLine(to: entity!.component(ofType: Sprite.self)!.sprite.position)
+                sprite.path = path
             }
         }
     }

@@ -40,23 +40,13 @@ extension SKScene {
                                   .distance(.init(upperLimit: 150), to: player.component(ofType: GKComponent.Sprite.self)!.sprite)]
             camera.addChild(wheel.component(ofType: GKComponent.Sprite.self)!.sprite)
             addChild(camera)
+            addChild(player.component(ofType: GKComponent.Path.self)!.sprite)
             addChild(player.component(ofType: GKComponent.Sprite.self)!.sprite)
             self.camera = camera
         }
         
         override func update(_ delta: TimeInterval) {
             entities.forEach { $0.update(deltaTime: delta) }
-        }
-        
-        func path(_ position: CGPoint) {
-            let path = GKEntity.Path(position)
-            entities.insert(path)
-            addChild(path.component(ofType: GKComponent.Sprite.self)!.sprite)
-        }
-        
-        func remove(_ path: GKEntity.Path) {
-            entities.remove(path)
-            path.component(ofType: GKComponent.Sprite.self)!.sprite.removeFromParent()
         }
         
         func startRotation() {
