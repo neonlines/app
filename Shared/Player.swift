@@ -24,8 +24,10 @@ final class Player: GKEntity {
         line.lineWidth = size / 2
         line.lineCap = .round
         line.strokeColor = .init(red: 0.75, green: 0.75, blue: 0.75, alpha: 1)
-        
         linePoints.reserveCapacity(maxPoints)
+        
+        
+        
     }
 
     override func update(deltaTime: TimeInterval) {
