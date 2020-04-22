@@ -5,7 +5,7 @@ private let maxSpeed = CGFloat(500)
 private let maxPoints = 500
 
 final class Player: GKEntity {
-    let sprite = SKSpriteNode(texture: .init(imageNamed: "node"), size: .init(width: size, height: size))
+    let node = SKSpriteNode(texture: .init(imageNamed: "node"), size: .init(width: size, height: size))
     let line = SKShapeNode()
     private var timer = TimeInterval()
     private var velocity = CGVector(dx: 0, dy: maxSpeed)
@@ -16,10 +16,10 @@ final class Player: GKEntity {
     required init?(coder: NSCoder) { nil }
     override init() {
         super.init()
-        sprite.color = .white
-        sprite.colorBlendFactor = 1
-        sprite.physicsBody = .init(circleOfRadius: size / 2)
-        sprite.physicsBody!.affectedByGravity = false
+        node.color = .white
+        node.colorBlendFactor = 1
+        node.physicsBody = .init(circleOfRadius: size / 2)
+        node.physicsBody!.affectedByGravity = false
         
         line.lineWidth = size / 2
         line.lineCap = .round
@@ -32,7 +32,7 @@ final class Player: GKEntity {
         timer -= deltaTime
         if timer <= 0 {
             timer = 0.02
-            linePoints.append(sprite.position)
+            linePoints.append(node.position)
             if linePoints.count > maxPoints {
                 linePoints = linePoints.suffix(maxPoints)
             }
@@ -40,7 +40,7 @@ final class Player: GKEntity {
                 $0.addLines(between: linePoints)
                 return $0
             } (CGMutablePath())
-            sprite.physicsBody!.velocity = velocity
+            node.physicsBody!.velocity = velocity
         }
     }
     
@@ -55,6 +55,6 @@ final class Player: GKEntity {
         let speedY = (1 - abs(dx)) * maxSpeed
         let speedX = maxSpeed - speedY
         velocity = .init(dx: dx * speedX, dy: dy * speedY)
-        sprite.zRotation = self.radians
+        node.zRotation = self.radians
     }
 }
