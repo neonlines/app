@@ -5,7 +5,7 @@ extension GKEntity {
         required init?(coder: NSCoder) { nil }
         override init() {
             super.init()
-            addComponent(.Colour(.white))
+            addComponent(.Colour(.white, secondary: .init(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)))
             addComponent(.Sprite("node", size: 32))
             addComponent(.Body(radius: 16))
             addComponent(.Path())

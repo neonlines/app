@@ -11,18 +11,20 @@ extension GKComponent {
         }
         
         override func didAddToEntity() {
-            guard let colour = entity!.component(ofType: Colour.self)?.colour else { return }
+            guard let colour = entity!.component(ofType: Colour.self)?.primary else { return }
             sprite.color = colour
             sprite.colorBlendFactor = 1
         }
     }
     
     final class Colour: GKComponent {
-        let colour: SKColor
+        let primary: SKColor
+        let secondary: SKColor
         
         required init?(coder: NSCoder) { nil }
-        init(_ colour: SKColor) {
-            self.colour = colour
+        init(_ primary: SKColor, secondary: SKColor) {
+            self.primary = primary
+            self.secondary = secondary
             super.init()
         }
     }
@@ -63,8 +65,7 @@ extension GKComponent {
         override func didAddToEntity() {
             sprite.lineWidth = 16
             sprite.lineCap = .round
-            sprite.strokeColor = entity!.component(ofType: Colour.self)!.colour
-            sprite.alpha = 0.75
+            sprite.strokeColor = entity!.component(ofType: Colour.self)!.secondary
         }
         
         override func update(deltaTime: TimeInterval) {
