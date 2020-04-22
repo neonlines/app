@@ -14,16 +14,17 @@
 		CE2CC6F3244C9A0100C21893 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F1244C9A0100C21893 /* State.swift */; };
 		CE2CC6F8244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
 		CE2CC6F9244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
-		CE50402D244D6714003D4320 /* Drag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50402C244D6714003D4320 /* Drag.swift */; };
-		CE50402E244D6714003D4320 /* Drag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50402C244D6714003D4320 /* Drag.swift */; };
 		CE9443D0244CA2E30087CDA9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9443CF244CA2E30087CDA9 /* Media.xcassets */; };
 		CE9443D1244CA2E30087CDA9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9443CF244CA2E30087CDA9 /* Media.xcassets */; };
-		CE9443D3244CA5000087CDA9 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443D2244CA5000087CDA9 /* Entity.swift */; };
-		CE9443D4244CA5000087CDA9 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443D2244CA5000087CDA9 /* Entity.swift */; };
+		CE9443D3244CA5000087CDA9 /* Wheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443D2244CA5000087CDA9 /* Wheel.swift */; };
+		CE9443D4244CA5000087CDA9 /* Wheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443D2244CA5000087CDA9 /* Wheel.swift */; };
 		CE9443D9244CA65C0087CDA9 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443D8244CA65C0087CDA9 /* Scene.swift */; };
 		CE9443DA244CA65C0087CDA9 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443D8244CA65C0087CDA9 /* Scene.swift */; };
-		CE9443DC244CAC9A0087CDA9 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443DB244CAC9A0087CDA9 /* Component.swift */; };
-		CE9443DD244CAC9A0087CDA9 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443DB244CAC9A0087CDA9 /* Component.swift */; };
+		CED29E48245015BC00AE2F7F /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED29E47245015BC00AE2F7F /* Player.swift */; };
+		CED29E4A2450163300AE2F7F /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED29E492450163300AE2F7F /* Grid.swift */; };
+		CED29E4C2450166800AE2F7F /* Starting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED29E4B2450166800AE2F7F /* Starting.swift */; };
+		CED29E4E2450168200AE2F7F /* Playing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED29E4D2450168200AE2F7F /* Playing.swift */; };
+		CED29E5024501BC800AE2F7F /* Title.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED29E4F24501BC800AE2F7F /* Title.swift */; };
 		CEF23A81244C8EA200D02FD7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23A80244C8EA200D02FD7 /* App.swift */; };
 		CEF23A85244C8EA200D02FD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF23A84244C8EA200D02FD7 /* Assets.xcassets */; };
 		CEF23A95244C8EB100D02FD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23A94244C8EB100D02FD7 /* AppDelegate.swift */; };
@@ -38,11 +39,14 @@
 		CE2CC6ED244C996C00C21893 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		CE2CC6F1244C9A0100C21893 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		CE2CC6F7244C9B0900C21893 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
-		CE50402C244D6714003D4320 /* Drag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drag.swift; sourceTree = "<group>"; };
 		CE9443CF244CA2E30087CDA9 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-		CE9443D2244CA5000087CDA9 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		CE9443D2244CA5000087CDA9 /* Wheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wheel.swift; sourceTree = "<group>"; };
 		CE9443D8244CA65C0087CDA9 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
-		CE9443DB244CAC9A0087CDA9 /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
+		CED29E47245015BC00AE2F7F /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		CED29E492450163300AE2F7F /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		CED29E4B2450166800AE2F7F /* Starting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Starting.swift; sourceTree = "<group>"; };
+		CED29E4D2450168200AE2F7F /* Playing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playing.swift; sourceTree = "<group>"; };
+		CED29E4F24501BC800AE2F7F /* Title.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Title.swift; sourceTree = "<group>"; };
 		CEF23A7D244C8EA200D02FD7 /* neonlines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = neonlines.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF23A80244C8EA200D02FD7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		CEF23A84244C8EA200D02FD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -127,13 +131,16 @@
 		CEF23AA9244C8F3C00D02FD7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				CE9443DB244CAC9A0087CDA9 /* Component.swift */,
-				CE50402C244D6714003D4320 /* Drag.swift */,
-				CE9443D2244CA5000087CDA9 /* Entity.swift */,
+				CED29E492450163300AE2F7F /* Grid.swift */,
+				CED29E47245015BC00AE2F7F /* Player.swift */,
+				CED29E4D2450168200AE2F7F /* Playing.swift */,
 				CE9443D8244CA65C0087CDA9 /* Scene.swift */,
+				CED29E4B2450166800AE2F7F /* Starting.swift */,
 				CE2CC6F1244C9A0100C21893 /* State.swift */,
 				CE2CC6F7244C9B0900C21893 /* String.swift */,
+				CED29E4F24501BC800AE2F7F /* Title.swift */,
 				CE2CC6ED244C996C00C21893 /* View.swift */,
+				CE9443D2244CA5000087CDA9 /* Wheel.swift */,
 				CE9443CF244CA2E30087CDA9 /* Media.xcassets */,
 				CEF23AAF244C98EA00D02FD7 /* Localizable.strings */,
 			);
@@ -248,14 +255,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE9443DC244CAC9A0087CDA9 /* Component.swift in Sources */,
+				CED29E4E2450168200AE2F7F /* Playing.swift in Sources */,
 				CE2CC6F8244C9B0900C21893 /* String.swift in Sources */,
+				CED29E4C2450166800AE2F7F /* Starting.swift in Sources */,
 				CE9443D9244CA65C0087CDA9 /* Scene.swift in Sources */,
-				CE50402D244D6714003D4320 /* Drag.swift in Sources */,
+				CED29E5024501BC800AE2F7F /* Title.swift in Sources */,
+				CED29E4A2450163300AE2F7F /* Grid.swift in Sources */,
 				CEF23A81244C8EA200D02FD7 /* App.swift in Sources */,
-				CE9443D3244CA5000087CDA9 /* Entity.swift in Sources */,
+				CE9443D3244CA5000087CDA9 /* Wheel.swift in Sources */,
 				CEF23AAE244C984100D02FD7 /* Window.swift in Sources */,
 				CE2CC6EE244C996C00C21893 /* View.swift in Sources */,
+				CED29E48245015BC00AE2F7F /* Player.swift in Sources */,
 				CE2CC6F2244C9A0100C21893 /* State.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,12 +275,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE2CC6EF244C996C00C21893 /* View.swift in Sources */,
-				CE9443DD244CAC9A0087CDA9 /* Component.swift in Sources */,
 				CEF23A95244C8EB100D02FD7 /* AppDelegate.swift in Sources */,
-				CE50402E244D6714003D4320 /* Drag.swift in Sources */,
 				CE2CC6F9244C9B0900C21893 /* String.swift in Sources */,
 				CE2CC6F3244C9A0100C21893 /* State.swift in Sources */,
-				CE9443D4244CA5000087CDA9 /* Entity.swift in Sources */,
+				CE9443D4244CA5000087CDA9 /* Wheel.swift in Sources */,
 				CE9443DA244CA65C0087CDA9 /* Scene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

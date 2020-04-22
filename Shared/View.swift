@@ -3,7 +3,7 @@ import GameplayKit
 final class View: SKView, SKSceneDelegate {
     private(set) var state: GKStateMachine!
     private var time = TimeInterval()
-    private var drag = Drag.no
+    private var drag: CGFloat?
     
     override var mouseDownCanMoveWindow: Bool { true }
     
@@ -15,8 +15,8 @@ final class View: SKView, SKSceneDelegate {
         showsNodeCount = true
         showsPhysics = true
         
-        state = .init(states: [.Start(self), .Play(self)])
-        state.enter(GKState.Start.self)
+        state = .init(states: [Starting(self), Playing(self)])
+        state.enter(Starting.self)
     }
     
     func update(_ time: TimeInterval, for: SKScene) {
@@ -27,10 +27,10 @@ final class View: SKView, SKSceneDelegate {
     override func mouseDown(with: NSEvent) {
         let point = convert(with)
         if point.valid {
-            drag = .drag(origin: point.radians)
-            (scene as? SKScene.Play)?.startRotation()
+            drag = point.radians
+            (scene as? Grid)?.startRotation()
         } else {
-            drag = .no
+            drag = nil
         }
     }
     
@@ -38,19 +38,17 @@ final class View: SKView, SKSceneDelegate {
         let point = convert(with)
         if point.valid {
             NSCursor.pointingHand.set()
-            switch drag {
-            case .drag(let origin):
-                (scene as? SKScene.Play)?.rotate(point.radians - origin)
-            default: break
+            if let drag = self.drag {
+                (scene as? Grid)?.rotate(point.radians - drag)
             }
         } else {
-            drag = .no
+            drag = nil
         }
     }
     
     override func mouseUp(with: NSEvent) {
-        (state.currentState as! GKState.State).press.insert(with.location(in: scene!), at: 0)
-        drag = .no
+        (state.currentState as! State).press.insert(with.location(in: scene!), at: 0)
+        drag = nil
         NSCursor.arrow.set()
     }
     
