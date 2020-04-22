@@ -5,7 +5,7 @@ final class Grid: Scene {
     private var entities = Set<GKEntity>()
     
     override func didMove(to: SKView) {
-        let borders = Borders(radius: 5000)
+        let borders = Borders(radius: 500)
         entities.insert(borders)
         
         let player = Player()
@@ -16,8 +16,7 @@ final class Grid: Scene {
         entities.insert(wheel)
         
         let camera = SKCameraNode()
-        camera.constraints = [.orient(to: player.node, offset: .init(constantValue: .pi / -2)),
-                              .distance(.init(upperLimit: 150), to: player.node)]
+        camera.constraints = [.orient(to: player.node, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 150), to: player.node)]
         camera.addChild(wheel.node)
         addChild(camera)
         addChild(borders.node)
