@@ -9,13 +9,15 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         
         let borders = Borders(radius: 500)
         borders.node.physicsBody?.categoryBitMask = 0b0001
-//        borders.node.physicsBody?.contactTestBitMask = 0b1000
+        borders.node.physicsBody?.contactTestBitMask = 0b1000
         entities.insert(borders)
         
         let player = Player()
         player.node.physicsBody?.categoryBitMask = 0b1000
+        player.node.physicsBody?.collisionBitMask = 0
         player.line.physicsBody?.categoryBitMask = 0b0010
         player.line.physicsBody?.contactTestBitMask = 0b1000
+        player.line.physicsBody?.collisionBitMask = 0
         entities.insert(player)
         self.player = player
         

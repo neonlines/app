@@ -43,6 +43,7 @@ final class Player: GKEntity {
             path.addLines(between: linePoints)
             line.path = path
             line.physicsBody = .init(edgeChainFrom: path)
+            line.physicsBody?.collisionBitMask = 0
         }
     }
     
