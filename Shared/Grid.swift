@@ -5,7 +5,7 @@ final class Grid: Scene {
     private var entities = Set<GKEntity>()
     
     override func didMove(to: SKView) {
-        let borders = Borders(radius: 500)
+        let borders = Borders(radius: 200)
         entities.insert(borders)
         
         let player = Player()
@@ -25,21 +25,18 @@ final class Grid: Scene {
         self.camera = camera
         
         let emitter = SKEmitterNode()
-//        emitter.path
         emitter.particleTexture = .init(image: NSImage(named: "particle")!)
-        emitter.particleSize = .init(width: 22, height: 12)
-        emitter.particleAlpha = 1
-        emitter.particleBirthRate = 10
-        emitter.emissionAngleRange = .pi
-        
-        emitter.particlePositionRange = .init(dx: 1, dy: 1)
-        emitter.particleRotationRange = .pi
+        emitter.particleSize = .init(width: 8, height: 8)
+        emitter.particleBirthRate = 100
+        emitter.emissionAngleRange = .pi * 2
+//        emitter.particlePositionRange = .init(dx: 20, dy: 20)
+        emitter.particleRotationRange = .pi * 2
         emitter.particleColor = .white
-        emitter.particleSpeed = 10
-        emitter.particleLifetime = 100
-        emitter.particleAlphaRange = 1
-        emitter.particleRotationSpeed = .pi
-        emitter.targetNode = player.node
+        emitter.particleSpeed = 50
+        emitter.particleLifetime = 10
+        emitter.numParticlesToEmit = 50
+        emitter.particleAlphaSpeed = -0.5
+        emitter.particleRotationSpeed = 0.5
         addChild(emitter)
     }
     
