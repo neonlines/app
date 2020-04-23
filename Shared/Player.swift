@@ -17,6 +17,7 @@ final class Player: GKEntity {
     required init?(coder: NSCoder) { nil }
     override init() {
         super.init()
+        node.entity = self
         node.color = .white
         node.colorBlendFactor = 1
         node.physicsBody = .init(circleOfRadius: size / 2)
@@ -25,6 +26,7 @@ final class Player: GKEntity {
         node.physicsBody!.contactTestBitMask = .all
         node.physicsBody!.categoryBitMask = .player
         
+        line.entity = self
         line.lineWidth = size / 2
         line.lineCap = .round
         line.strokeColor = .init(red: 0.75, green: 0.75, blue: 0.75, alpha: 1)
@@ -39,7 +41,7 @@ final class Player: GKEntity {
                 linePoints.append(node.position)
                 linePoints = linePoints.suffix(maxPoints)
                 node.physicsBody!.velocity = velocity
-            } else if !linePoints.isEmpty {
+            } else if linePoints.count > 1 {
                 linePoints.removeFirst()
             }
             let path = CGMutablePath()
@@ -47,7 +49,7 @@ final class Player: GKEntity {
             line.path = path
             line.physicsBody = .init(edgeChainFrom: path)
             line.physicsBody!.collisionBitMask = .none
-            line.physicsBody!.contactTestBitMask = .player
+            line.physicsBody!.contactTestBitMask = .none
             line.physicsBody!.categoryBitMask = .line
         }
     }
@@ -70,6 +72,7 @@ final class Player: GKEntity {
     func explode() {
         guard active else { return }
         active = false
+        node.physicsBody!.velocity = .zero
         
         let emitter = SKEmitterNode()
         emitter.particleTexture = .init(image: NSImage(named: "particle")!)
@@ -83,6 +86,8 @@ final class Player: GKEntity {
         emitter.numParticlesToEmit = 50
         emitter.particleAlphaSpeed = -0.5
         emitter.particleRotationSpeed = 0.5
+        emitter.position = node.position
         node.scene!.addChild(emitter)
+        node.alpha = 0
     }
 }
