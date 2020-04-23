@@ -13,5 +13,8 @@ final class Borders: GKEntity {
         node.lineJoin = .round
         node.strokeColor = .init(red: 0.35, green: 0.35, blue: 0.35, alpha: 1)
         node.physicsBody = .init(edgeLoopFrom: CGRect(x: -radius, y: -radius, width: size, height: size))
+        node.physicsBody!.collisionBitMask = .none
+        node.physicsBody!.contactTestBitMask = .player
+        node.physicsBody!.categoryBitMask = .border
     }
 }

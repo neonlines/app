@@ -26,6 +26,7 @@
 		CED29E4C2450166800AE2F7F /* Starting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED29E4B2450166800AE2F7F /* Starting.swift */; };
 		CED29E4E2450168200AE2F7F /* Playing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED29E4D2450168200AE2F7F /* Playing.swift */; };
 		CED29E5024501BC800AE2F7F /* Title.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED29E4F24501BC800AE2F7F /* Title.swift */; };
+		CEDDDE1A2451C6F800C97E0A /* UInt32.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDDE192451C6F800C97E0A /* UInt32.swift */; };
 		CEF23A81244C8EA200D02FD7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23A80244C8EA200D02FD7 /* App.swift */; };
 		CEF23A85244C8EA200D02FD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF23A84244C8EA200D02FD7 /* Assets.xcassets */; };
 		CEF23A95244C8EB100D02FD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23A94244C8EB100D02FD7 /* AppDelegate.swift */; };
@@ -49,6 +50,7 @@
 		CED29E4B2450166800AE2F7F /* Starting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Starting.swift; sourceTree = "<group>"; };
 		CED29E4D2450168200AE2F7F /* Playing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playing.swift; sourceTree = "<group>"; };
 		CED29E4F24501BC800AE2F7F /* Title.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Title.swift; sourceTree = "<group>"; };
+		CEDDDE192451C6F800C97E0A /* UInt32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt32.swift; sourceTree = "<group>"; };
 		CEF23A7D244C8EA200D02FD7 /* neonlines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = neonlines.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF23A80244C8EA200D02FD7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		CEF23A84244C8EA200D02FD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				CEB504792450991E00D5B1BC /* Borders.swift */,
+				CEDDDE192451C6F800C97E0A /* UInt32.swift */,
 				CED29E492450163300AE2F7F /* Grid.swift */,
 				CED29E47245015BC00AE2F7F /* Player.swift */,
 				CED29E4D2450168200AE2F7F /* Playing.swift */,
@@ -271,6 +274,7 @@
 				CEB5047A2450991E00D5B1BC /* Borders.swift in Sources */,
 				CED29E48245015BC00AE2F7F /* Player.swift in Sources */,
 				CE2CC6F2244C9A0100C21893 /* State.swift in Sources */,
+				CEDDDE1A2451C6F800C97E0A /* UInt32.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

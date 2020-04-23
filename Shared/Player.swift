@@ -21,6 +21,9 @@ final class Player: GKEntity {
         node.colorBlendFactor = 1
         node.physicsBody = .init(circleOfRadius: size / 2)
         node.physicsBody!.affectedByGravity = false
+        node.physicsBody!.collisionBitMask = .none
+        node.physicsBody!.contactTestBitMask = .all
+        node.physicsBody!.categoryBitMask = .player
         
         line.lineWidth = size / 2
         line.lineCap = .round
@@ -43,7 +46,9 @@ final class Player: GKEntity {
             path.addLines(between: linePoints)
             line.path = path
             line.physicsBody = .init(edgeChainFrom: path)
-            line.physicsBody?.collisionBitMask = 0
+            line.physicsBody!.collisionBitMask = .none
+            line.physicsBody!.contactTestBitMask = .player
+            line.physicsBody!.categoryBitMask = .line
         }
     }
     
