@@ -1,14 +1,21 @@
 import GameplayKit
 
-final class Grid: Scene {
+final class Grid: Scene, SKPhysicsContactDelegate {
     private weak var player: Player!
     private var entities = Set<GKEntity>()
     
     override func didMove(to: SKView) {
-        let borders = Borders(radius: 200)
+        physicsWorld.contactDelegate = self
+        
+        let borders = Borders(radius: 500)
+        borders.node.physicsBody?.categoryBitMask = 0b0001
+//        borders.node.physicsBody?.contactTestBitMask = 0b1000
         entities.insert(borders)
         
         let player = Player()
+        player.node.physicsBody?.categoryBitMask = 0b1000
+        player.line.physicsBody?.categoryBitMask = 0b0010
+        player.line.physicsBody?.contactTestBitMask = 0b1000
         entities.insert(player)
         self.player = player
         
@@ -23,25 +30,16 @@ final class Grid: Scene {
         addChild(player.line)
         addChild(player.node)
         self.camera = camera
-        
-        let emitter = SKEmitterNode()
-        emitter.particleTexture = .init(image: NSImage(named: "particle")!)
-        emitter.particleSize = .init(width: 8, height: 8)
-        emitter.particleBirthRate = 100
-        emitter.emissionAngleRange = .pi * 2
-//        emitter.particlePositionRange = .init(dx: 20, dy: 20)
-        emitter.particleRotationRange = .pi * 2
-        emitter.particleColor = .white
-        emitter.particleSpeed = 50
-        emitter.particleLifetime = 10
-        emitter.numParticlesToEmit = 50
-        emitter.particleAlphaSpeed = -0.5
-        emitter.particleRotationSpeed = 0.5
-        addChild(emitter)
     }
     
     override func update(_ delta: TimeInterval) {
         entities.forEach { $0.update(deltaTime: delta) }
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        print(contact)
+        assert(contact.bodyA.node !== player.node)
+        assert(contact.bodyB.node !== player.node)
     }
     
     func startRotation() {

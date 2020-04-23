@@ -12,6 +12,7 @@ final class Player: GKEntity {
     private var linePoints = [CGPoint]()
     private var rotateOrigin = CGFloat()
     private var radians = CGFloat()
+    private var active = true
     
     required init?(coder: NSCoder) { nil }
     override init() {
@@ -25,24 +26,23 @@ final class Player: GKEntity {
         line.lineCap = .round
         line.strokeColor = .init(red: 0.75, green: 0.75, blue: 0.75, alpha: 1)
         linePoints.reserveCapacity(maxPoints)
-        
-        
-        
     }
 
     override func update(deltaTime: TimeInterval) {
         timer -= deltaTime
         if timer <= 0 {
             timer = 0.02
-            linePoints.append(node.position)
-            if linePoints.count > maxPoints {
+            if active {
+                linePoints.append(node.position)
                 linePoints = linePoints.suffix(maxPoints)
+                node.physicsBody!.velocity = velocity
+            } else if !linePoints.isEmpty {
+                linePoints.removeFirst()
             }
-            line.path = {
-                $0.addLines(between: linePoints)
-                return $0
-            } (CGMutablePath())
-            node.physicsBody!.velocity = velocity
+            let path = CGMutablePath()
+            path.addLines(between: linePoints)
+            line.path = path
+            line.physicsBody = .init(edgeChainFrom: path)
         }
     }
     
@@ -51,6 +51,7 @@ final class Player: GKEntity {
     }
     
     func rotate(_ radians: CGFloat) {
+        guard active else { return }
         self.radians = rotateOrigin + radians
         let dx = sin(self.radians)
         let dy = cos(self.radians)
@@ -58,5 +59,24 @@ final class Player: GKEntity {
         let speedX = maxSpeed - speedY
         velocity = .init(dx: dx * speedX, dy: dy * speedY)
         node.zRotation = self.radians
+    }
+    
+    func explode() {
+        guard active else { return }
+        active = false
+        
+        let emitter = SKEmitterNode()
+        emitter.particleTexture = .init(image: NSImage(named: "particle")!)
+        emitter.particleSize = .init(width: 8, height: 8)
+        emitter.particleBirthRate = 100
+        emitter.emissionAngleRange = .pi * 2
+        emitter.particleRotationRange = .pi * 2
+        emitter.particleColor = .white
+        emitter.particleSpeed = 50
+        emitter.particleLifetime = 10
+        emitter.numParticlesToEmit = 50
+        emitter.particleAlphaSpeed = -0.5
+        emitter.particleRotationSpeed = 0.5
+        node.scene!.addChild(emitter)
     }
 }
