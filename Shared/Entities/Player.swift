@@ -15,10 +15,15 @@ final class Player: GKEntity {
     
     private var linePoints = [CGPoint]() {
         didSet {
-            let path = CGMutablePath()
-            path.addLines(between: linePoints)
-            line.path = path
-            line.physicsBody = .init(edgeChainFrom: path)
+            let node = CGMutablePath()
+            node.addLines(between: linePoints)
+            line.path = node
+            
+            let points = linePoints.dropLast(6)
+            guard !points.isEmpty else { return }
+            let body = CGMutablePath()
+            body.addLines(between: .init(points))
+            line.physicsBody = .init(edgeChainFrom: body)
             line.physicsBody!.collisionBitMask = .none
             line.physicsBody!.contactTestBitMask = .none
             line.physicsBody!.categoryBitMask = .line
@@ -51,7 +56,7 @@ final class Player: GKEntity {
     }
     
     func recede() {
-        if linePoints.count > 1 {
+        if linePoints.count > 0 {
             linePoints.removeFirst()
         }
     }
