@@ -24,4 +24,6 @@ class State: GKState {
     }
     
     func control() { }
+    func startRotation() { }
+    func rotate(_ radians: CGFloat) { }
 }

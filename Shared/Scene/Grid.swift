@@ -1,7 +1,7 @@
 import GameplayKit
 
 final class Grid: Scene, SKPhysicsContactDelegate {
-    private weak var player: Player!
+    private(set) weak var player: Player!
     private var entities = Set<GKEntity>()
     
     override func didMove(to: SKView) {
@@ -32,8 +32,7 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        let player = contact.bodyB.node!.entity as! Player
-        guard contact.bodyA.node?.entity != player else { return }
+        guard let player = contact.bodyB.node!.entity as? Player, contact.bodyA.node!.entity != player else { return }
         (view as! View).state.enter(GameOver.self)
         player.explode()
     }

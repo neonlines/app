@@ -5,7 +5,7 @@ final class Starting: State {
         super.didEnter(from: from)
         let scene = Title()
         scene.delegate = view
-        view.presentScene(scene, transition: .fade(withDuration: 3.5))
+        view.presentScene(scene, transition: .crossFade(withDuration: 3.5))
     }
     
     override func control() {

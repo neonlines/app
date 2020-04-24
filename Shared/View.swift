@@ -28,7 +28,7 @@ final class View: SKView, SKSceneDelegate {
         let point = convert(with)
         if point.valid {
             drag = point.radians
-            (scene as? Grid)?.startRotation()
+            (state.currentState as! State).startRotation()
         } else {
             drag = nil
         }
@@ -39,7 +39,7 @@ final class View: SKView, SKSceneDelegate {
         if point.valid {
             NSCursor.pointingHand.set()
             if let drag = self.drag {
-                (scene as? Grid)?.rotate(point.radians - drag)
+                (state.currentState as! State).rotate(point.radians - drag)
             }
         } else {
             drag = nil

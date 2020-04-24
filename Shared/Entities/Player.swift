@@ -9,10 +9,21 @@ final class Player: GKEntity {
     let line = SKShapeNode()
     private var timer = TimeInterval()
     private var velocity = CGVector(dx: 0, dy: maxSpeed)
-    private var linePoints = [CGPoint]()
     private var rotateOrigin = CGFloat()
     private var radians = CGFloat()
     private var active = true
+    
+    private var linePoints = [CGPoint]() {
+        didSet {
+            let path = CGMutablePath()
+            path.addLines(between: linePoints)
+            line.path = path
+            line.physicsBody = .init(edgeChainFrom: path)
+            line.physicsBody!.collisionBitMask = .none
+            line.physicsBody!.contactTestBitMask = .none
+            line.physicsBody!.categoryBitMask = .line
+        }
+    }
     
     required init?(coder: NSCoder) { nil }
     override init() {
@@ -32,25 +43,16 @@ final class Player: GKEntity {
         line.strokeColor = .init(red: 0.75, green: 0.75, blue: 0.75, alpha: 1)
         linePoints.reserveCapacity(maxPoints)
     }
-
-    override func update(deltaTime: TimeInterval) {
-        timer -= deltaTime
-        if timer <= 0 {
-            timer = 0.02
-            if active {
-                linePoints.append(node.position)
-                linePoints = linePoints.suffix(maxPoints)
-                node.physicsBody!.velocity = velocity
-            } else if linePoints.count > 1 {
-                linePoints.removeFirst()
-            }
-            let path = CGMutablePath()
-            path.addLines(between: linePoints)
-            line.path = path
-            line.physicsBody = .init(edgeChainFrom: path)
-            line.physicsBody!.collisionBitMask = .none
-            line.physicsBody!.contactTestBitMask = .none
-            line.physicsBody!.categoryBitMask = .line
+    
+    func move() {
+        linePoints.append(node.position)
+        linePoints = linePoints.suffix(maxPoints)
+        node.physicsBody!.velocity = velocity
+    }
+    
+    func recede() {
+        if linePoints.count > 1 {
+            linePoints.removeFirst()
         }
     }
     
@@ -59,7 +61,6 @@ final class Player: GKEntity {
     }
     
     func rotate(_ radians: CGFloat) {
-        guard active else { return }
         self.radians = rotateOrigin + radians
         let dx = sin(self.radians)
         let dy = cos(self.radians)
@@ -70,9 +71,7 @@ final class Player: GKEntity {
     }
     
     func explode() {
-        guard active else { return }
-        active = false
-        node.physicsBody!.velocity = .zero
+        node.physicsBody = nil
         
         let emitter = SKEmitterNode()
         emitter.particleTexture = .init(image: NSImage(named: "particle")!)
