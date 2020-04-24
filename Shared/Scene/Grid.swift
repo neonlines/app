@@ -34,6 +34,7 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let player = contact.bodyB.node!.entity as! Player
         guard contact.bodyA.node?.entity != player else { return }
+        (view as! View).state.enter(GameOver.self)
         player.explode()
     }
     

@@ -15,7 +15,7 @@ final class View: SKView, SKSceneDelegate {
         showsNodeCount = true
         showsPhysics = true
         
-        state = .init(states: [Starting(self), Playing(self)])
+        state = .init(states: [Starting(self), Playing(self), GameOver(self)])
         state.enter(Starting.self)
     }
     

@@ -20,6 +20,7 @@ class State: GKState {
             timer = 0.15
             control()
         }
+        view.scene!.update(deltaTime)
     }
     
     func control() { }
