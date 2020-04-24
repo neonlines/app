@@ -33,8 +33,10 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         guard let player = contact.bodyB.node?.entity as? Player else { return }
-        (view as! View).state.enter(GameOver.self)
         player.explode()
+        if player === self.player {
+            (view as! View).state.enter(GameOver.self)
+        }
     }
     
     func startRotation() {
