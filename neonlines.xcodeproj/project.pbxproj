@@ -87,6 +87,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CEA411E62452BC5D000A80B9 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				CED29E4D2450168200AE2F7F /* Playing.swift */,
+				CED29E4B2450166800AE2F7F /* Starting.swift */,
+				CE2CC6F1244C9A0100C21893 /* State.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		CEA411E72452BC6C000A80B9 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				CED29E492450163300AE2F7F /* Grid.swift */,
+				CE9443D8244CA65C0087CDA9 /* Scene.swift */,
+				CED29E4F24501BC800AE2F7F /* Title.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		CEA411E82452BC7F000A80B9 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				CEB504792450991E00D5B1BC /* Borders.swift */,
+				CED29E47245015BC00AE2F7F /* Player.swift */,
+				CE9443D2244CA5000087CDA9 /* Wheel.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		CEA411E92452BC95000A80B9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CE2CC6F7244C9B0900C21893 /* String.swift */,
+				CEDDDE192451C6F800C97E0A /* UInt32.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		CEF23A72244C8E6F00D02FD7 = {
 			isa = PBXGroup;
 			children = (
@@ -135,20 +174,13 @@
 		CEF23AA9244C8F3C00D02FD7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				CEB504792450991E00D5B1BC /* Borders.swift */,
-				CEDDDE192451C6F800C97E0A /* UInt32.swift */,
-				CED29E492450163300AE2F7F /* Grid.swift */,
-				CED29E47245015BC00AE2F7F /* Player.swift */,
-				CED29E4D2450168200AE2F7F /* Playing.swift */,
-				CE9443D8244CA65C0087CDA9 /* Scene.swift */,
-				CED29E4B2450166800AE2F7F /* Starting.swift */,
-				CE2CC6F1244C9A0100C21893 /* State.swift */,
-				CE2CC6F7244C9B0900C21893 /* String.swift */,
-				CED29E4F24501BC800AE2F7F /* Title.swift */,
 				CE2CC6ED244C996C00C21893 /* View.swift */,
-				CE9443D2244CA5000087CDA9 /* Wheel.swift */,
 				CE9443CF244CA2E30087CDA9 /* Media.xcassets */,
+				CEA411E82452BC7F000A80B9 /* Entities */,
+				CEA411E92452BC95000A80B9 /* Extensions */,
 				CEF23AAF244C98EA00D02FD7 /* Localizable.strings */,
+				CEA411E72452BC6C000A80B9 /* Scene */,
+				CEA411E62452BC5D000A80B9 /* State */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
