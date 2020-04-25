@@ -9,6 +9,15 @@
           "revision": "2d889305b9befc049a120d80148dff688b80a2bd",
           "version": null
         }
+      },
+      {
+        "package": "Brain",
+        "repositoryURL": "https://github.com/neonlines/brain.git",
+        "state": {
+          "branch": "master",
+          "revision": "9879725b9f8ad57af9ee4d046905ec58fbc88352",
+          "version": null
+        }
       }
     ]
   },

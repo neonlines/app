@@ -10,7 +10,7 @@ final class Starting: State {
     
     override func control() {
         guard !press.isEmpty else { return }
-        let scene = Grid()
+        let scene = Grid(radius: 10000)
         scene.delegate = view
         view.presentScene(scene, transition: .crossFade(withDuration: 1.5))
         stateMachine!.enter(Playing.self)

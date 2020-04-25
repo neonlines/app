@@ -19,6 +19,10 @@ final class View: SKView, SKSceneDelegate {
         state.enter(Starting.self)
     }
     
+    override func viewDidEndLiveResize() {
+        (scene as? Scene)?.align()
+    }
+    
     func update(_ time: TimeInterval, for: SKScene) {
         state.update(deltaTime: self.time == 0 ? 0 : time - self.time)
         self.time = time
@@ -54,7 +58,7 @@ final class View: SKView, SKSceneDelegate {
     
     private func convert(_ event: NSEvent) -> CGPoint {
         {
-            .init(x: $0.x - frame.midX, y: $0.y - frame.midY + 150)
+            .init(x: $0.x - frame.midX, y: $0.y)
         } (convert(event.locationInWindow, from: nil))
     }
 }

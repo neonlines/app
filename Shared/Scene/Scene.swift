@@ -8,4 +8,6 @@ class Scene: SKScene {
         scaleMode = .resizeFill
         backgroundColor = .windowBackgroundColor
     }
+    
+    func align() { }
 }

@@ -14,6 +14,7 @@
 		CE2CC6F3244C9A0100C21893 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F1244C9A0100C21893 /* State.swift */; };
 		CE2CC6F8244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
 		CE2CC6F9244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
+		CE5A66C224543D5E00609B51 /* Brain in Frameworks */ = {isa = PBXBuildFile; productRef = CE5A66C124543D5E00609B51 /* Brain */; };
 		CE9443D0244CA2E30087CDA9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9443CF244CA2E30087CDA9 /* Media.xcassets */; };
 		CE9443D1244CA2E30087CDA9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9443CF244CA2E30087CDA9 /* Media.xcassets */; };
 		CE9443D3244CA5000087CDA9 /* Wheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443D2244CA5000087CDA9 /* Wheel.swift */; };
@@ -76,6 +77,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEF23AAC244C97F000D02FD7 /* Balam in Frameworks */,
+				CE5A66C224543D5E00609B51 /* Brain in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +208,7 @@
 			name = mac;
 			packageProductDependencies = (
 				CEF23AAB244C97F000D02FD7 /* Balam */,
+				CE5A66C124543D5E00609B51 /* Brain */,
 			);
 			productName = mac;
 			productReference = CEF23A7D244C8EA200D02FD7 /* neonlines.app */;
@@ -256,6 +259,7 @@
 			mainGroup = CEF23A72244C8E6F00D02FD7;
 			packageReferences = (
 				CEF23AAA244C97F000D02FD7 /* XCRemoteSwiftPackageReference "balam" */,
+				CE5A66C024543D5E00609B51 /* XCRemoteSwiftPackageReference "brain" */,
 			);
 			productRefGroup = CEF23A7E244C8EA200D02FD7 /* Products */;
 			projectDirPath = "";
@@ -665,6 +669,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CE5A66C024543D5E00609B51 /* XCRemoteSwiftPackageReference "brain" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/neonlines/brain.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		CEF23AAA244C97F000D02FD7 /* XCRemoteSwiftPackageReference "balam" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/catverse/balam.git";
@@ -676,6 +688,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CE5A66C124543D5E00609B51 /* Brain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE5A66C024543D5E00609B51 /* XCRemoteSwiftPackageReference "brain" */;
+			productName = Brain;
+		};
 		CEF23AAB244C97F000D02FD7 /* Balam */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CEF23AAA244C97F000D02FD7 /* XCRemoteSwiftPackageReference "balam" */;
