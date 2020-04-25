@@ -6,4 +6,8 @@ final class Wheel: GKEntity {
     func align() {
         node.position.y = node.scene!.frame.height / -2
     }
+    
+    func rotate(_ radians: CGFloat) {
+        node.zRotation = radians
+    }
 }

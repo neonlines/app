@@ -56,6 +56,7 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     
     func rotate(_ radians: CGFloat) {
         player.rotate(radians)
+        wheel.rotate(radians)
     }
     
     override func align() {
