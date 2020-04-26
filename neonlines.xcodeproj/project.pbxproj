@@ -15,6 +15,7 @@
 		CE2CC6F8244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
 		CE2CC6F9244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
 		CE5A66C224543D5E00609B51 /* Brain in Frameworks */ = {isa = PBXBuildFile; productRef = CE5A66C124543D5E00609B51 /* Brain */; };
+		CE7D03372455E294001AC44B /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D03362455E294001AC44B /* Line.swift */; };
 		CE9443D0244CA2E30087CDA9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9443CF244CA2E30087CDA9 /* Media.xcassets */; };
 		CE9443D1244CA2E30087CDA9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9443CF244CA2E30087CDA9 /* Media.xcassets */; };
 		CE9443D3244CA5000087CDA9 /* Wheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443D2244CA5000087CDA9 /* Wheel.swift */; };
@@ -43,6 +44,7 @@
 		CE2CC6ED244C996C00C21893 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		CE2CC6F1244C9A0100C21893 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		CE2CC6F7244C9B0900C21893 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		CE7D03362455E294001AC44B /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		CE9443CF244CA2E30087CDA9 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		CE9443D2244CA5000087CDA9 /* Wheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wheel.swift; sourceTree = "<group>"; };
 		CE9443D8244CA65C0087CDA9 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				CEB504792450991E00D5B1BC /* Borders.swift */,
+				CE7D03362455E294001AC44B /* Line.swift */,
 				CED29E47245015BC00AE2F7F /* Player.swift */,
 				CE9443D2244CA5000087CDA9 /* Wheel.swift */,
 			);
@@ -313,6 +316,7 @@
 				CE2CC6EE244C996C00C21893 /* View.swift in Sources */,
 				CEB5047A2450991E00D5B1BC /* Borders.swift in Sources */,
 				CED29E48245015BC00AE2F7F /* Player.swift in Sources */,
+				CE7D03372455E294001AC44B /* Line.swift in Sources */,
 				CE2CC6F2244C9A0100C21893 /* State.swift in Sources */,
 				CEDDDE1A2451C6F800C97E0A /* UInt32.swift in Sources */,
 			);
