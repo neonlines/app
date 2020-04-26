@@ -6,8 +6,8 @@ final class Player: SKSpriteNode {
     private let maxSpeed = CGFloat(500)
     
     required init?(coder: NSCoder) { nil }
-    init() {
-        super.init(texture: .init(imageNamed: "node"), color: .white, size: .init(width: 32, height: 32))
+    init(color: SKColor) {
+        super.init(texture: .init(imageNamed: "node"), color: color, size: .init(width: 32, height: 32))
         colorBlendFactor = 1
         physicsBody = .init(circleOfRadius: 16)
         physicsBody!.affectedByGravity = false

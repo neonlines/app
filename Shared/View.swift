@@ -55,7 +55,7 @@ final class View: SKView, SKSceneDelegate {
     
     private func convert(_ event: NSEvent) -> CGPoint {
         {
-            .init(x: $0.x - frame.midX, y: $0.y - 50)
+            .init(x: $0.x - frame.midX, y: $0.y - 60)
         } (convert(event.locationInWindow, from: nil))
     }
 }

@@ -8,7 +8,7 @@ final class Wheel: SKSpriteNode {
     }
     
     func align() {
-        position.y = (scene!.frame.height / -2) + 50
+        position.y = (scene!.frame.height / -2) + 60
     }
     
     func rotate(_ radians: CGFloat) {

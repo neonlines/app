@@ -2,9 +2,10 @@ import Brain
 import SpriteKit
 
 final class Grid: Scene, SKPhysicsContactDelegate {
-    private(set) weak var player: Player!
+    private weak var player: Player!
     private weak var wheel: Wheel!
     private weak var hud: Hud!
+    private weak var minimap: Minimap!
     private var rotation = CGFloat()
     private let brain: Brain
     
@@ -15,14 +16,16 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         
         let borders = Borders(radius: radius)
-        let player = Player()
+        let player = Player(color: .white)
         let wheel = Wheel()
         let hud = Hud()
+        let minimap = Minimap(radius: radius)
         
         let camera = SKCameraNode()
         camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 50), to: player)]
-        camera.addChild(hud)
         camera.addChild(wheel)
+        camera.addChild(hud)
+        camera.addChild(minimap)
         
         addChild(camera)
         addChild(borders)
@@ -32,11 +35,13 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         self.hud = hud
         self.player = player
         self.wheel = wheel
+        self.minimap = minimap
     }
     
     override func didMove(to: SKView) {
         wheel.align()
         hud.align()
+        minimap.align()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -47,17 +52,28 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         }
     }
     
-    func startRotating() {
+    override func align() {
+        wheel.align()
+        hud.align()
+        minimap.align()
+    }
+    
+    override func startRotating() {
         rotation = player.zRotation
     }
     
-    func rotate(_ radians: CGFloat) {
+    override func rotate(_ radians: CGFloat) {
         player.zRotation = rotation + radians
         wheel.zRotation = -player.zRotation
     }
     
-    override func align() {
-        wheel.align()
-        hud.align()
+    override func move() {
+        player.move()
+        minimap.clear()
+        minimap.show(player.position, color: player.color)
+    }
+    
+    override func recede() {
+        player.recede()
     }
 }

@@ -10,4 +10,8 @@ class Scene: SKScene {
     }
     
     func align() { }
+    func startRotating() { }
+    func rotate(_ radians: CGFloat) { }
+    func move() { }
+    func recede() { }
 }

@@ -19,7 +19,7 @@ final class GameOver: State {
         }
         if timer <= 0 {
             timer = 0.02
-            (view.scene as? Grid)?.player.recede()
+            (view.scene as? Scene)?.recede()
         }
     }
 }

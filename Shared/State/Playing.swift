@@ -12,15 +12,15 @@ final class Playing: State {
         timer -= deltaTime
         if timer <= 0 {
             timer = 0.02
-            (view.scene as? Grid)?.player.move()
+            (view.scene as? Scene)?.move()
         }
     }
     
     override func startRotating() {
-        (view.scene as? Grid)?.startRotating()
+        (view.scene as? Scene)?.startRotating()
     }
     
     override func rotate(_ radians: CGFloat) {
-        (view.scene as? Grid)?.rotate(radians)
+        (view.scene as? Scene)?.rotate(radians)
     }
 }
