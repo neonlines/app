@@ -4,6 +4,7 @@ import SpriteKit
 final class Grid: Scene, SKPhysicsContactDelegate {
     private(set) weak var player: Player!
     private weak var wheel: Wheel!
+    private weak var hud: Hud!
     private var rotation = CGFloat()
     private let brain: Brain
     
@@ -16,21 +17,26 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         let borders = Borders(radius: radius)
         let player = Player()
         let wheel = Wheel()
+        let hud = Hud()
         
         let camera = SKCameraNode()
         camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 50), to: player)]
+        camera.addChild(hud)
         camera.addChild(wheel)
+        
         addChild(camera)
         addChild(borders)
         addChild(player.line)
         addChild(player)
         self.camera = camera
+        self.hud = hud
         self.player = player
         self.wheel = wheel
     }
     
     override func didMove(to: SKView) {
         wheel.align()
+        hud.align()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -52,5 +58,6 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     
     override func align() {
         wheel.align()
+        hud.align()
     }
 }

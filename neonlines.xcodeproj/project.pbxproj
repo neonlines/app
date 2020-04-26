@@ -16,6 +16,7 @@
 		CE2CC6F9244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
 		CE5A66C224543D5E00609B51 /* Brain in Frameworks */ = {isa = PBXBuildFile; productRef = CE5A66C124543D5E00609B51 /* Brain */; };
 		CE7D03372455E294001AC44B /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D03362455E294001AC44B /* Line.swift */; };
+		CE7D03392455E8E0001AC44B /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D03382455E8E0001AC44B /* Hud.swift */; };
 		CE9443D0244CA2E30087CDA9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9443CF244CA2E30087CDA9 /* Media.xcassets */; };
 		CE9443D1244CA2E30087CDA9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9443CF244CA2E30087CDA9 /* Media.xcassets */; };
 		CE9443D3244CA5000087CDA9 /* Wheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443D2244CA5000087CDA9 /* Wheel.swift */; };
@@ -45,6 +46,7 @@
 		CE2CC6F1244C9A0100C21893 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		CE2CC6F7244C9B0900C21893 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		CE7D03362455E294001AC44B /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		CE7D03382455E8E0001AC44B /* Hud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hud.swift; sourceTree = "<group>"; };
 		CE9443CF244CA2E30087CDA9 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		CE9443D2244CA5000087CDA9 /* Wheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wheel.swift; sourceTree = "<group>"; };
 		CE9443D8244CA65C0087CDA9 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				CEB504792450991E00D5B1BC /* Borders.swift */,
+				CE7D03382455E8E0001AC44B /* Hud.swift */,
 				CE7D03362455E294001AC44B /* Line.swift */,
 				CED29E47245015BC00AE2F7F /* Player.swift */,
 				CE9443D2244CA5000087CDA9 /* Wheel.swift */,
@@ -308,6 +311,7 @@
 				CED29E4C2450166800AE2F7F /* Starting.swift in Sources */,
 				CEA411EB2452BD06000A80B9 /* GameOver.swift in Sources */,
 				CE9443D9244CA65C0087CDA9 /* Scene.swift in Sources */,
+				CE7D03392455E8E0001AC44B /* Hud.swift in Sources */,
 				CED29E5024501BC800AE2F7F /* Title.swift in Sources */,
 				CED29E4A2450163300AE2F7F /* Grid.swift in Sources */,
 				CEF23A81244C8EA200D02FD7 /* App.swift in Sources */,

@@ -31,7 +31,7 @@ final class Line: SKShapeNode {
     }
     
     func append(_ position: CGPoint) {
-        points = (points + [position].suffix(max))
+        points = (points + [position]).suffix(max)
     }
     
     func recede() {
