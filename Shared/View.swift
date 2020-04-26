@@ -11,7 +11,6 @@ final class View: SKView, SKSceneDelegate {
     init() {
         super.init(frame: .zero)
         ignoresSiblingOrder = true
-        showsFPS = true
         
         state = .init(states: [Starting(self), Playing(self), GameOver(self)])
         state.enter(Starting.self)

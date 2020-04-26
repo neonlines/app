@@ -18,7 +18,7 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         let wheel = Wheel()
         
         let camera = SKCameraNode()
-        camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 150), to: player)]
+        camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 50), to: player)]
         camera.addChild(wheel)
         addChild(camera)
         addChild(borders)
