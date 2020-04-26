@@ -7,7 +7,6 @@ private let maxPoints = 500
 final class Player: GKEntity {
     let node = SKSpriteNode(texture: .init(imageNamed: "node"), size: .init(width: size, height: size))
     let line = SKShapeNode()
-    private var timer = TimeInterval()
     private var velocity = CGVector(dx: 0, dy: maxSpeed)
     private var rotateOrigin = CGFloat()
     private var radians = CGFloat()

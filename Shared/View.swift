@@ -30,7 +30,7 @@ final class View: SKView, SKSceneDelegate {
         let point = convert(with)
         if point.valid {
             drag = point.radians
-            (state.currentState as! State).startRotation()
+            (state.currentState as! State).startRotating()
         } else {
             drag = nil
         }

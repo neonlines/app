@@ -16,11 +16,11 @@ final class Playing: State {
         }
     }
     
-    override func startRotation() {
-        (view.scene as? Grid)?.startRotation()
+    override func startRotating() {
+        (view.scene as? Grid)?.player.startRotating()
     }
     
     override func rotate(_ radians: CGFloat) {
-        (view.scene as? Grid)?.rotate(radians)
+        (view.scene as? Grid)?.player.rotate(radians)
     }
 }
