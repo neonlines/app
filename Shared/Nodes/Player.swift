@@ -1,16 +1,10 @@
-import GameplayKit
+import SpriteKit
 
-private let size = CGFloat(32)
-private let maxSpeed = CGFloat(500)
-private let maxPoints = 500
-
-final class Player: GKEntity {
-    let node = SKSpriteNode(texture: .init(imageNamed: "node"), size: .init(width: size, height: size))
+final class Player: SKSpriteNode {
     let line = SKShapeNode()
-    private var velocity = CGVector(dx: 0, dy: maxSpeed)
-    private var rotateOrigin = CGFloat()
-    private var radians = CGFloat()
     private var active = true
+    private let maxSpeed = CGFloat(500)
+    private let maxPoints = 500
     
     private var linePoints = [CGPoint]() {
         didSet {
@@ -30,28 +24,30 @@ final class Player: GKEntity {
     }
     
     required init?(coder: NSCoder) { nil }
-    override init() {
-        super.init()
-        node.entity = self
-        node.color = .white
-        node.colorBlendFactor = 1
-        node.physicsBody = .init(circleOfRadius: size / 2)
-        node.physicsBody!.affectedByGravity = false
-        node.physicsBody!.collisionBitMask = .none
-        node.physicsBody!.contactTestBitMask = .all
-        node.physicsBody!.categoryBitMask = .player
+    init() {
+        super.init(texture: .init(imageNamed: "node"), color: .white, size: .init(width: 32, height: 32))
+        colorBlendFactor = 1
+        physicsBody = .init(circleOfRadius: 16)
+        physicsBody!.affectedByGravity = false
+        physicsBody!.collisionBitMask = .none
+        physicsBody!.contactTestBitMask = .all
+        physicsBody!.categoryBitMask = .player
         
-        line.entity = self
-        line.lineWidth = size / 2
+        line.lineWidth = 16
         line.lineCap = .round
         line.strokeColor = .init(red: 0.75, green: 0.75, blue: 0.75, alpha: 1)
         linePoints.reserveCapacity(maxPoints)
     }
     
     func move() {
-        linePoints.append(node.position)
+        let dx = sin(zRotation)
+        let dy = cos(zRotation)
+        let speedY = (1 - abs(dx)) * maxSpeed
+        let speedX = maxSpeed - speedY
+        physicsBody!.velocity = .init(dx: dx * speedX, dy: dy * speedY)
+        
+        linePoints.append(position)
         linePoints = linePoints.suffix(maxPoints)
-        node.physicsBody!.velocity = velocity
     }
     
     func recede() {
@@ -60,22 +56,8 @@ final class Player: GKEntity {
         }
     }
     
-    func startRotating() {
-        rotateOrigin = radians
-    }
-    
-    func rotate(_ radians: CGFloat) {
-        self.radians = rotateOrigin + radians
-        let dx = sin(self.radians)
-        let dy = cos(self.radians)
-        let speedY = (1 - abs(dx)) * maxSpeed
-        let speedX = maxSpeed - speedY
-        velocity = .init(dx: dx * speedX, dy: dy * speedY)
-        node.zRotation = self.radians
-    }
-    
     func explode() {
-        node.physicsBody = nil
+        physicsBody = nil
         
         let emitter = SKEmitterNode()
         emitter.particleTexture = .init(image: NSImage(named: "particle")!)
@@ -89,8 +71,8 @@ final class Player: GKEntity {
         emitter.numParticlesToEmit = 50
         emitter.particleAlphaSpeed = -0.5
         emitter.particleRotationSpeed = 0.5
-        emitter.position = node.position
-        node.scene!.addChild(emitter)
-        node.alpha = 0
+        emitter.position = position
+        scene!.addChild(emitter)
+        alpha = 0
     }
 }

@@ -1,4 +1,4 @@
-import GameplayKit
+import SpriteKit
 
 final class Wheel: SKSpriteNode {
     required init?(coder: NSCoder) { nil }

@@ -1,4 +1,4 @@
-import GameplayKit
+import SpriteKit
 
 final class Borders: SKShapeNode {
     required init?(coder: NSCoder) { nil }

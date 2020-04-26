@@ -1,9 +1,10 @@
 import Brain
-import GameplayKit
+import SpriteKit
 
 final class Grid: Scene, SKPhysicsContactDelegate {
     private(set) weak var player: Player!
     private weak var wheel: Wheel!
+    private var rotation = CGFloat()
     private let brain: Brain
     
     required init?(coder: NSCoder) { nil }
@@ -17,12 +18,12 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         let wheel = Wheel()
         
         let camera = SKCameraNode()
-        camera.constraints = [.orient(to: player.node, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 150), to: player.node)]
+        camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 150), to: player)]
         camera.addChild(wheel)
         addChild(camera)
         addChild(borders)
         addChild(player.line)
-        addChild(player.node)
+        addChild(player)
         self.camera = camera
         self.player = player
         self.wheel = wheel
@@ -33,20 +34,20 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        guard let player = contact.bodyB.node?.entity as? Player else { return }
+        guard let player = contact.bodyB.node as? Player else { return }
         player.explode()
         if player === self.player {
             (view as! View).state.enter(GameOver.self)
         }
     }
     
-    func startRotation() {
-        player.startRotating()
+    func startRotating() {
+        rotation = player.zRotation
     }
     
     func rotate(_ radians: CGFloat) {
-        player.rotate(radians)
-        wheel.rotate(radians)
+        player.zRotation = rotation + radians
+        wheel.zRotation = -player.zRotation
     }
     
     override func align() {
