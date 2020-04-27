@@ -88,7 +88,6 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     private func addFoe(_ color: SKColor) {
         let foe = Player(line: .init(grid: self, color: color))
         foe.position = brain.position([])
-        foe.position.y = -3000
         addChild(foe.line)
         addChild(foe)
         players.insert(foe)
