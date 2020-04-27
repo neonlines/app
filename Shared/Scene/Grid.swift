@@ -21,8 +21,8 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         let hud = Hud()
         let minimap = Minimap(radius: radius)
         
-//        player.position = brain.position([])
-//        player.zRotation = .pi
+        player.position = brain.position([])
+        wheel.zRotation = .random(in: 0 ..< .pi * 2)
         
         let camera = SKCameraNode()
         camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 50), to: player)]
