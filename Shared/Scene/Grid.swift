@@ -40,20 +40,15 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         self.minimap = minimap
         
         players.insert(player)
+        
+        addFoe(.red)
+        addFoe(.blue)
     }
     
     override func didMove(to: SKView) {
         wheel.align()
         hud.align()
         minimap.align()
-    }
-    
-    func didBegin(_ contact: SKPhysicsContact) {
-        guard let player = contact.bodyB.node as? Player else { return }
-        player.explode()
-        if player === wheel.player {
-            (view as! View).state.enter(GameOver.self)
-        }
     }
     
     override func align() {
@@ -78,7 +73,24 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         }
     }
     
+    func didBegin(_ contact: SKPhysicsContact) {
+        guard let player = contact.bodyB.node as? Player else { return }
+        player.explode()
+        if player === wheel.player {
+            (view as! View).state.enter(GameOver.self)
+        }
+    }
+    
     func remove(_ line: Line) {
         players.remove(at: players.firstIndex { $0.line === line }!).remove()
+    }
+    
+    private func addFoe(_ color: SKColor) {
+        let foe = Player(line: .init(grid: self, color: color))
+        foe.position = brain.position([])
+        foe.position.y = -3000
+        addChild(foe.line)
+        addChild(foe)
+        players.insert(foe)
     }
 }

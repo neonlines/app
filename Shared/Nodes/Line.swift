@@ -9,7 +9,7 @@ final class Line: SKShapeNode {
                 return $0
             } (CGMutablePath())
             
-            let points = self.points.dropLast(6)
+            let points = self.points.dropLast(10)
             guard !points.isEmpty else { return }
             physicsBody = .init(edgeChainFrom: {
                 $0.addLines(between: .init(points))
@@ -27,6 +27,7 @@ final class Line: SKShapeNode {
         super.init()
         lineWidth = 20
         lineCap = .round
+        zPosition = 1
         strokeColor = color
         points.reserveCapacity(max)
         self.grid = grid

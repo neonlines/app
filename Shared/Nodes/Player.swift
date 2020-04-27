@@ -9,6 +9,7 @@ final class Player: SKSpriteNode {
     init(line: Line) {
         self.line = line
         super.init(texture: .init(imageNamed: "node"), color: .clear, size: .init(width: 32, height: 32))
+        zPosition = 2
         physicsBody = .init(circleOfRadius: 16)
         physicsBody!.affectedByGravity = false
         physicsBody!.collisionBitMask = .none
@@ -46,6 +47,7 @@ final class Player: SKSpriteNode {
         emitter.particleAlphaSpeed = -0.5
         emitter.particleRotationSpeed = 0.5
         emitter.position = position
+        emitter.zPosition = 3
         scene!.addChild(emitter)
         self.emitter = emitter
         alpha = 0
