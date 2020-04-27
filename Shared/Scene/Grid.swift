@@ -5,6 +5,7 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     private weak var wheel: Wheel!
     private weak var hud: Hud!
     private weak var minimap: Minimap!
+    private weak var pointers: SKNode!
     private var players = Set<Player>()
     private var rotation = CGFloat()
     private let brain: Brain
@@ -20,15 +21,17 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         let wheel = Wheel(player: player)
         let hud = Hud()
         let minimap = Minimap(radius: radius)
+        let pointers = SKNode()
         
         player.position = brain.position([])
-        wheel.zRotation = .random(in: 0 ..< .pi * 2)
+//        wheel.zRotation = .random(in: 0 ..< .pi * 2)
         
         let camera = SKCameraNode()
         camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 50), to: player)]
         camera.addChild(wheel)
         camera.addChild(hud)
         camera.addChild(minimap)
+        camera.addChild(pointers)
         
         addChild(camera)
         addChild(borders)
@@ -38,6 +41,7 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         self.hud = hud
         self.wheel = wheel
         self.minimap = minimap
+        self.pointers = pointers
         
         players.insert(player)
         
@@ -63,13 +67,24 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     
     override func rotate(_ radians: CGFloat) {
         wheel.zRotation = rotation - radians
+        pointers.zRotation = -wheel.zRotation
     }
     
     override func move() {
         minimap.clear()
+        pointers.children.forEach { $0.removeFromParent() }
         players.forEach {
-            $0.move()
+            
             minimap.show($0.position, color: $0.line.strokeColor)
+            guard let player = wheel.player, $0 !== player else {
+                $0.move()
+                return }
+            
+            var position = CGPoint(x: $0.position.x - player.position.x, y: $0.position.y - player.position.y)
+            position.x = min(max(position.x, -100), 100)
+            position.y = min(max(position.y, -100), 100)
+            let pointer = Pointer(color: $0.line.strokeColor, position: position)
+            pointers.addChild(pointer)
         }
     }
     
@@ -88,6 +103,8 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     private func addFoe(_ color: SKColor) {
         let foe = Player(line: .init(grid: self, color: color))
         foe.position = brain.position([])
+        foe.color = foe.line.strokeColor
+        foe.colorBlendFactor = 1
         addChild(foe.line)
         addChild(foe)
         players.insert(foe)

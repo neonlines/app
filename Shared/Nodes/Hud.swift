@@ -7,7 +7,7 @@ final class Hud: SKShapeNode {
         fillColor = .windowBackgroundColor
         strokeColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .black : .white
         lineWidth = 1
-        zPosition = 2
+        zPosition = 11
     }
     
     func align() {

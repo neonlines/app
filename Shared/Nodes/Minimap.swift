@@ -13,7 +13,7 @@ final class Minimap: SKShapeNode {
         path = .init(rect: .init(x: size / -2, y: size / -2, width: size, height: size), transform: nil)
         fillColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .black : .white
         lineWidth = 0
-        zPosition = 3
+        zPosition = 12
     }
     
     func align() {
@@ -28,6 +28,7 @@ final class Minimap: SKShapeNode {
         let node = SKShapeNode(circleOfRadius: 3)
         node.fillColor = color
         node.lineWidth = 0
+        node.zPosition = 13
         node.position = .init(x: point.x * ratio, y: point.y * ratio)
         addChild(node)
     }
