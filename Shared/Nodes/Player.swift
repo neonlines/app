@@ -3,7 +3,7 @@ import SpriteKit
 final class Player: SKSpriteNode {
     let line: Line
     private weak var emitter: SKEmitterNode?
-    private let maxSpeed = CGFloat(500)
+    private let maxSpeed = CGFloat(300)
     
     required init?(coder: NSCoder) { nil }
     init(line: Line) {

@@ -74,7 +74,7 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         minimap.clear()
         players.forEach {
             $0.move()
-            minimap.show($0.position, color: $0.color)
+            minimap.show($0.position, color: $0.line.strokeColor)
         }
     }
     
