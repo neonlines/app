@@ -74,13 +74,11 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         minimap.clear()
         pointers.children.forEach { $0.removeFromParent() }
         players.forEach {
-            
             minimap.show($0.position, color: $0.line.strokeColor)
-            guard let player = wheel.player, $0 !== player else {
+            guard !camera!.containedNodeSet().contains($0) else {
                 $0.move()
-                return }
-            
-            var position = CGPoint(x: $0.position.x - player.position.x, y: $0.position.y - player.position.y)
+            return }
+            var position = CGPoint(x: $0.position.x - wheel.player.position.x, y: $0.position.y - wheel.player.position.y)
             position.x = min(max(position.x, -100), 100)
             position.y = min(max(position.y, -100), 100)
             let pointer = Pointer(color: $0.line.strokeColor, position: position)
