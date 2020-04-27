@@ -1,7 +1,7 @@
 import SpriteKit
 
 final class Line: SKShapeNode {
-    weak var player: Player!
+    private weak var grid: Grid!
     private var points = [CGPoint]() {
         didSet {
             path = {
@@ -23,21 +23,22 @@ final class Line: SKShapeNode {
     private let max = 500
     
     required init?(coder: NSCoder) { nil }
-    override init() {
+    init(grid: Grid, color: SKColor) {
         super.init()
-        lineWidth = 16
+        lineWidth = 20
         lineCap = .round
-        strokeColor = .init(red: 0.75, green: 0.75, blue: 0.75, alpha: 1)
+        strokeColor = color
         points.reserveCapacity(max)
+        self.grid = grid
     }
     
-    func append() {
-        points = (points + [player.position]).suffix(max)
+    func append(_ position: CGPoint) {
+        points = (points + [position]).suffix(max)
     }
     
     func recede() {
         guard points.count > 0 else {
-            player.remove()
+            grid.remove(self)
             return
         }
         points.removeFirst()

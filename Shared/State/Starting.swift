@@ -8,8 +8,7 @@ final class Starting: State {
         view.presentScene(scene, transition: .crossFade(withDuration: 3.5))
     }
     
-    override func control() {
-        guard !press.isEmpty else { return }
+    override func control(_ point: CGPoint) {
         let scene = Grid(radius: 10000)
         scene.delegate = view
         view.presentScene(scene, transition: .crossFade(withDuration: 1.5))

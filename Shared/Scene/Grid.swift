@@ -2,10 +2,10 @@ import Brain
 import SpriteKit
 
 final class Grid: Scene, SKPhysicsContactDelegate {
-    private weak var player: Player!
     private weak var wheel: Wheel!
     private weak var hud: Hud!
     private weak var minimap: Minimap!
+    private var players = Set<Player>()
     private var rotation = CGFloat()
     private let brain: Brain
     
@@ -16,10 +16,13 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         
         let borders = Borders(radius: radius)
-        let player = Player(color: .white)
-        let wheel = Wheel()
+        let player = Player(line: .init(grid: self, color: .init(white: 0.85, alpha: 1)))
+        let wheel = Wheel(player: player)
         let hud = Hud()
         let minimap = Minimap(radius: radius)
+        
+//        player.position = brain.position([])
+//        player.zRotation = .pi
         
         let camera = SKCameraNode()
         camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 50), to: player)]
@@ -33,9 +36,10 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         addChild(player)
         self.camera = camera
         self.hud = hud
-        self.player = player
         self.wheel = wheel
         self.minimap = minimap
+        
+        players.insert(player)
     }
     
     override func didMove(to: SKView) {
@@ -47,7 +51,7 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         guard let player = contact.bodyB.node as? Player else { return }
         player.explode()
-        if player === self.player {
+        if player === wheel.player {
             (view as! View).state.enter(GameOver.self)
         }
     }
@@ -59,21 +63,22 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     }
     
     override func startRotating() {
-        rotation = player.zRotation
+        rotation = wheel.zRotation
     }
     
     override func rotate(_ radians: CGFloat) {
-        player.zRotation = rotation + radians
-        wheel.zRotation = -player.zRotation
+        wheel.zRotation = rotation - radians
     }
     
     override func move() {
-        player.move()
         minimap.clear()
-        minimap.show(player.position, color: player.color)
+        players.forEach {
+            $0.move()
+            minimap.show($0.position, color: $0.color)
+        }
     }
     
-    override func recede() {
-        player?.recede()
+    func remove(_ line: Line) {
+        players.remove(at: players.firstIndex { $0.line === line }!).remove()
     }
 }
