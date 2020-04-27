@@ -1,7 +1,7 @@
 import SpriteKit
 
 final class Line: SKShapeNode {
-    private let max = 500
+    weak var player: Player!
     private var points = [CGPoint]() {
         didSet {
             path = {
@@ -20,6 +20,7 @@ final class Line: SKShapeNode {
             physicsBody!.categoryBitMask = .line
         }
     }
+    private let max = 500
     
     required init?(coder: NSCoder) { nil }
     override init() {
@@ -30,13 +31,15 @@ final class Line: SKShapeNode {
         points.reserveCapacity(max)
     }
     
-    func append(_ position: CGPoint) {
-        points = (points + [position]).suffix(max)
+    func append() {
+        points = (points + [player.position]).suffix(max)
     }
     
     func recede() {
-        if points.count > 0 {
-            points.removeFirst()
+        guard points.count > 0 else {
+            player.remove()
+            return
         }
+        points.removeFirst()
     }
 }

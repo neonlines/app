@@ -2,6 +2,7 @@ import SpriteKit
 
 final class Player: SKSpriteNode {
     let line = Line()
+    private weak var emitter: SKEmitterNode?
     private var active = true
     private let maxSpeed = CGFloat(500)
     
@@ -14,6 +15,7 @@ final class Player: SKSpriteNode {
         physicsBody!.collisionBitMask = .none
         physicsBody!.contactTestBitMask = .all
         physicsBody!.categoryBitMask = .player
+        line.player = self
     }
     
     func move() {
@@ -22,7 +24,7 @@ final class Player: SKSpriteNode {
         let speedY = (1 - abs(dx)) * maxSpeed
         let speedX = maxSpeed - speedY
         physicsBody!.velocity = .init(dx: dx * speedX, dy: dy * speedY)
-        line.append(position)
+        line.append()
     }
     
     func recede() {
@@ -30,6 +32,7 @@ final class Player: SKSpriteNode {
     }
     
     func explode() {
+        guard physicsBody != nil else { return }
         physicsBody = nil
         
         let emitter = SKEmitterNode()
@@ -46,6 +49,13 @@ final class Player: SKSpriteNode {
         emitter.particleRotationSpeed = 0.5
         emitter.position = position
         scene!.addChild(emitter)
+        self.emitter = emitter
         alpha = 0
+    }
+    
+    func remove() {
+        emitter?.removeFromParent()
+        line.removeFromParent()
+        removeFromParent()
     }
 }

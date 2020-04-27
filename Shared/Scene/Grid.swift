@@ -74,6 +74,6 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     }
     
     override func recede() {
-        player.recede()
+        player?.recede()
     }
 }
