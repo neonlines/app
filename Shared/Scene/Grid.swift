@@ -87,11 +87,8 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        guard let player = contact.bodyB.node as? Player else { return }
-        player.explode()
-        if player === wheel.player {
-            (view as! View).state.enter(GameOver.self)
-        }
+        contact.bodyB.node.flatMap { $0 as? Player }.map(explode)
+        contact.bodyA.node.flatMap { $0 as? Player }.map(explode)
     }
     
     func remove(_ line: Line) {
@@ -106,5 +103,12 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         addChild(foe.line)
         addChild(foe)
         players.insert(foe)
+    }
+    
+    private func explode(_ player: Player) {
+        player.explode()
+        if player === wheel.player {
+            (view as! View).state.enter(GameOver.self)
+        }
     }
 }
