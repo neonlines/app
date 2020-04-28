@@ -24,6 +24,7 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         let pointers = SKNode()
         
         player.position = brain.position([])
+        wheel.zRotation = -.pi
 //        wheel.zRotation = .random(in: 0 ..< .pi * 2)
         
         let camera = SKCameraNode()
