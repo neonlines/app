@@ -14,6 +14,7 @@
 		CE2CC6F3244C9A0100C21893 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F1244C9A0100C21893 /* State.swift */; };
 		CE2CC6F8244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
 		CE2CC6F9244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
+		CE46A7012459596E000B1F27 /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46A7002459596E000B1F27 /* Skin.swift */; };
 		CE5A66C224543D5E00609B51 /* Brain in Frameworks */ = {isa = PBXBuildFile; productRef = CE5A66C124543D5E00609B51 /* Brain */; };
 		CE7D03372455E294001AC44B /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D03362455E294001AC44B /* Line.swift */; };
 		CE7D03392455E8E0001AC44B /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D03382455E8E0001AC44B /* Hud.swift */; };
@@ -47,6 +48,7 @@
 		CE2CC6ED244C996C00C21893 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		CE2CC6F1244C9A0100C21893 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		CE2CC6F7244C9B0900C21893 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		CE46A7002459596E000B1F27 /* Skin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skin.swift; sourceTree = "<group>"; };
 		CE7D03362455E294001AC44B /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		CE7D03382455E8E0001AC44B /* Hud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hud.swift; sourceTree = "<group>"; };
 		CE7D033A2455F650001AC44B /* Minimap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Minimap.swift; sourceTree = "<group>"; };
@@ -99,6 +101,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE46A6FF2459595C000B1F27 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CE46A7002459596E000B1F27 /* Skin.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		CEA411E62452BC5D000A80B9 /* State */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +205,7 @@
 				CE9443CF244CA2E30087CDA9 /* Media.xcassets */,
 				CEA411E92452BC95000A80B9 /* Extensions */,
 				CEF23AAF244C98EA00D02FD7 /* Localizable.strings */,
+				CE46A6FF2459595C000B1F27 /* Models */,
 				CEA411E82452BC7F000A80B9 /* Nodes */,
 				CEA411E72452BC6C000A80B9 /* Scene */,
 				CEA411E62452BC5D000A80B9 /* State */,
@@ -326,6 +337,7 @@
 				CE7D033B2455F650001AC44B /* Minimap.swift in Sources */,
 				CEC9488E24573D3F00A458E3 /* Pointer.swift in Sources */,
 				CE2CC6EE244C996C00C21893 /* View.swift in Sources */,
+				CE46A7012459596E000B1F27 /* Skin.swift in Sources */,
 				CEB5047A2450991E00D5B1BC /* Borders.swift in Sources */,
 				CED29E48245015BC00AE2F7F /* Player.swift in Sources */,
 				CE7D03372455E294001AC44B /* Line.swift in Sources */,
