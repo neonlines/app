@@ -13,4 +13,5 @@ class Scene: SKScene {
     func startRotating() { }
     func rotate(_ radians: CGFloat) { }
     func move() { }
+    func foes() { }
 }

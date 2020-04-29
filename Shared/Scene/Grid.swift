@@ -12,7 +12,7 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     
     required init?(coder: NSCoder) { nil }
     init(radius: CGFloat) {
-        brain = .init(.init(radius: radius))
+        brain = .init(borders: .init(radius: radius), wheel: .init(delta: .pi / 10, speed: 300))
         super.init()
         physicsWorld.contactDelegate = self
         
@@ -25,7 +25,7 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         
         player.position = brain.position([])
         wheel.zRotation = -.pi
-//        wheel.zRotation = .random(in: 0 ..< .pi * 2)
+        wheel.zRotation = .random(in: 0 ..< .pi * 2)
         
         let camera = SKCameraNode()
         camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 50), to: player)]
@@ -75,15 +75,23 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         minimap.clear()
         pointers.children.forEach { $0.removeFromParent() }
         players.forEach {
+            $0.move()
+            guard $0.physicsBody != nil else { return }
             minimap.show($0.position, color: $0.line.strokeColor)
-            guard !camera!.containedNodeSet().contains($0) else {
-                $0.move()
-            return }
+            
+            guard !camera!.containedNodeSet().contains($0) else { return }
             var position = CGPoint(x: $0.position.x - wheel.player.position.x, y: $0.position.y - wheel.player.position.y)
             position.x = min(max(position.x, -100), 100)
             position.y = min(max(position.y, -100), 100)
             let pointer = Pointer(color: $0.line.strokeColor, position: position)
             pointers.addChild(pointer)
+        }
+    }
+    
+    override func foes() {
+        players.forEach { player in
+            guard player !== wheel.player else { return }
+            player.zRotation = brain.orient(player.position, current: player.zRotation, players: players.filter { player !== $0 }.map(\.position))
         }
     }
     
