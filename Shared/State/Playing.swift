@@ -5,7 +5,7 @@ final class Playing: State {
     
     override func didEnter(from: GKState?) {
         super.didEnter(from: from)
-        timer = 0.2
+        timer = 0.4
     }
     
     override func update(deltaTime: TimeInterval) {

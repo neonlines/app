@@ -12,7 +12,7 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     
     required init?(coder: NSCoder) { nil }
     init(radius: CGFloat) {
-        brain = .init(borders: .init(radius: radius), wheel: .init(delta: .pi / 10, speed: 300))
+        brain = .init(borders: .init(radius: radius), wheel: .init(delta: .pi / 90, speed: 300))
         super.init()
         physicsWorld.contactDelegate = self
         
@@ -24,8 +24,8 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         let pointers = SKNode()
         
         player.position = brain.position([])
-        wheel.zRotation = -.pi
         wheel.zRotation = .random(in: 0 ..< .pi * 2)
+        pointers.zRotation = -wheel.zRotation
         
         let camera = SKCameraNode()
         camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 50), to: player)]
@@ -91,7 +91,7 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     override func foes() {
         players.forEach { player in
             guard player !== wheel.player else { return }
-            player.zRotation = brain.orient(player.position, current: player.zRotation, players: players.filter { player !== $0 }.map(\.position))
+            player.zRotation = brain.orient(player.position, current: player.zRotation, players: players.filter { player !== $0 }.filter { $0.physicsBody != nil }.map(\.position))
         }
     }
     
@@ -106,9 +106,10 @@ final class Grid: Scene, SKPhysicsContactDelegate {
     
     private func addFoe(_ color: SKColor) {
         let foe = Player(line: .init(grid: self, color: color))
-        foe.position = brain.position([])
+        foe.position = brain.position(players.filter { $0.physicsBody != nil }.flatMap { [$0.position] + $0.line.points })
         foe.color = foe.line.strokeColor
         foe.colorBlendFactor = 1
+        foe.zRotation = .random(in: 0 ..< .pi * 2)
         addChild(foe.line)
         addChild(foe)
         players.insert(foe)
@@ -118,6 +119,8 @@ final class Grid: Scene, SKPhysicsContactDelegate {
         player.explode()
         if player === wheel.player {
             (view as! View).state.enter(GameOver.self)
+        } else {
+            addFoe(.green)
         }
     }
 }

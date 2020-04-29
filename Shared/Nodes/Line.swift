@@ -1,15 +1,14 @@
 import SpriteKit
 
 final class Line: SKShapeNode {
-    private weak var grid: Grid!
-    private var points = [CGPoint]() {
+    private(set) var points = [CGPoint]() {
         didSet {
             path = {
                 $0.addLines(between: self.points)
                 return $0
             } (CGMutablePath())
             
-            let points = self.points.dropLast(10)
+            let points = self.points.dropLast(12)
             guard !points.isEmpty else { return }
             physicsBody = .init(edgeChainFrom: {
                 $0.addLines(between: .init(points))
@@ -20,6 +19,8 @@ final class Line: SKShapeNode {
             physicsBody!.categoryBitMask = .line
         }
     }
+    
+    private weak var grid: Grid!
     private let max = 500
     
     required init?(coder: NSCoder) { nil }
