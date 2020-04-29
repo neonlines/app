@@ -1,1 +1,5 @@
-Press.start = "Touch to start";
+Press.to.start = "Touch to start";
+New.game = "New Game";
+Settings = "Settings";
+Store = "Store";
+Done = "Done";

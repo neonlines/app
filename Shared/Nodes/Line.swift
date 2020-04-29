@@ -20,18 +20,16 @@ final class Line: SKShapeNode {
         }
     }
     
-    private weak var grid: Grid!
     private let max = 500
     
     required init?(coder: NSCoder) { nil }
-    init(grid: Grid, color: SKColor) {
+    init(color: SKColor) {
         super.init()
         lineWidth = 20
         lineCap = .round
         zPosition = 1
         strokeColor = color
         points.reserveCapacity(max)
-        self.grid = grid
     }
     
     func append(_ position: CGPoint) {
@@ -40,7 +38,7 @@ final class Line: SKShapeNode {
     
     func recede() {
         guard points.count > 0 else {
-            grid.remove(self)
+            (scene!.view as! View).remove(self)
             return
         }
         points.removeFirst()
