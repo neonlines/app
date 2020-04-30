@@ -51,7 +51,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         self.wheel = wheel
         self.minimap = minimap
         self.pointers = pointers
-        presentScene(scene, transition: .crossFade(withDuration: 1.5))
+        presentScene(scene)
         
         players.insert(player)
         addFoe(.red)
@@ -91,8 +91,8 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        contact.bodyB.node.flatMap { $0 as? Player }.map(explode)
-        contact.bodyA.node.flatMap { $0 as? Player }.map(explode)
+        contact.bodyA.node.map(explode)
+        contact.bodyB.node.map(explode)
     }
     
     func update(_ time: TimeInterval, for: SKScene) {
@@ -151,12 +151,12 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         players.insert(foe)
     }
     
-    private func explode(_ player: Player) {
-        player.explode()
-        if player === wheel.player {
-//            (view as! View).state.enter(GameOver.self)
-        } else {
-            addFoe(.green)
+    private func explode(_ node: SKNode) {
+        (node as? Player).map {
+            $0.explode()
+            if $0 === wheel.player {
+                //            (view as! View).state.enter(GameOver.self)
+            }
         }
     }
 }
