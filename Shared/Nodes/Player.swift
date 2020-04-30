@@ -2,7 +2,6 @@ import SpriteKit
 
 final class Player: SKSpriteNode {
     let line: Line
-    private weak var emitter: SKEmitterNode?
     private let maxSpeed = CGFloat(300)
     
     required init?(coder: NSCoder) { nil }
@@ -37,24 +36,24 @@ final class Player: SKSpriteNode {
         let emitter = SKEmitterNode()
         emitter.particleTexture = .init(image: NSImage(named: "particle")!)
         emitter.particleSize = .init(width: 8, height: 8)
-        emitter.particleBirthRate = 100
+        emitter.particleBirthRate = 30
         emitter.emissionAngleRange = .pi * 2
         emitter.particleRotationRange = .pi * 2
         emitter.particleColor = line.strokeColor
         emitter.particleSpeed = 50
-        emitter.particleLifetime = 10
-        emitter.numParticlesToEmit = 50
-        emitter.particleAlphaSpeed = -0.5
+        emitter.particleLifetime = 50
+        emitter.numParticlesToEmit = 30
+        emitter.particleAlphaSpeed = -0.8
         emitter.particleRotationSpeed = 0.5
-        emitter.position = position
+        emitter.particlePosition = .zero
+        emitter.particlePositionRange = .zero
         emitter.zPosition = 3
-        scene!.addChild(emitter)
-        self.emitter = emitter
-        alpha = 0
+        addChild(emitter)
+        texture = nil
+        color = .clear
     }
     
     func remove() {
-        emitter?.removeFromParent()
         line.removeFromParent()
         removeFromParent()
     }
