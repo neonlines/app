@@ -10,7 +10,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private var rotation = CGFloat()
     private var times = Times()
     private var players = Set<Player>()
-    private let brain = Brain(borders: .init(radius: 5000), wheel: .init(delta: .pi / 30, speed: 300))
+    private let brain = Brain(borders: .init(radius: 5000), wheel: .init(delta: .pi / 30))
     override var mouseDownCanMoveWindow: Bool { true }
     
     required init?(coder: NSCoder) { nil }
@@ -140,7 +140,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private func foes() {
         guard let player = wheel?.player else { return }
         players.filter { $0 !== player }.forEach { foe in
-            foe.zRotation = brain.orient(foe.position, current: foe.zRotation, players: [player.position])
+            foe.zRotation = brain.orient(foe.position, current: foe.zRotation, player: player.position)
         }
     }
     
