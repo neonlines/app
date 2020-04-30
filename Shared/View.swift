@@ -2,13 +2,13 @@ import Brain
 import SpriteKit
 
 final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
-    private var times = Times()
-    private var drag: CGFloat?
-    private var rotation = CGFloat()
     private weak var wheel: Wheel!
     private weak var hud: Hud!
     private weak var minimap: Minimap!
     private weak var pointers: SKNode!
+    private var drag: CGFloat?
+    private var rotation = CGFloat()
+    private var times = Times()
     private var players = Set<Player>()
     private let brain = Brain(borders: .init(radius: 5000), wheel: .init(delta: .pi / 90, speed: 300))
     override var mouseDownCanMoveWindow: Bool { true }
@@ -67,26 +67,22 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     override func mouseDown(with: NSEvent) {
-        let point = convert(with)
-        if point.valid {
-            drag = point.radians
-            rotation = wheel.zRotation
-        } else {
+        guard let radians = with.radians else {
             drag = nil
+            return
         }
+        drag = radians
+        rotation = wheel.zRotation
     }
     
     override func mouseDragged(with: NSEvent) {
-        let point = convert(with)
-        if point.valid {
-            NSCursor.pointingHand.set()
-            if let drag = self.drag {
-                wheel.zRotation = rotation - (point.radians - drag)
-                pointers.zRotation = -wheel.zRotation
-            }
-        } else {
-            drag = nil
+        guard let radians = with.radians, let drag = self.drag else {
+            self.drag = nil
+            return
         }
+        NSCursor.pointingHand.set()
+        wheel.zRotation = rotation - (radians - drag)
+        pointers.zRotation = -wheel.zRotation
     }
     
     override func mouseUp(with: NSEvent) {
@@ -163,11 +159,15 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             addFoe(.green)
         }
     }
-    
-    private func convert(_ event: NSEvent) -> CGPoint {
+}
+
+private extension NSEvent {
+    var radians: CGFloat? {
         {
-            .init(x: $0.x - frame.midX, y: $0.y - 60)
-        } (convert(event.locationInWindow, from: nil))
+            let point = CGPoint(x: $0.x - window!.contentView!.frame.midX, y: $0.y - 60)
+            guard point.valid else { return nil }
+            return point.radians
+        } (window!.contentView!.convert(locationInWindow, from: nil))
     }
 }
 
@@ -202,5 +202,5 @@ private struct Times {
     
     var last = TimeInterval()
     var move = Item(0.02)
-    var foes = Item(0.2)
+    var foes = Item(0.1)
 }
