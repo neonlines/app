@@ -138,9 +138,9 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     private func foes() {
-        players.forEach { player in
-            guard player !== wheel?.player else { return }
-            player.zRotation = brain.orient(player.position, current: player.zRotation, players: players.filter { player !== $0 }.filter { $0.physicsBody != nil }.map(\.position))
+        guard let player = wheel?.player else { return }
+        players.filter { $0 !== player }.forEach { foe in
+            foe.zRotation = brain.orient(foe.position, current: foe.zRotation, players: [player.position])
         }
     }
     
