@@ -103,6 +103,11 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         if times.foes.timeout(delta) {
             foes()
         }
+        if times.spawn.timeout(delta) {
+            if Int.random(in: 0 ... 20) == 0 {
+                addFoe(.green)
+            }
+        }
     }
     
     func remove(_ line: Line) {
@@ -203,7 +208,8 @@ private struct Times {
     }
     
     var move = Item(0.02)
-    var foes = Item(0.1)
+    var foes = Item(0.05)
+    var spawn = Item(0.5)
     private var last = TimeInterval()
     
     mutating func delta(_ time: TimeInterval) -> TimeInterval {
