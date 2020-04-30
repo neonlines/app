@@ -3,3 +3,4 @@ New.game = "New Game";
 Settings = "Settings";
 Store = "Store";
 Done = "Done";
+Game.over = "Game Over";

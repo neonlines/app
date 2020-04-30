@@ -160,8 +160,16 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             $0.explode()
             if $0 === wheel?.player {
                 wheel = nil
-                scene!.run(.fadeOut(withDuration: 5)) { [weak self] in
-                    self?.window?.show(Launch())
+                let label = SKLabelNode(text: .key("Game.over"))
+                label.fontSize = 30
+                label.fontName = "bold"
+                label.alpha = 0
+                scene!.camera!.addChild(label)
+                
+                label.run(.sequence([.fadeIn(withDuration: 3)])) { [weak self] in
+                    self?.scene!.run(.fadeOut(withDuration: 3)) {
+                        self?.window?.show(Launch())
+                    }
                 }
             }
         }
@@ -208,7 +216,7 @@ private struct Times {
     }
     
     var move = Item(0.02)
-    var foes = Item(0.05)
+    var foes = Item(0.04)
     var spawn = Item(0.5)
     private var last = TimeInterval()
     
