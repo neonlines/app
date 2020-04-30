@@ -10,11 +10,12 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private var rotation = CGFloat()
     private var times = Times()
     private var players = Set<Player>()
-    private let brain = Brain(borders: .init(radius: 5000), wheel: .init(delta: .pi / 30))
+    private let brain: Brain
     override var mouseDownCanMoveWindow: Bool { true }
     
     required init?(coder: NSCoder) { nil }
-    init() {
+    init(radius: CGFloat) {
+        brain = .init(borders: .init(radius: radius), wheel: .init(delta: .pi / 60))
         super.init(frame: .zero)
         ignoresSiblingOrder = true
         let scene = SKScene()
@@ -24,11 +25,11 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         scene.backgroundColor = .windowBackgroundColor
         scene.physicsWorld.contactDelegate = self
         
-        let borders = Borders(radius: 5000)
+        let borders = Borders(radius: radius)
         let player = Player(line: .init(color: .init(white: 0.7, alpha: 1)))
         let wheel = Wheel(player: player)
         let hud = Hud()
-        let minimap = Minimap(radius: 5000)
+        let minimap = Minimap(radius: radius)
         let pointers = SKNode()
         
         player.position = brain.position([])
@@ -104,7 +105,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             foes()
         }
         if times.spawn.timeout(delta) {
-            if Int.random(in: 0 ... 15) == 0 {
+            if players.count < 9, Int.random(in: 0 ... 25) == 0 {
                 addFoe(.green)
             }
         }
@@ -139,7 +140,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     private func foes() {
         guard let player = wheel?.player else { return }
-        players.filter { $0 !== player }.forEach { foe in
+        players.filter { $0.physicsBody != nil }.filter { $0 !== player }.forEach { foe in
             foe.zRotation = brain.orient(foe.position, current: foe.zRotation, player: player.position)
         }
     }
@@ -167,7 +168,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 scene!.camera!.addChild(label)
                 
                 label.run(.sequence([.fadeIn(withDuration: 3)])) { [weak self] in
-                    self?.scene!.run(.fadeOut(withDuration: 3)) {
+                    self?.scene!.run(.fadeOut(withDuration: 4)) {
                         self?.window?.show(Launch())
                     }
                 }
@@ -216,8 +217,8 @@ private struct Times {
     }
     
     var move = Item(0.03)
-    var foes = Item(0.1)
-    var spawn = Item(0.5)
+    var foes = Item(0.05)
+    var spawn = Item(0.1)
     private var last = TimeInterval()
     
     mutating func delta(_ time: TimeInterval) -> TimeInterval {
