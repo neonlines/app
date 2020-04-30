@@ -2,7 +2,7 @@ import Brain
 import SpriteKit
 
 final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
-    private weak var wheel: Wheel!
+    private weak var wheel: Wheel?
     private weak var hud: Hud!
     private weak var minimap: Minimap!
     private weak var pointers: SKNode!
@@ -67,7 +67,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     override func mouseDown(with: NSEvent) {
-        guard let radians = with.radians else {
+        guard let wheel = self.wheel, let radians = with.radians else {
             drag = nil
             return
         }
@@ -76,7 +76,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     override func mouseDragged(with: NSEvent) {
-        guard let radians = with.radians, let drag = self.drag else {
+        guard let wheel = self.wheel, let radians = with.radians, let drag = self.drag else {
             self.drag = nil
             return
         }
@@ -96,14 +96,13 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     func update(_ time: TimeInterval, for: SKScene) {
-        let delta = time - times.last
+        let delta = times.delta(time)
         if times.move.timeout(delta) {
             move()
         }
         if times.foes.timeout(delta) {
             foes()
         }
-        times.last = time
     }
     
     func remove(_ line: Line) {
@@ -111,7 +110,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     private func align() {
-        wheel.align()
+        wheel?.align()
         hud.align()
         minimap.align()
     }
@@ -124,7 +123,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             guard $0.physicsBody != nil else { return }
             minimap.show($0.position, color: $0.line.strokeColor)
             
-            guard !scene!.camera!.containedNodeSet().contains($0), let player = wheel.player else { return }
+            guard !scene!.camera!.containedNodeSet().contains($0), let player = wheel?.player else { return }
             var position = CGPoint(x: $0.position.x - player.position.x, y: $0.position.y - player.position.y)
             position.x = min(max(position.x, -100), 100)
             position.y = min(max(position.y, -100), 100)
@@ -135,7 +134,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     private func foes() {
         players.forEach { player in
-            guard player !== wheel.player else { return }
+            guard player !== wheel?.player else { return }
             player.zRotation = brain.orient(player.position, current: player.zRotation, players: players.filter { player !== $0 }.filter { $0.physicsBody != nil }.map(\.position))
         }
     }
@@ -154,8 +153,11 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private func explode(_ node: SKNode) {
         (node as? Player).map {
             $0.explode()
-            if $0 === wheel.player {
-                //            (view as! View).state.enter(GameOver.self)
+            if $0 === wheel?.player {
+                wheel = nil
+                scene!.run(.fadeOut(withDuration: 5)) { [weak self] in
+                    self?.window?.show(Launch())
+                }
             }
         }
     }
@@ -200,7 +202,17 @@ private struct Times {
         }
     }
     
-    var last = TimeInterval()
     var move = Item(0.02)
     var foes = Item(0.1)
+    private var last = TimeInterval()
+    
+    mutating func delta(_ time: TimeInterval) -> TimeInterval {
+        guard last > 0 else {
+            last = time
+            return 0
+        }
+        let delta = time - last
+        last = time
+        return delta
+    }
 }
