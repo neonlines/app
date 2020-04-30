@@ -51,13 +51,15 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         self.wheel = wheel
         self.minimap = minimap
         self.pointers = pointers
+        presentScene(scene, transition: .crossFade(withDuration: 1.5))
         
         players.insert(player)
-        
-        presentScene(scene, transition: .crossFade(withDuration: 1.5))
-        align()
         addFoe(.red)
         addFoe(.blue)
+    }
+    
+    override func viewDidMoveToWindow() {
+        align()
     }
     
     override func viewDidEndLiveResize() {
@@ -98,14 +100,12 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     func update(_ time: TimeInterval, for: SKScene) {
-        if times.last > 0 {
-            let delta = time - times.last
-            if times.move.timeout(delta) {
-                move()
-            }
-            if times.foes.timeout(delta) {
-                foes()
-            }
+        let delta = time - times.last
+        if times.move.timeout(delta) {
+            move()
+        }
+        if times.foes.timeout(delta) {
+            foes()
         }
         times.last = time
     }
@@ -128,8 +128,8 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             guard $0.physicsBody != nil else { return }
             minimap.show($0.position, color: $0.line.strokeColor)
             
-            guard !scene!.camera!.containedNodeSet().contains($0) else { return }
-            var position = CGPoint(x: $0.position.x - wheel.player.position.x, y: $0.position.y - wheel.player.position.y)
+            guard !scene!.camera!.containedNodeSet().contains($0), let player = wheel.player else { return }
+            var position = CGPoint(x: $0.position.x - player.position.x, y: $0.position.y - player.position.y)
             position.x = min(max(position.x, -100), 100)
             position.y = min(max(position.y, -100), 100)
             let pointer = Pointer(color: $0.line.strokeColor, position: position)
@@ -146,7 +146,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     private func addFoe(_ color: SKColor) {
         let foe = Player(line: .init(color: color))
-        foe.position = brain.position(players.filter { $0.physicsBody != nil }.flatMap { [$0.position] + $0.line.points })
+        foe.position = brain.position(players.filter { $0.physicsBody != nil }.flatMap { $0.line.points })
         foe.color = foe.line.strokeColor
         foe.colorBlendFactor = 1
         foe.zRotation = .random(in: 0 ..< .pi * 2)
