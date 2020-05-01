@@ -109,7 +109,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             foes()
         }
         if times.spawn.timeout(delta) {
-            if players.filter({ $0.physicsBody != nil }).count < 8, Int.random(in: 0 ... 25) == 0 {
+            if players.filter({ $0.physicsBody != nil }).count < 7, Int.random(in: 0 ... 25) == 0 {
                 spawn()
             }
         }
