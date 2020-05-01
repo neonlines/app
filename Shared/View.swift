@@ -142,9 +142,9 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             
             guard !scene!.camera!.containedNodeSet().contains($0), let player = wheel?.player else { return }
             var position = CGPoint(x: $0.position.x - player.position.x, y: $0.position.y - player.position.y)
-            let maxDelta = max(abs(position.x), abs(position.y))
-            position.x = min(max(position.x * position.x / maxDelta, -100), 100)
-            position.y = min(max(position.y * position.y / maxDelta, -100), 100)
+            let maxDelta = max(abs(position.x), abs(position.y)) / 100
+            position.x = position.x / maxDelta
+            position.y = position.y / maxDelta
             let pointer = Pointer(color: $0.line.strokeColor, position: position)
             pointers.addChild(pointer)
         }
@@ -187,20 +187,19 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             } else if wheel != nil {
                 score += 150
                 let base = SKShapeNode(rect: .init(x: -40, y: -20, width: 80, height: 40), cornerRadius: 18)
-                base.fillColor = .indigoLight
+                base.fillColor = .indigoDark
                 base.lineWidth = 0
                 base.alpha = 0
                 base.zPosition = 4
                 $0.addChild(base)
                 
                 let label = SKLabelNode(text: "+150")
-                label.fontSize = 16
+                label.fontSize = 17
                 label.fontName = "bold"
-                label.fontColor = .black
+                label.fontColor = .white
                 label.verticalAlignmentMode = .center
                 base.addChild(label)
-                
-                base.run(.sequence([.fadeIn(withDuration: 3), .fadeOut(withDuration: 4)]))
+                base.run(.sequence([.fadeIn(withDuration: 4), .fadeOut(withDuration: 2)]))
             }
         }
     }
