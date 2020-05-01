@@ -20,20 +20,21 @@ final class Line: SKShapeNode {
         }
     }
     
-    private let max = 400
+    let skin: Skin
     
     required init?(coder: NSCoder) { nil }
-    init(color: SKColor) {
+    init(skin: Skin) {
+        self.skin = skin
         super.init()
         lineWidth = 20
         lineCap = .round
         zPosition = 1
-        strokeColor = color
-        points.reserveCapacity(max)
+        strokeColor = skin.colour
+        points.reserveCapacity(400)
     }
     
     func append(_ position: CGPoint) {
-        points = (points + [position]).suffix(max)
+        points = (points + [position]).suffix(400)
     }
     
     func recede() {

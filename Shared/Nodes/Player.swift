@@ -7,7 +7,7 @@ final class Player: SKSpriteNode {
     required init?(coder: NSCoder) { nil }
     init(line: Line) {
         self.line = line
-        super.init(texture: .init(imageNamed: "node"), color: .clear, size: .init(width: 32, height: 32))
+        super.init(texture: .init(imageNamed: line.skin.texture), color: .clear, size: .init(width: 32, height: 32))
         zPosition = 2
         physicsBody = .init(circleOfRadius: 16)
         physicsBody!.affectedByGravity = false
@@ -39,7 +39,8 @@ final class Player: SKSpriteNode {
         emitter.particleBirthRate = 30
         emitter.emissionAngleRange = .pi * 2
         emitter.particleRotationRange = .pi * 2
-        emitter.particleColor = line.strokeColor
+        emitter.particleColor = line.skin.colour
+        emitter.particleColorBlendFactor = 1
         emitter.particleSpeed = 50
         emitter.particleLifetime = 50
         emitter.numParticlesToEmit = 30

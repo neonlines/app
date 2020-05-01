@@ -9,7 +9,7 @@ final class Pointer: SKShapeNode {
         lineWidth = 2
         fillColor = color
         strokeColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .black : .white
-        alpha = 0.4
+        alpha = 0.5
         zPosition = 20
     }
 }

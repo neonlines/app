@@ -32,18 +32,19 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         scene.physicsWorld.contactDelegate = self
         
         let borders = Borders(radius: radius)
-        let player = Player(line: .init(color: .init(white: 0.7, alpha: 1)))
+        let player = Player(line: .init(skin: .make(id: .basic)))
         let wheel = Wheel(player: player)
         let hud = Hud()
         let minimap = Minimap(radius: radius)
         let pointers = SKNode()
+        pointers.position.y = 200
         
         player.position = brain.position([])
         wheel.zRotation = .random(in: 0 ..< .pi * 2)
         pointers.zRotation = -wheel.zRotation
         
         let camera = SKCameraNode()
-        camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 50), to: player)]
+        camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 200), to: player)]
         camera.addChild(wheel)
         camera.addChild(hud)
         camera.addChild(minimap)
@@ -59,10 +60,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         self.minimap = minimap
         self.pointers = pointers
         presentScene(scene)
-        
         players.insert(player)
-        addFoe(.red)
-        addFoe(.blue)
     }
     
     override func viewDidMoveToWindow() {
@@ -111,8 +109,8 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             foes()
         }
         if times.spawn.timeout(delta) {
-            if players.count < 9, Int.random(in: 0 ... 25) == 0 {
-                addFoe(.green)
+            if players.filter({ $0.physicsBody != nil }).count < 8, Int.random(in: 0 ... 25) == 0 {
+                spawn()
             }
         }
         if wheel != nil {
@@ -138,14 +136,14 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         players.forEach {
             $0.move()
             guard $0.physicsBody != nil else { return }
-            minimap.show($0.position, color: $0.line.strokeColor)
+            minimap.show($0.position, color: $0.line.skin.colour)
             
             guard !scene!.camera!.containedNodeSet().contains($0), let player = wheel?.player else { return }
             var position = CGPoint(x: $0.position.x - player.position.x, y: $0.position.y - player.position.y)
             let maxDelta = max(abs(position.x), abs(position.y)) / 100
             position.x = position.x / maxDelta
             position.y = position.y / maxDelta
-            let pointer = Pointer(color: $0.line.strokeColor, position: position)
+            let pointer = Pointer(color: $0.line.skin.colour, position: position)
             pointers.addChild(pointer)
         }
     }
@@ -157,11 +155,17 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         }
     }
     
-    private func addFoe(_ color: SKColor) {
-        let foe = Player(line: .init(color: color))
+    private func spawn() {
+        let skin: Skin
+        switch Int.random(in: 0 ... 4) {
+        case 1: skin = .make(id: .foe1)
+        case 2: skin = .make(id: .foe2)
+        case 3: skin = .make(id: .foe3)
+        case 4: skin = .make(id: .foe4)
+        default: skin = .make(id: .foe0)
+        }
+        let foe = Player(line: .init(skin: skin))
         foe.position = brain.position(players.filter { $0.physicsBody != nil }.flatMap { $0.line.points })
-        foe.color = foe.line.strokeColor
-        foe.colorBlendFactor = 1
         foe.zRotation = .random(in: 0 ..< .pi * 2)
         scene!.addChild(foe.line)
         scene!.addChild(foe)
@@ -174,7 +178,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             if $0 === wheel?.player {
                 wheel = nil
                 let label = SKLabelNode(text: .key("Game.over"))
-                label.fontSize = 30
+                label.fontSize = 20
                 label.fontName = "bold"
                 label.alpha = 0
                 scene!.camera!.addChild(label)
