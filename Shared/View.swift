@@ -13,6 +13,12 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private let brain: Brain
     override var mouseDownCanMoveWindow: Bool { true }
     
+    private var score = 0 {
+        didSet {
+            hud.counter(score)
+        }
+    }
+    
     required init?(coder: NSCoder) { nil }
     init(radius: CGFloat) {
         brain = .init(borders: .init(radius: radius), wheel: .init(delta: .pi / 30))
@@ -109,6 +115,11 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 addFoe(.green)
             }
         }
+        if wheel != nil {
+            if times.scoring.timeout(delta) {
+                score += 1
+            }
+        }
     }
     
     func remove(_ line: Line) {
@@ -131,8 +142,9 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             
             guard !scene!.camera!.containedNodeSet().contains($0), let player = wheel?.player else { return }
             var position = CGPoint(x: $0.position.x - player.position.x, y: $0.position.y - player.position.y)
-            position.x = min(max(position.x, -100), 100)
-            position.y = min(max(position.y, -100), 100)
+            let maxDelta = max(abs(position.x), abs(position.y))
+            position.x = min(max(position.x * position.x / maxDelta, -100), 100)
+            position.y = min(max(position.y * position.y / maxDelta, -100), 100)
             let pointer = Pointer(color: $0.line.strokeColor, position: position)
             pointers.addChild(pointer)
         }
@@ -167,11 +179,28 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 label.alpha = 0
                 scene!.camera!.addChild(label)
                 
-                label.run(.sequence([.fadeIn(withDuration: 3)])) { [weak self] in
+                label.run(.fadeIn(withDuration: 3)) { [weak self] in
                     self?.scene!.run(.fadeOut(withDuration: 4)) {
                         self?.window?.show(Launch())
                     }
                 }
+            } else if wheel != nil {
+                score += 150
+                let base = SKShapeNode(rect: .init(x: -40, y: -20, width: 80, height: 40), cornerRadius: 18)
+                base.fillColor = .indigoLight
+                base.lineWidth = 0
+                base.alpha = 0
+                base.zPosition = 4
+                $0.addChild(base)
+                
+                let label = SKLabelNode(text: "+150")
+                label.fontSize = 16
+                label.fontName = "bold"
+                label.fontColor = .black
+                label.verticalAlignmentMode = .center
+                base.addChild(label)
+                
+                base.run(.sequence([.fadeIn(withDuration: 3), .fadeOut(withDuration: 4)]))
             }
         }
     }
@@ -219,6 +248,7 @@ private struct Times {
     var move = Item(0.03)
     var foes = Item(0.02)
     var spawn = Item(0.1)
+    var scoring = Item(1.5)
     private var last = TimeInterval()
     
     mutating func delta(_ time: TimeInterval) -> TimeInterval {

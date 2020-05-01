@@ -11,13 +11,14 @@ final class Hud: SKShapeNode {
         strokeColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .black : .white
         lineWidth = 1
         zPosition = 11
+        formatter.numberStyle = .decimal
         
         let label = SKLabelNode()
         label.horizontalAlignmentMode = .left
-        label.verticalAlignmentMode = .center
         label.fontSize = 16
         label.fontName = "bold"
         label.fontColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .white : .black
+        label.position.y = -6
         addChild(label)
         self.label = label
     }
