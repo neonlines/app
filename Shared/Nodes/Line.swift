@@ -30,11 +30,11 @@ final class Line: SKShapeNode {
         lineCap = .round
         zPosition = 1
         strokeColor = skin.colour
-        points.reserveCapacity(400)
+        points.reserveCapacity(350)
     }
     
     func append(_ position: CGPoint) {
-        points = (points + [position]).suffix(400)
+        points = (points + [position]).suffix(350)
     }
     
     func recede() {
