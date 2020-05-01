@@ -15,7 +15,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     required init?(coder: NSCoder) { nil }
     init(radius: CGFloat) {
-        brain = .init(borders: .init(radius: radius), wheel: .init(delta: .pi / 60))
+        brain = .init(borders: .init(radius: radius), wheel: .init(delta: .pi / 30))
         super.init(frame: .zero)
         ignoresSiblingOrder = true
         let scene = SKScene()
@@ -217,7 +217,7 @@ private struct Times {
     }
     
     var move = Item(0.03)
-    var foes = Item(0.05)
+    var foes = Item(0.02)
     var spawn = Item(0.1)
     private var last = TimeInterval()
     
