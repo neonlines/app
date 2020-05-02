@@ -44,7 +44,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         pointers.zRotation = -wheel.zRotation
         
         let camera = SKCameraNode()
-        camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 200), to: player)]
+        camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 200), to: .init(x: 0, y: -400), in: player)]
         camera.addChild(wheel)
         camera.addChild(hud)
         camera.addChild(minimap)
