@@ -36,7 +36,7 @@ final class Menu: NSView {
     @objc private func newGame() {
         guard active else { return }
         active = false
-        window!.show(View(radius: 2_000))
+        window!.show(View(radius: 2_500))
     }
     
     @objc private func settings() {

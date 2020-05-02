@@ -39,7 +39,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         let pointers = SKNode()
         pointers.position.y = 200
         
-        player.position = brain.position([])
+        player.position = brain.position([])!
         wheel.zRotation = .random(in: 0 ..< .pi * 2)
         pointers.zRotation = -wheel.zRotation
         
@@ -109,7 +109,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             foes()
         }
         if times.spawn.timeout(delta) {
-            if players.filter({ $0.physicsBody != nil }).count < 7, Int.random(in: 0 ... 25) == 0 {
+            if players.filter({ $0.physicsBody != nil }).count < 10, Int.random(in: 0 ... 2) == 0 {
                 spawn()
             }
         }
@@ -156,6 +156,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     private func spawn() {
+        guard let position = brain.position(players.flatMap({ $0.line.points })) else { return }
         let skin: Skin
         switch Int.random(in: 0 ... 4) {
         case 1: skin = .make(id: .foe1)
@@ -165,7 +166,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         default: skin = .make(id: .foe0)
         }
         let foe = Player(line: .init(skin: skin))
-        foe.position = brain.position(players.filter { $0.physicsBody != nil }.flatMap { $0.line.points })
+        foe.position = position
         foe.zRotation = .random(in: 0 ..< .pi * 2)
         scene!.addChild(foe.line)
         scene!.addChild(foe)
@@ -250,7 +251,7 @@ private struct Times {
     
     var move = Item(0.03)
     var foes = Item(0.02)
-    var spawn = Item(0.1)
+    var spawn = Item(0.05)
     var scoring = Item(1.5)
     private var last = TimeInterval()
     
