@@ -7,9 +7,9 @@ final class Player: SKSpriteNode {
     required init?(coder: NSCoder) { nil }
     init(line: Line) {
         self.line = line
-        super.init(texture: .init(imageNamed: line.skin.texture), color: .clear, size: .init(width: 32, height: 32))
+        super.init(texture: .init(imageNamed: line.skin.texture), color: .clear, size: .init(width: 16, height: 16))
         zPosition = 2
-        physicsBody = .init(circleOfRadius: 16)
+        physicsBody = .init(circleOfRadius: 8)
         physicsBody!.affectedByGravity = false
         physicsBody!.collisionBitMask = .none
         physicsBody!.contactTestBitMask = .all
@@ -17,16 +17,11 @@ final class Player: SKSpriteNode {
     }
     
     func move() {
-        guard physicsBody != nil else {
-            line.recede()
-            return
-        }
         let dx = sin(zRotation)
         let dy = cos(zRotation)
         let speedY = (1 - abs(dx)) * maxSpeed
         let speedX = maxSpeed - speedY
         physicsBody!.velocity = .init(dx: dx * speedX, dy: dy * speedY)
-        line.append(position)
     }
     
     func explode() {

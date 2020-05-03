@@ -105,6 +105,9 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         if times.move.timeout(delta) {
             move()
         }
+        if times.lines.timeout(delta) {
+            lines()
+        }
         if times.foes.timeout(delta) {
             foes()
         }
@@ -133,9 +136,8 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private func move() {
         minimap.clear()
         pointers.children.forEach { $0.removeFromParent() }
-        players.forEach {
+        players.filter { $0.physicsBody != nil }.forEach {
             $0.move()
-            guard $0.physicsBody != nil else { return }
             minimap.show($0.position, color: $0.line.skin.colour)
             
             guard !scene!.camera!.containedNodeSet().contains($0), let player = wheel?.player else { return }
@@ -145,6 +147,12 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             position.y = position.y / maxDelta
             let pointer = Pointer(color: $0.line.skin.colour, position: position)
             pointers.addChild(pointer)
+        }
+    }
+    
+    private func lines() {
+        players.forEach {
+            $0.physicsBody == nil ? $0.line.recede() : $0.line.append($0.position)
         }
     }
     
@@ -250,6 +258,7 @@ private struct Times {
     }
     
     var move = Item(0.03)
+    var lines = Item(0.1)
     var foes = Item(0.02)
     var spawn = Item(0.05)
     var scoring = Item(1.5)
