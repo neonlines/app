@@ -28,7 +28,19 @@ final class Score: NSView {
         label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
         next.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        next.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 100).isActive = true
+        next.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 150).isActive = true
+        
+        if profile.maxScore < points {
+            profile.maxScore = points
+            balam.update(profile)
+            
+            let max = Label(.key("New.max.score"), .bold(20))
+            max.textColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .indigoLight : .indigoDark
+            addSubview(max)
+            
+            max.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+            max.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20).isActive = true
+        }
     }
     
     @objc private func next() {

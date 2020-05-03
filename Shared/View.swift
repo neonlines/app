@@ -112,9 +112,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             foes()
         }
         if times.spawn.timeout(delta) {
-            if players.filter({ $0.physicsBody != nil }).count < 10, Int.random(in: 0 ... 2) == 0 {
-                spawn()
-            }
+            spawn()
         }
         if times.radar.timeout(delta) {
             radar()
@@ -156,7 +154,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     private func spawn() {
-        guard let position = brain.position(players.flatMap({ $0.line.points })) else { return }
+        guard players.filter({ $0.physicsBody != nil }).count < 6, let position = brain.position(players.flatMap({ $0.line.points })) else { return }
         let skin: Skin
         switch Int.random(in: 0 ... 4) {
         case 1: skin = .make(id: .foe1)
