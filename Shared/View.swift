@@ -203,7 +203,8 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 
                 label.run(.fadeIn(withDuration: 3)) { [weak self] in
                     self?.scene!.run(.fadeOut(withDuration: 4)) {
-                        self?.window?.show(Launch())
+                        guard let score = self?.score else { return }
+                        self?.window?.show(Score(points: score))
                     }
                 }
             } else if wheel != nil {

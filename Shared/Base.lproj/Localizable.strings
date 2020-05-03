@@ -4,3 +4,4 @@ Settings = "Settings";
 Store = "Store";
 Done = "Done";
 Game.over = "Game Over";
+Score = "Score";

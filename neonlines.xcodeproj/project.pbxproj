@@ -27,6 +27,7 @@
 		CE7D03372455E294001AC44B /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D03362455E294001AC44B /* Line.swift */; };
 		CE7D03392455E8E0001AC44B /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D03382455E8E0001AC44B /* Hud.swift */; };
 		CE7D033B2455F650001AC44B /* Minimap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D033A2455F650001AC44B /* Minimap.swift */; };
+		CE899EB4245EBAA00066824A /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE899EB3245EBAA00066824A /* Score.swift */; };
 		CE9443D0244CA2E30087CDA9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9443CF244CA2E30087CDA9 /* Media.xcassets */; };
 		CE9443D1244CA2E30087CDA9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9443CF244CA2E30087CDA9 /* Media.xcassets */; };
 		CE9443D3244CA5000087CDA9 /* Wheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443D2244CA5000087CDA9 /* Wheel.swift */; };
@@ -62,6 +63,7 @@
 		CE7D03362455E294001AC44B /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		CE7D03382455E8E0001AC44B /* Hud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hud.swift; sourceTree = "<group>"; };
 		CE7D033A2455F650001AC44B /* Minimap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Minimap.swift; sourceTree = "<group>"; };
+		CE899EB3245EBAA00066824A /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		CE9443CF244CA2E30087CDA9 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		CE9443D2244CA5000087CDA9 /* Wheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wheel.swift; sourceTree = "<group>"; };
 		CEB504792450991E00D5B1BC /* Borders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Borders.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				CE382D3A2459CFBE004DE132 /* Label.swift */,
 				CE382D382459CDE3004DE132 /* Launch.swift */,
 				CE382D3E2459D363004DE132 /* Menu.swift */,
+				CE899EB3245EBAA00066824A /* Score.swift */,
 				CE7CE25B2459EC9600CD8791 /* Scroll.swift */,
 				CE7CE2592459E91400CD8791 /* Settings.swift */,
 				CE7CE25D2459EEED00CD8791 /* Store.swift */,
@@ -324,6 +327,7 @@
 				CE382D412459DAF1004DE132 /* Control.swift in Sources */,
 				CE9443D3244CA5000087CDA9 /* Wheel.swift in Sources */,
 				CE7CE25E2459EEED00CD8791 /* Store.swift in Sources */,
+				CE899EB4245EBAA00066824A /* Score.swift in Sources */,
 				CEF23AAE244C984100D02FD7 /* Window.swift in Sources */,
 				CE7D033B2455F650001AC44B /* Minimap.swift in Sources */,
 				CE382D452459DB56004DE132 /* Color.swift in Sources */,
