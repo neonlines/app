@@ -34,9 +34,11 @@ final class Score: NSView {
             profile.maxScore = points
             balam.update(profile)
             
-            let max = Label(.key("New.max.score"), .bold(20))
+            let max = Label(.key("New.max.score"), .regular(20))
             max.textColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .indigoLight : .indigoDark
             addSubview(max)
+            
+            label.textColor = max.textColor
             
             max.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
             max.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20).isActive = true
