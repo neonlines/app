@@ -37,14 +37,14 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         let hud = Hud()
         let minimap = Minimap(radius: radius)
         let pointers = SKNode()
-        pointers.position.y = 200
+        pointers.position.y = 100
         
         player.position = brain.position([])!
         wheel.zRotation = .random(in: 0 ..< .pi * 2)
         pointers.zRotation = -wheel.zRotation
         
         let camera = SKCameraNode()
-        camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 200), to: .init(x: 0, y: -400), in: player)]
+        camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 100), to: player)]
         camera.addChild(wheel)
         camera.addChild(hud)
         camera.addChild(minimap)
