@@ -15,7 +15,7 @@ final class Line: SKShapeNode {
                 return $0
             } (CGMutablePath()))
             physicsBody!.collisionBitMask = .none
-            physicsBody!.contactTestBitMask = .none
+            physicsBody!.contactTestBitMask = .player
             physicsBody!.categoryBitMask = .line
         }
     }

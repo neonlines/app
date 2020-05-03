@@ -116,6 +116,9 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 spawn()
             }
         }
+        if times.radar.timeout(delta) {
+            radar()
+        }
         if wheel != nil {
             if times.scoring.timeout(delta) {
                 score += 1
@@ -134,19 +137,8 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     private func move() {
-        minimap.clear()
-        pointers.children.forEach { $0.removeFromParent() }
         players.filter { $0.physicsBody != nil }.forEach {
             $0.move()
-            minimap.show($0.position, color: $0.line.skin.colour)
-            
-            guard !scene!.camera!.containedNodeSet().contains($0), let player = wheel?.player else { return }
-            var position = CGPoint(x: $0.position.x - player.position.x, y: $0.position.y - player.position.y)
-            let maxDelta = max(abs(position.x), abs(position.y)) / 100
-            position.x = position.x / maxDelta
-            position.y = position.y / maxDelta
-            let pointer = Pointer(color: $0.line.skin.colour, position: position)
-            pointers.addChild(pointer)
         }
     }
     
@@ -179,6 +171,23 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         scene!.addChild(foe.line)
         scene!.addChild(foe)
         players.insert(foe)
+    }
+    
+    private func radar() {
+        guard let player = wheel?.player else { return }
+        minimap.clear()
+        pointers.children.forEach { $0.removeFromParent() }
+        players.filter { $0.physicsBody != nil }.forEach {
+            minimap.show($0.position, color: $0.line.skin.colour)
+            
+            guard !scene!.camera!.containedNodeSet().contains($0) else { return }
+            var position = CGPoint(x: $0.position.x - player.position.x, y: $0.position.y - player.position.y)
+            let maxDelta = max(abs(position.x), abs(position.y)) / 100
+            position.x = position.x / maxDelta
+            position.y = position.y / maxDelta
+            let pointer = Pointer(color: $0.line.skin.colour, position: position)
+            pointers.addChild(pointer)
+        }
     }
     
     private func explode(_ node: SKNode) {
@@ -257,10 +266,11 @@ private struct Times {
         }
     }
     
-    var move = Item(0.03)
-    var lines = Item(0.1)
+    var move = Item(0.05)
+    var lines = Item(0.02)
     var foes = Item(0.02)
     var spawn = Item(0.05)
+    var radar = Item(0.5)
     var scoring = Item(1.5)
     private var last = TimeInterval()
     
