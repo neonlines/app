@@ -14,7 +14,7 @@ final class Score: NSView {
         let label = Label(formatter.string(from: .init(value: points))!, .boldMono(50))
         addSubview(label)
         
-        let next = Button(.key("New.game"))
+        let next = Button(.key("Continue"))
         next.target = self
         next.action = #selector(self.next)
         next.layer!.backgroundColor = .indigoLight

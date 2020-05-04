@@ -1,8 +1,9 @@
 import AppKit
 
 final class Settings: NSView {
-    private var active = true
     private weak var scroll: Scroll!
+    private var active = true
+    private let itemSize = CGFloat(200)
     
     required init?(coder: NSCoder) { nil }
     init() {
@@ -21,7 +22,7 @@ final class Settings: NSView {
         done.action = #selector(self.done)
         addSubview(done)
         
-        let title = Label(.key("Choose.your.skin"), .regular(16))
+        let title = Label(.key("Choose.your.skin"), .bold(16))
         scroll.add(title)
         
         scroll.topAnchor.constraint(equalTo: topAnchor, constant: 1).isActive = true
@@ -39,7 +40,7 @@ final class Settings: NSView {
         done.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         done.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
         
-        title.topAnchor.constraint(equalTo: scroll.top, constant: 50).isActive = true
+        title.topAnchor.constraint(equalTo: scroll.top, constant: 80).isActive = true
         title.leftAnchor.constraint(equalTo: scroll.left, constant: 20).isActive = true
         
         Skin.Id.allCases.forEach {
@@ -49,6 +50,8 @@ final class Settings: NSView {
             item.selected = $0 == profile.skin
             scroll.add(item)
     
+            item.widthAnchor.constraint(equalToConstant: itemSize).isActive = true
+            item.heightAnchor.constraint(equalToConstant: itemSize).isActive = true
             item.top = item.topAnchor.constraint(equalTo: scroll.top)
             item.left = item.leftAnchor.constraint(equalTo: scroll.left)
         }
@@ -62,15 +65,16 @@ final class Settings: NSView {
     }
     
     private func arrange() {
-        guard let size = NSApp.keyWindow?.frame.size else { return }
-        var point = CGPoint(x: 20, y: 100)
+        guard let width = NSApp.keyWindow?.frame.size.width else { return }
+        let left = (width / (itemSize + 20)).truncatingRemainder(dividingBy: 1) * (itemSize / 2)
+        var point = CGPoint(x: left, y: 150)
         scroll.views.compactMap { $0 as? Item }.forEach {
-            if point.x > size.width - 100 {
-                point = .init(x: 20, y: point.y + 220)
+            if point.x > width - itemSize {
+                point = .init(x: left, y: point.y + itemSize + 20)
             }
             $0.left.constant = point.x
             $0.top.constant = point.y
-            point.x += 120
+            point.x += itemSize + 20
         }
         NSAnimationContext.runAnimationGroup {
             $0.duration = 0.5
@@ -86,7 +90,7 @@ final class Settings: NSView {
     }
     
     @objc private func change(_ item: Item) {
-        guard !item.selected else { return }
+        guard active, !item.selected else { return }
         profile.skin = item.id
         balam.update(profile)
         scroll.views.compactMap { $0 as? Item }.forEach {
@@ -100,16 +104,25 @@ private final class Item: Control {
     weak var top: NSLayoutConstraint! { didSet { top.isActive = true } }
     weak var left: NSLayoutConstraint! { didSet { left.isActive = true } }
     private weak var image: NSImageView!
+    private weak var border: NSView!
     
     required init?(coder: NSCoder) { nil }
     init(id: Skin.Id) {
         self.id = id
         super.init()
         wantsLayer = true
-        layer!.cornerRadius = 12
-        layer!.borderWidth = 2
+        layer!.cornerRadius = 32
+        layer!.borderWidth = 5
         
         let skin = Skin.make(id: id)
+        
+        let border = NSView()
+        border.translatesAutoresizingMaskIntoConstraints = false
+        border.wantsLayer = true
+        border.layer!.cornerRadius = 45
+        border.layer!.backgroundColor = skin.colour.cgColor
+        addSubview(border)
+        self.border = border
         
         let image = NSImageView(image: NSImage(named: skin.texture)!)
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -117,19 +130,22 @@ private final class Item: Control {
         addSubview(image)
         self.image = image
         
-        widthAnchor.constraint(equalToConstant: 100).isActive = true
-        heightAnchor.constraint(equalToConstant: 200).isActive = true
+        border.widthAnchor.constraint(equalToConstant: 90).isActive = true
+        border.heightAnchor.constraint(equalToConstant: 90).isActive = true
+        border.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        border.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
-        image.widthAnchor.constraint(equalToConstant: 64).isActive = true
-        image.heightAnchor.constraint(equalToConstant: 64).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        image.heightAnchor.constraint(equalToConstant: 70).isActive = true
         image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        image.topAnchor.constraint(equalTo: topAnchor, constant: 50).isActive = true
+        image.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
     var selected = false {
         didSet {
+            border.alphaValue = selected ? 1 : 0
+            image.alphaValue = selected ? 1 : 0.35
             layer!.borderColor = selected ? NSColor.indigoLight.cgColor : NSColor.separatorColor.cgColor
-            image.alphaValue = selected ? 1 : 0.5
         }
     }
 }
