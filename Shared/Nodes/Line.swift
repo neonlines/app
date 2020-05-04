@@ -23,13 +23,13 @@ final class Line: SKShapeNode {
     let skin: Skin
     
     required init?(coder: NSCoder) { nil }
-    init(skin: Skin) {
-        self.skin = skin
+    init(skin: Skin.Id) {
+        self.skin = .make(id: skin)
         super.init()
         lineWidth = 6
         lineCap = .round
         zPosition = 1
-        strokeColor = skin.colour
+        strokeColor = self.skin.colour
         points.reserveCapacity(600)
     }
     

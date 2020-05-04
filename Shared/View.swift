@@ -32,7 +32,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         scene.physicsWorld.contactDelegate = self
         
         let borders = Borders(radius: radius)
-        let player = Player(line: .init(skin: .make(id: .basic)))
+        let player = Player(line: .init(skin: profile.skin))
         let wheel = Wheel(player: player)
         let hud = Hud()
         let minimap = Minimap(radius: radius)
@@ -155,13 +155,13 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     private func spawn() {
         guard players.filter({ $0.physicsBody != nil }).count < 6, let position = brain.position(players.flatMap({ $0.line.points })) else { return }
-        let skin: Skin
+        let skin: Skin.Id
         switch Int.random(in: 0 ... 4) {
-        case 1: skin = .make(id: .foe1)
-        case 2: skin = .make(id: .foe2)
-        case 3: skin = .make(id: .foe3)
-        case 4: skin = .make(id: .foe4)
-        default: skin = .make(id: .foe0)
+        case 1: skin = .foe1
+        case 2: skin = .foe2
+        case 3: skin = .foe3
+        case 4: skin = .foe4
+        default: skin = .foe0
         }
         let foe = Player(line: .init(skin: skin))
         foe.position = position

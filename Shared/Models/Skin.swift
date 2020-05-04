@@ -1,7 +1,7 @@
 import SpriteKit
 
 struct Skin {
-    enum Id: String, Codable {
+    enum Id: String, Codable, CaseIterable {
         case
         basic,
         foe0,
