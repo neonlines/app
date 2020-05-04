@@ -3,7 +3,7 @@ import AppKit
 final class Settings: NSView {
     private weak var scroll: Scroll!
     private var active = true
-    private let itemSize = CGFloat(200)
+    private let itemSize = CGFloat(220)
     
     required init?(coder: NSCoder) { nil }
     init() {
@@ -45,10 +45,16 @@ final class Settings: NSView {
         
         Skin.Id.allCases.forEach {
             let item = Item(id: $0)
-            item.target = self
-            item.action = #selector(change)
             item.selected = $0 == profile.skin
+            item.target = self
             scroll.add(item)
+            
+            if $0.active {
+                item.action = #selector(change)
+            } else {
+                item.action = #selector(store)
+                item.purchaseable()
+            }
     
             item.widthAnchor.constraint(equalToConstant: itemSize).isActive = true
             item.heightAnchor.constraint(equalToConstant: itemSize).isActive = true
@@ -95,6 +101,25 @@ final class Settings: NSView {
         balam.update(profile)
         scroll.views.compactMap { $0 as? Item }.forEach {
             $0.selected = $0.id == profile.skin
+        }
+    }
+    
+    @objc private func store() {
+        guard active else { return }
+        active = false
+        window!.show(Store())
+    }
+}
+
+private extension Skin.Id {
+    var active: Bool {
+        switch self {
+        case .basic: return true
+        case .foe0: return profile.purchases.contains(.skinFoe0)
+        case .foe1: return profile.purchases.contains(.skinFoe1)
+        case .foe2: return profile.purchases.contains(.skinFoe2)
+        case .foe3: return profile.purchases.contains(.skinFoe3)
+        case .foe4: return profile.purchases.contains(.skinFoe4)
         }
     }
 }
@@ -147,5 +172,40 @@ private final class Item: Control {
             image.alphaValue = selected ? 1 : 0.35
             layer!.borderColor = selected ? NSColor.indigoLight.cgColor : NSColor.separatorColor.cgColor
         }
+    }
+    
+    func purchaseable() {
+        let base = NSView()
+        base.translatesAutoresizingMaskIntoConstraints = false
+        base.wantsLayer = true
+        base.layer!.backgroundColor = .indigoLight
+        addSubview(base)
+        
+        let title = Label(.key("New.skin"), .medium(16))
+        title.textColor = .black
+        title.alignment = .center
+        title.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        addSubview(title)
+        
+        let subtitle = Label(.key("Purchase.on.store"), .regular(12))
+        subtitle.textColor = .black
+        subtitle.alignment = .center
+        subtitle.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        addSubview(subtitle)
+        
+        base.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        base.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        base.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        base.topAnchor.constraint(equalTo: title.topAnchor, constant: -10).isActive = true
+        
+        title.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 10).isActive = true
+        title.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor, constant: -10).isActive = true
+        title.bottomAnchor.constraint(equalTo: subtitle.topAnchor).isActive = true
+        title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        
+        subtitle.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 10).isActive = true
+        subtitle.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor, constant: -10).isActive = true
+        subtitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12).isActive = true
+        subtitle.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 }

@@ -8,3 +8,5 @@ Score = "Score";
 Continue = "Continue";
 New.max.score = "New Max Score!";
 Choose.your.skin = "Choose your skin";
+New.skin = "New Skin";
+Purchase.on.store = "Purchase on the store";
