@@ -19,6 +19,9 @@ final class Store: NSView {
         let separator = Separator()
         addSubview(separator)
         
+        let scroll = Scroll()
+        addSubview(scroll)
+        
         separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
         separator.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
         separator.topAnchor.constraint(equalTo: topAnchor, constant: 54).isActive = true
@@ -29,6 +32,12 @@ final class Store: NSView {
         
         done.rightAnchor.constraint(equalTo: rightAnchor, constant: -25).isActive = true
         done.bottomAnchor.constraint(equalTo: separator.topAnchor, constant: -10).isActive = true
+        
+        scroll.topAnchor.constraint(equalTo: separator.bottomAnchor).isActive = true
+        scroll.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
+        scroll.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
+        scroll.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1).isActive = true
+        scroll.bottom.constraint(greaterThanOrEqualTo: scroll.bottomAnchor).isActive = true
     }
     
     @objc private func done() {
