@@ -1,10 +1,25 @@
 import AppKit
+import StoreKit
 
-final class Store: NSView {
+final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver {
+    private weak var request: SKProductsRequest?
+    private weak var scroll: Scroll!
+    private let formatter = NumberFormatter()
+    
+    private var products = [SKProduct]() {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.refresh()
+            }
+        }
+    }
+    
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(frame: .zero)
-        let restore = Button(.key("Restore"))
+        formatter.numberStyle = .currencyISOCode
+        
+        let restore = Button(.key("Restore.purchases"))
         restore.target = self
         restore.action = #selector(self.done)
         addSubview(restore)
@@ -21,6 +36,7 @@ final class Store: NSView {
         
         let scroll = Scroll()
         addSubview(scroll)
+        self.scroll = scroll
         
         separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
         separator.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
@@ -38,6 +54,75 @@ final class Store: NSView {
         scroll.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
         scroll.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1).isActive = true
         scroll.bottom.constraint(greaterThanOrEqualTo: scroll.bottomAnchor).isActive = true
+        scroll.right.constraint(equalTo: scroll.rightAnchor).isActive = true
+        
+        loading()
+        
+        SKPaymentQueue.default().add(self)
+
+        let request = SKProductsRequest(productIdentifiers: [])
+        request.delegate = self
+        self.request = request
+        request.start()
+    }
+    
+    deinit {
+        SKPaymentQueue.default().remove(self)
+    }
+    
+    func productsRequest(_: SKProductsRequest, didReceive: SKProductsResponse) { products = didReceive.products }
+    func paymentQueue(_: SKPaymentQueue, updatedTransactions: [SKPaymentTransaction]) { update(updatedTransactions) }
+    func paymentQueue(_: SKPaymentQueue, removedTransactions: [SKPaymentTransaction]) { update(removedTransactions) }
+    func paymentQueueRestoreCompletedTransactionsFinished(_: SKPaymentQueue) { DispatchQueue.main.async { [weak self] in self?.refresh() } }
+    func request(_: SKRequest, didFailWithError: Error) { DispatchQueue.main.async { [weak self] in self?.error(didFailWithError.localizedDescription) } }
+    func paymentQueue(_: SKPaymentQueue, restoreCompletedTransactionsFailedWithError: Error) { DispatchQueue.main.async { [weak self] in self?.error(restoreCompletedTransactionsFailedWithError.localizedDescription) } }
+    
+    private func loading() {
+        scroll.views.forEach { $0.removeFromSuperview() }
+        
+        let label = Label(.key("Loading"), .bold(12))
+        scroll.add(label)
+        
+        label.leftAnchor.constraint(equalTo: scroll.left, constant: 20).isActive = true
+        label.topAnchor.constraint(equalTo: scroll.top, constant: 20).isActive = true
+    }
+    
+    private func error(_ string: String) {
+        scroll.views.forEach { $0.removeFromSuperview() }
+        
+        let label = Label(string, .regular(14))
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        scroll.add(label)
+        
+        label.leftAnchor.constraint(equalTo: scroll.left, constant: 20).isActive = true
+        label.topAnchor.constraint(equalTo: scroll.top, constant: 20).isActive = true
+        label.rightAnchor.constraint(lessThanOrEqualTo: scroll.right, constant: -20).isActive = true
+    }
+    
+    private func update(_ transactions: [SKPaymentTransaction]) {
+        guard !transactions.contains(where: { $0.transactionState == .purchasing }) else { return }
+        transactions.forEach { transaction in
+            switch transaction.transactionState {
+            case .failed:
+                SKPaymentQueue.default().finishTransaction(transaction)
+            case .restored:
+//                app.session.purchase(map.first { $0.1 == transaction.payment.productIdentifier }!.key)
+                break
+            case .purchased:
+//                app.session.purchase(map.first { $0.1 == transaction.payment.productIdentifier }!.key)
+                SKPaymentQueue.default().finishTransaction(transaction)
+            default: break
+            }
+        }
+        if !products.isEmpty {
+            DispatchQueue.main.async { [weak self] in
+                self?.refresh()
+            }
+        }
+    }
+    
+    private func refresh() {
+        scroll.views.forEach { $0.removeFromSuperview() }
     }
     
     @objc private func done() {

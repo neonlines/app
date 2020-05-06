@@ -10,4 +10,5 @@ New.max.score = "New Max Score!";
 Choose.your.skin = "Choose your skin";
 New.skin = "New Skin";
 Purchase.on.store = "Purchase on the store";
-Restore = "Restore";
+Restore.purchases = "Restore Purchases";
+Loading = "Loading...";
