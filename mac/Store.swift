@@ -43,14 +43,14 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         
         separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
         separator.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
-        separator.topAnchor.constraint(equalTo: topAnchor, constant: 54).isActive = true
+        separator.topAnchor.constraint(equalTo: topAnchor, constant: 60).isActive = true
         separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
-        restore.rightAnchor.constraint(equalTo: done.leftAnchor, constant: -40).isActive = true
-        restore.bottomAnchor.constraint(equalTo: separator.topAnchor, constant: -10).isActive = true
+        restore.rightAnchor.constraint(equalTo: done.leftAnchor, constant: -20).isActive = true
+        restore.bottomAnchor.constraint(equalTo: separator.topAnchor, constant: -13).isActive = true
         
-        done.rightAnchor.constraint(equalTo: rightAnchor, constant: -25).isActive = true
-        done.bottomAnchor.constraint(equalTo: separator.topAnchor, constant: -10).isActive = true
+        done.rightAnchor.constraint(equalTo: rightAnchor, constant: -15).isActive = true
+        done.bottomAnchor.constraint(equalTo: separator.topAnchor, constant: -13).isActive = true
         
         scroll.topAnchor.constraint(equalTo: separator.bottomAnchor).isActive = true
         scroll.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
@@ -130,5 +130,51 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
     
     @objc private func done() {
         window!.show(Menu())
+    }
+}
+
+private final class Item: NSView {
+    private(set) weak var image: NSImageView!
+    private(set) weak var title: Label!
+    private(set) weak var subtitle: Label!
+    private(set) weak var purchased: Label!
+    private(set) weak var price: Label!
+    private(set) weak var purchase: Button!
+    
+    required init?(coder: NSCoder) { nil }
+    init() {
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        let image = NSImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.imageScaling = .scaleProportionallyUpOrDown
+        addSubview(image)
+        self.image = image
+        
+        let title = Label("", .bold(20))
+        title.textColor = .headerTextColor
+        title.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        addSubview(title)
+        self.title = title
+        
+        let subtitle = Label("", .regular(14))
+        subtitle.textColor = .secondaryLabelColor
+        subtitle.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        addSubview(subtitle)
+        self.subtitle = subtitle
+        
+        heightAnchor.constraint(equalToConstant: 80).isActive = true
+        
+        image.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
+        image.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        image.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        title.leftAnchor.constraint(equalTo: image.rightAnchor, constant: 10).isActive = true
+        title.topAnchor.constraint(equalTo: image.topAnchor).isActive = true
+        
+        subtitle.topAnchor.constraint(equalTo: title.bottomAnchor).isActive = true
+        subtitle.leftAnchor.constraint(equalTo: title.leftAnchor).isActive = true
     }
 }
