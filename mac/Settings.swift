@@ -43,13 +43,13 @@ final class Settings: NSView {
         title.topAnchor.constraint(equalTo: scroll.top, constant: 80).isActive = true
         title.leftAnchor.constraint(equalTo: scroll.left, constant: 20).isActive = true
         
-        Skin.Id.allCases.forEach {
-            let item = Item(id: $0)
-            item.selected = $0 == profile.skin
+        Skin.Id.allCases.forEach { id in
+            let item = Item(id: id)
+            item.selected = id == profile.skin
             item.target = self
             scroll.add(item)
             
-            if $0.active {
+            if id == .basic || profile.purchases.contains(where: { $0.hasSuffix(id.rawValue) }) {
                 item.action = #selector(change)
             } else {
                 item.action = #selector(store)
@@ -108,19 +108,6 @@ final class Settings: NSView {
         guard active else { return }
         active = false
         window!.show(Store())
-    }
-}
-
-private extension Skin.Id {
-    var active: Bool {
-        switch self {
-        case .basic: return true
-        case .foe0: return profile.purchases.contains(.skinFoe0)
-        case .foe1: return profile.purchases.contains(.skinFoe1)
-        case .foe2: return profile.purchases.contains(.skinFoe2)
-        case .foe3: return profile.purchases.contains(.skinFoe3)
-        case .foe4: return profile.purchases.contains(.skinFoe4)
-        }
     }
 }
 

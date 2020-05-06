@@ -14,8 +14,11 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         }
     }
     
+    private let list: Set<String>
+    
     required init?(coder: NSCoder) { nil }
     init() {
+        list = .init()
         super.init(frame: .zero)
         formatter.numberStyle = .currencyISOCode
         
@@ -60,7 +63,7 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         
         SKPaymentQueue.default().add(self)
 
-        let request = SKProductsRequest(productIdentifiers: [])
+        let request = SKProductsRequest(productIdentifiers: list)
         request.delegate = self
         self.request = request
         request.start()

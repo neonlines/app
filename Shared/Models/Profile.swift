@@ -3,7 +3,7 @@ import Foundation
 struct Profile: Codable, Equatable {
     var maxScore = 0
     var skin = Skin.Id.basic
-    var purchases = Set<Purchase>()
+    var purchases = Set<String>()
     let created = Date()
     
     func hash(into: inout Hasher) {
