@@ -23,7 +23,7 @@ final class Window: NSWindow {
 extension NSWindow {
     func show(_ view: NSView) {
         NSAnimationContext.runAnimationGroup({
-            $0.duration = 1
+            $0.duration = 0.4
             $0.allowsImplicitAnimation = true
             contentView!.alphaValue = 0
         }) { [weak self] in
@@ -31,7 +31,7 @@ extension NSWindow {
             view.alphaValue = 0
             self?.contentView = view
             NSAnimationContext.runAnimationGroup {
-                $0.duration = 1
+                $0.duration = 0.4
                 $0.allowsImplicitAnimation = true
                 view.alphaValue = 1
             }

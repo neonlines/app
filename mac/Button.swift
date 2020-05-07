@@ -14,10 +14,10 @@ final class Button: Control {
         addSubview(label)
         self.label = label
         
-        bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: 8).isActive = true
-        rightAnchor.constraint(equalTo: label.rightAnchor, constant: 18).isActive = true
+        bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: 4).isActive = true
+        rightAnchor.constraint(equalTo: label.rightAnchor, constant: 16).isActive = true
         
-        label.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
-        label.leftAnchor.constraint(equalTo: leftAnchor, constant: 18).isActive = true
+        label.topAnchor.constraint(equalTo: topAnchor, constant: 4).isActive = true
+        label.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
     }
 }

@@ -20,6 +20,8 @@ final class Settings: NSView {
         let done = Button(.key("Done"))
         done.target = self
         done.action = #selector(self.done)
+        done.label.textColor = .black
+        done.layer!.backgroundColor = .indigoLight
         addSubview(done)
         
         let title = Label(.key("Choose.your.skin"), .bold(16))
@@ -35,10 +37,10 @@ final class Settings: NSView {
         separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
         separator.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
         separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        separator.bottomAnchor.constraint(equalTo: done.topAnchor, constant: -10).isActive = true
+        separator.bottomAnchor.constraint(equalTo: done.topAnchor, constant: -15).isActive = true
         
         done.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        done.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
+        done.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15).isActive = true
         
         title.topAnchor.constraint(equalTo: scroll.top, constant: 80).isActive = true
         title.leftAnchor.constraint(equalTo: scroll.left, constant: 20).isActive = true
