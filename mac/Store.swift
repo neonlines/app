@@ -4,7 +4,6 @@ import StoreKit
 final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver {
     private weak var request: SKProductsRequest?
     private weak var scroll: Scroll!
-    private let formatter = NumberFormatter()
     
     private var products = [SKProduct]() {
         didSet {
@@ -17,8 +16,6 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(frame: .zero)
-        formatter.numberStyle = .currencyISOCode
-        
         let restore = Button(.key("Restore.purchases"))
         restore.target = self
         restore.action = #selector(self.done)
@@ -133,7 +130,9 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         var top = skins.bottomAnchor
         
         products.filter { $0.productIdentifier.contains(".skin.") }.sorted { $0.productIdentifier < $1.productIdentifier }.forEach {
-            let item = SkinItem(product: $0, price: formatter.string(from: $0.price) ?? "")
+            let item = SkinItem(product: $0)
+            item.purchase?.target = self
+            item.purchase?.action = #selector(purchase)
             scroll.add(item)
             
             if top != scroll.top {
@@ -180,20 +179,33 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         return separator
     }
     
+    @objc private func purchase(_ button: Button) {
+        loading()
+        SKPaymentQueue.default().add(.init(product: (button.superview as! Item).product))
+    }
+    
     @objc private func done() {
         window!.show(Menu())
     }
 }
 
-private final class SkinItem: NSView {
-    private(set) weak var purchase: Button?
+private class Item: NSView {
+    weak var purchase: Button?
     let product: SKProduct
     
     required init?(coder: NSCoder) { nil }
-    init(product: SKProduct, price: String) {
+    init(product: SKProduct) {
         self.product = product
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
+    }
+}
+
+private final class SkinItem: Item {
+    required init?(coder: NSCoder) { nil }
+    override init(product: SKProduct) {
+        super.init(product: product)
+        
         let image = NSImageView(image: NSImage(named: "skin_" + product.productIdentifier.components(separatedBy: ".").last!)!)
         image.translatesAutoresizingMaskIntoConstraints = false
         image.imageScaling = .scaleProportionallyUpOrDown
@@ -217,7 +229,10 @@ private final class SkinItem: NSView {
             purchased.widthAnchor.constraint(equalToConstant: 30).isActive = true
             purchased.heightAnchor.constraint(equalToConstant: 30).isActive = true
         } else {
-            let price = Label(price, .medium(14))
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .currencyISOCode
+            formatter.locale = product.priceLocale
+            let price = Label(formatter.string(from: product.price) ?? "", .medium(14))
             addSubview(price)
             
             let purchase = Button(.key("Purchase"))
