@@ -81,8 +81,9 @@ final class Froob: NSView {
         } else {
             timer.stringValue = formatter.string(from: now, to: expected) ?? ""
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
                 self?.update()
+                
             }
         }
     }
