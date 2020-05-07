@@ -13,3 +13,5 @@ Purchase.on.store = "Purchase on the store";
 Restore.purchases = "Restore Purchases";
 Loading = "Loading...";
 Purchase = "Purchase";
+Skins = "Skins";
+Purchase.skin.description = "Purchase this skin to use it when playing.";
