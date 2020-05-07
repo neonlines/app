@@ -33,10 +33,24 @@ final class Menu: NSView {
         store.topAnchor.constraint(equalTo: settings.bottomAnchor, constant: 10).isActive = true
     }
     
+    private func startGame() {
+        profile.lastGame = .init()
+        balam.update(profile)
+        window!.show(View(radius: 2_500))
+    }
+    
     @objc private func newGame() {
         guard active else { return }
         active = false
-        window!.show(View(radius: 2_500))
+        guard profile.purchases.contains("neon.lines.premium.unlimited") else {
+            if Date() > Calendar.current.date(byAdding: .hour, value: 12, to: profile.lastGame)! {
+                startGame()
+            } else {
+                window!.show(Froob())
+            }
+            return
+        }
+        startGame()
     }
     
     @objc private func settings() {
