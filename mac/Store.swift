@@ -14,11 +14,8 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         }
     }
     
-    private let list: Set<String>
-    
     required init?(coder: NSCoder) { nil }
     init() {
-        list = .init()
         super.init(frame: .zero)
         formatter.numberStyle = .currencyISOCode
         
@@ -63,7 +60,11 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         
         SKPaymentQueue.default().add(self)
 
-        let request = SKProductsRequest(productIdentifiers: list)
+        let list = Skin.Id.allCases.map {
+            "neon.lines.skin." + $0.rawValue
+        }
+        
+        let request = SKProductsRequest(productIdentifiers: .init(list))
         request.delegate = self
         self.request = request
         request.start()
@@ -126,6 +127,29 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
     
     private func refresh() {
         scroll.views.forEach { $0.removeFromSuperview() }
+        var top = scroll.top
+        products.forEach {
+            let item = Item(product: $0)
+            scroll.add(item)
+            
+            if top != scroll.top {
+                let separator = Separator()
+                scroll.add(separator)
+                
+                separator.leftAnchor.constraint(equalTo: scroll.left).isActive = true
+                separator.rightAnchor.constraint(equalTo: scroll.right).isActive = true
+                separator.topAnchor.constraint(equalTo: top).isActive = true
+                top = separator.bottomAnchor
+            }
+            
+            item.leftAnchor.constraint(equalTo: scroll.left).isActive = true
+            item.rightAnchor.constraint(equalTo: scroll.right).isActive = true
+            item.topAnchor.constraint(equalTo: top).isActive = true
+            top = item.bottomAnchor
+        }
+        if top != scroll.top {
+            scroll.bottom.constraint(greaterThanOrEqualTo: top).isActive = true
+        }
     }
     
     @objc private func done() {
@@ -135,14 +159,16 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
 
 private final class Item: NSView {
     private(set) weak var image: NSImageView!
+    private(set) weak var purchased: NSImageView!
     private(set) weak var title: Label!
     private(set) weak var subtitle: Label!
-    private(set) weak var purchased: Label!
     private(set) weak var price: Label!
     private(set) weak var purchase: Button!
+    let product: SKProduct
     
     required init?(coder: NSCoder) { nil }
-    init() {
+    init(product: SKProduct) {
+        self.product = product
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         
@@ -164,6 +190,21 @@ private final class Item: NSView {
         addSubview(subtitle)
         self.subtitle = subtitle
         
+        let price = Label("", .regular(14))
+        addSubview(price)
+        
+        let purchase = Button(.key("Purchase"))
+        purchase.layer!.backgroundColor = .indigoLight
+        purchase.label.textColor = .black
+        addSubview(purchase)
+        self.purchase = purchase
+        
+        let purchased = NSImageView(image: NSImage(named: "purchased")!)
+        purchased.translatesAutoresizingMaskIntoConstraints = false
+        purchased.imageScaling = .scaleNone
+        addSubview(purchased)
+        self.purchased = purchased
+        
         heightAnchor.constraint(equalToConstant: 80).isActive = true
         
         image.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
@@ -173,8 +214,25 @@ private final class Item: NSView {
         
         title.leftAnchor.constraint(equalTo: image.rightAnchor, constant: 10).isActive = true
         title.topAnchor.constraint(equalTo: image.topAnchor).isActive = true
-        
+        title.rightAnchor.constraint(lessThanOrEqualTo: purchase.leftAnchor, constant: -10).isActive = true
+        title.rightAnchor.constraint(lessThanOrEqualTo: price.leftAnchor, constant: -10).isActive = true
+        title.rightAnchor.constraint(lessThanOrEqualTo: purchased.leftAnchor, constant: -10).isActive = true
+                
         subtitle.topAnchor.constraint(equalTo: title.bottomAnchor).isActive = true
         subtitle.leftAnchor.constraint(equalTo: title.leftAnchor).isActive = true
+        subtitle.rightAnchor.constraint(lessThanOrEqualTo: purchase.leftAnchor, constant: -10).isActive = true
+        subtitle.rightAnchor.constraint(lessThanOrEqualTo: price.leftAnchor, constant: -10).isActive = true
+        subtitle.rightAnchor.constraint(lessThanOrEqualTo: purchased.leftAnchor, constant: -10).isActive = true
+        
+        price.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
+        price.topAnchor.constraint(equalTo: image.topAnchor).isActive = true
+        
+        purchase.topAnchor.constraint(equalTo: price.bottomAnchor).isActive = true
+        purchase.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
+        
+        purchased.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        purchased.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
+        purchased.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        purchased.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
 }

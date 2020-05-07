@@ -12,3 +12,4 @@ New.skin = "New Skin";
 Purchase.on.store = "Purchase on the store";
 Restore.purchases = "Restore Purchases";
 Loading = "Loading...";
+Purchase = "Purchase";
