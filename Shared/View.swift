@@ -78,20 +78,24 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         }
         drag = radians
         rotation = wheel.zRotation
+        wheel.on = true
+        NSCursor.pointingHand.set()
     }
     
     override func mouseDragged(with: NSEvent) {
         guard let wheel = self.wheel, let radians = with.radians, let drag = self.drag else {
             self.drag = nil
+            self.wheel?.on = false
+            NSCursor.arrow.set()
             return
         }
-        NSCursor.pointingHand.set()
         wheel.zRotation = rotation - (radians - drag)
         pointers.zRotation = -wheel.zRotation
     }
     
     override func mouseUp(with: NSEvent) {
         drag = nil
+        wheel?.on = false
         NSCursor.arrow.set()
     }
     
@@ -239,7 +243,7 @@ private extension NSEvent {
 private extension CGPoint {
     var valid: Bool {
         let distance = pow(x, 2) + pow(y, 2)
-        return distance < 19_600
+        return distance > 50 && distance < 19_600
     }
     
     var radians: CGFloat {

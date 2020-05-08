@@ -9,14 +9,25 @@ final class Wheel: SKSpriteNode {
         }
     }
     
+    var on = false {
+        didSet {
+            update()
+        }
+    }
+    
     required init?(coder: NSCoder) { nil }
     init(player: Player) {
-        super.init(texture: .init(imageNamed: "wheel" + (NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? "_dark" : "_light")), color: .clear, size: .init(width: 182, height: 182))
+        super.init(texture: nil, color: .clear, size: .init(width: 182, height: 182))
         zPosition = 10
         self.player = player
+        update()
     }
     
     func align() {
         position.y = (scene!.frame.height / -2) + 140
+    }
+    
+    private func update() {
+        texture = .init(imageNamed: "wheel_" + (on ? "on" : "off") + (NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? "_dark" : "_light"))
     }
 }
