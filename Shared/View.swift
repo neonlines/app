@@ -201,6 +201,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 label.fontSize = 20
                 label.fontName = "bold"
                 label.alpha = 0
+                label.fontColor = .labelColor
                 scene!.camera!.addChild(label)
                 
                 label.run(.fadeIn(withDuration: 3)) { [weak self] in

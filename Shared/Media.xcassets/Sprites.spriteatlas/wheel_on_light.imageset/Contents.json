@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "wheel_on_light.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

@@ -158,7 +158,7 @@ private final class Item: Control {
     var selected = false {
         didSet {
             border.alphaValue = selected ? 1 : 0
-            image.alphaValue = selected ? 1 : 0.35
+            image.alphaValue = selected ? 1 : 0.5
             layer!.borderColor = selected ? NSColor.indigoLight.cgColor : NSColor.separatorColor.cgColor
         }
     }
