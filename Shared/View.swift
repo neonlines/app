@@ -211,20 +211,21 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 }
             } else if wheel != nil {
                 score += 150
-                let base = SKShapeNode(rect: .init(x: -40, y: -20, width: 80, height: 40), cornerRadius: 18)
-                base.fillColor = .indigoDark
+                let base = SKShapeNode(rect: .init(x: -30, y: -30, width: 60, height: 60), cornerRadius: 30)
+                base.fillColor = wheel!.player.line.skin.colour
                 base.lineWidth = 0
                 base.alpha = 0
                 base.zPosition = 4
                 $0.addChild(base)
                 
-                let label = SKLabelNode(text: "+150")
-                label.fontSize = 17
+                let label = SKLabelNode(text: "150")
+                label.fontSize = 18
                 label.fontName = "bold"
-                label.fontColor = .white
+                label.fontColor = .black
                 label.verticalAlignmentMode = .center
+                label.horizontalAlignmentMode = .center
                 base.addChild(label)
-                base.run(.sequence([.fadeIn(withDuration: 4), .fadeOut(withDuration: 2)]))
+                base.run(.sequence([.fadeIn(withDuration: 3), .wait(forDuration: 2), .fadeOut(withDuration: 1)]))
             }
         }
     }

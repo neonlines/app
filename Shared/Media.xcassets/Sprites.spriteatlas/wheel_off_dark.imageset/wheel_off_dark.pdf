@@ -52,7 +52,7 @@ endobj
      /Range [ 0.000000 1.000000 0.000000 1.000000 0.000000 1.000000 ]
   >>
 stream
-{  0.000000 exch 0.000000 exch 0.000000 exch dup 0.000000 gt { exch pop exch pop exch pop dup 0.000000 sub 0.116667 mul 0.000000 add exch dup 0.000000 sub 0.116667 mul 0.000000 add exch dup 0.000000 sub 0.116667 mul 0.000000 add exch } if dup 1.000000 gt { exch pop exch pop exch pop 0.116667 exch 0.116667 exch 0.116667 exch } if pop }
+{  0.079167 exch 0.079167 exch 0.079167 exch dup 0.000000 gt { exch pop exch pop exch pop dup 0.000000 sub 0.116667 mul 0.079167 add exch dup 0.000000 sub 0.116667 mul 0.079167 add exch dup 0.000000 sub 0.116667 mul 0.079167 add exch } if dup 1.000000 gt { exch pop exch pop exch pop 0.195833 exch 0.195833 exch 0.195833 exch } if pop }
 endstream
 endobj
 
