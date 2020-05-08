@@ -5,13 +5,14 @@ final class Score: NSView {
     init(points: Int) {
         super.init(frame: .zero)
         
-        let title = Label(.key("Score"), .bold(15))
-        title.textColor = .secondaryLabelColor
+        let title = Label(.key("Score"), .bold(16))
+        title.textColor = .headerColor
         addSubview(title)
         
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        let label = Label(formatter.string(from: .init(value: points))!, .boldMono(50))
+        
+        let label = Label(formatter.string(from: .init(value: points))!, .bold(60))
         addSubview(label)
         
         let next = Button(.key("Continue"))
@@ -34,7 +35,7 @@ final class Score: NSView {
             profile.maxScore = points
             balam.update(profile)
             
-            let max = Label(.key("New.max.score"), .regular(20))
+            let max = Label(.key("New.max.score"), .bold(16))
             max.textColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .indigoLight : .indigoDark
             addSubview(max)
             

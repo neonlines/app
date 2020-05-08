@@ -7,15 +7,13 @@ final class Hud: SKShapeNode {
     required init?(coder: NSCoder) { nil }
     override init() {
         super.init()
-        fillColor = .windowBackgroundColor
-        strokeColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .black : .white
-        lineWidth = 1
+        lineWidth = 0
         zPosition = 11
         formatter.numberStyle = .decimal
         
         let label = SKLabelNode()
         label.horizontalAlignmentMode = .left
-        label.fontSize = 16
+        label.fontSize = 18
         label.fontName = "bold"
         label.fontColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .white : .black
         label.position.y = -6

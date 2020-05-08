@@ -204,7 +204,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 scene!.camera!.addChild(label)
                 
                 label.run(.fadeIn(withDuration: 3)) { [weak self] in
-                    self?.scene!.run(.fadeOut(withDuration: 4)) {
+                    self?.scene!.run(.fadeOut(withDuration: 2)) {
                         guard let score = self?.score else { return }
                         self?.window!.show(Score(points: score))
                     }
