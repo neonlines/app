@@ -11,12 +11,12 @@ final class Wheel: SKSpriteNode {
     
     required init?(coder: NSCoder) { nil }
     init(player: Player) {
-        super.init(texture: .init(imageNamed: "wheel" + (NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? "_dark" : "_light")), color: .clear, size: .init(width: 240, height: 240))
+        super.init(texture: .init(imageNamed: "wheel" + (NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? "_dark" : "_light")), color: .clear, size: .init(width: 182, height: 182))
         zPosition = 10
         self.player = player
     }
     
     func align() {
-        position.y = (scene!.frame.height / -2) + 60
+        position.y = (scene!.frame.height / -2) + 140
     }
 }

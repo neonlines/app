@@ -229,7 +229,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
 private extension NSEvent {
     var radians: CGFloat? {
         {
-            let point = CGPoint(x: $0.x - window!.contentView!.frame.midX, y: $0.y - 60)
+            let point = CGPoint(x: $0.x - window!.contentView!.frame.midX, y: $0.y - 140)
             guard point.valid else { return nil }
             return point.radians
         } (window!.contentView!.convert(locationInWindow, from: nil))
@@ -239,7 +239,7 @@ private extension NSEvent {
 private extension CGPoint {
     var valid: Bool {
         let distance = pow(x, 2) + pow(y, 2)
-        return distance > 900 && distance < 19_600
+        return distance < 19_600
     }
     
     var radians: CGFloat {
