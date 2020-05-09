@@ -36,16 +36,19 @@ var profile = Profile()
     }
     
     func leaderboards() {
-        guard GKLocalPlayer.local.isAuthenticated else { return }
+        guard GKLocalPlayer.local.isAuthenticated, !windows.contains(where: { $0.contentViewController is GKGameCenterViewController }) else {
+            windows.first { $0.contentViewController is GKGameCenterViewController }?.makeKeyAndOrderFront(true)
+            windows.first { $0.contentViewController is GKGameCenterViewController }?.center()
+            return
+        }
         let controller = GKGameCenterViewController()
         controller.viewState = .leaderboards
         controller.gameCenterDelegate = self
         controller.leaderboardIdentifier = board
-        runModal(for: .init(contentViewController: controller))
+        NSWindow(contentViewController: controller).makeKeyAndOrderFront(self)
     }
     
     func gameCenterViewControllerDidFinish(_: GKGameCenterViewController) {
-        stopModal()
         modalWindow?.close()
     }
     
