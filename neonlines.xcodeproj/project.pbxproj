@@ -50,6 +50,9 @@
 		CEF23AAE244C984100D02FD7 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23AAD244C984100D02FD7 /* Window.swift */; };
 		CEF23AB1244C98EA00D02FD7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEF23AAF244C98EA00D02FD7 /* Localizable.strings */; };
 		CEFADD882467304B00A4A185 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFADD872467304B00A4A185 /* Menu.swift */; };
+		CEFADD8C246737FD00A4A185 /* foe.caf in Resources */ = {isa = PBXBuildFile; fileRef = CEFADD8A246737FD00A4A185 /* foe.caf */; };
+		CEFADD8D246737FD00A4A185 /* player.caf in Resources */ = {isa = PBXBuildFile; fileRef = CEFADD8B246737FD00A4A185 /* player.caf */; };
+		CEFADD8F246739B300A4A185 /* spawn.caf in Resources */ = {isa = PBXBuildFile; fileRef = CEFADD8E246739B300A4A185 /* spawn.caf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +100,9 @@
 		CEF23AAD244C984100D02FD7 /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 		CEF23AB0244C98EA00D02FD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEFADD872467304B00A4A185 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		CEFADD8A246737FD00A4A185 /* foe.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = foe.caf; sourceTree = "<group>"; };
+		CEFADD8B246737FD00A4A185 /* player.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = player.caf; sourceTree = "<group>"; };
+		CEFADD8E246739B300A4A185 /* spawn.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = spawn.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,8 +237,19 @@
 				CEF23AAF244C98EA00D02FD7 /* Localizable.strings */,
 				CE46A6FF2459595C000B1F27 /* Models */,
 				CEA411E82452BC7F000A80B9 /* Nodes */,
+				CEFADD89246737FD00A4A185 /* Sounds */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		CEFADD89246737FD00A4A185 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				CEFADD8A246737FD00A4A185 /* foe.caf */,
+				CEFADD8B246737FD00A4A185 /* player.caf */,
+				CEFADD8E246739B300A4A185 /* spawn.caf */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,7 +339,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEF23A85244C8EA200D02FD7 /* Assets.xcassets in Resources */,
+				CEFADD8D246737FD00A4A185 /* player.caf in Resources */,
+				CEFADD8C246737FD00A4A185 /* foe.caf in Resources */,
 				CE9443D0244CA2E30087CDA9 /* Media.xcassets in Resources */,
+				CEFADD8F246739B300A4A185 /* spawn.caf in Resources */,
 				CEF23AB1244C98EA00D02FD7 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

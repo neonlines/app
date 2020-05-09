@@ -61,6 +61,8 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         self.pointers = pointers
         presentScene(scene)
         players.insert(player)
+        
+        player.run(.playSoundFileNamed("spawn", waitForCompletion: false))
     }
     
     override func viewDidMoveToWindow() {
@@ -196,6 +198,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         (node as? Player).map {
             $0.explode()
             if $0 === wheel?.player {
+                $0.run(.playSoundFileNamed("player", waitForCompletion: false))
                 wheel = nil
                 let label = SKLabelNode(text: .key("Game.over"))
                 label.fontSize = 20
@@ -211,6 +214,10 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                     }
                 }
             } else if wheel != nil {
+                if scene!.camera!.containedNodeSet().contains($0) {
+                    $0.run(.playSoundFileNamed("foe", waitForCompletion: false))
+                }
+                
                 score += 150
                 let base = SKShapeNode(rect: .init(x: -30, y: -30, width: 60, height: 60), cornerRadius: 30)
                 base.fillColor = wheel!.player.line.skin.colour
