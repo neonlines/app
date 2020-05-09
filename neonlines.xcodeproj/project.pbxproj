@@ -81,7 +81,7 @@
 		CED29E47245015BC00AE2F7F /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		CEDDDE192451C6F800C97E0A /* UInt32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt32.swift; sourceTree = "<group>"; };
 		CEED9C3424647B58006AA889 /* Froob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Froob.swift; sourceTree = "<group>"; };
-		CEF23A7D244C8EA200D02FD7 /* neonlines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = neonlines.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEF23A7D244C8EA200D02FD7 /* Neon Lines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Neon Lines.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF23A80244C8EA200D02FD7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		CEF23A84244C8EA200D02FD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEF23A89244C8EA200D02FD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -179,7 +179,7 @@
 		CEF23A7E244C8EA200D02FD7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CEF23A7D244C8EA200D02FD7 /* neonlines.app */,
+				CEF23A7D244C8EA200D02FD7 /* Neon Lines.app */,
 				CEF23A92244C8EB100D02FD7 /* neonlines.app */,
 			);
 			name = Products;
@@ -256,7 +256,7 @@
 				CE5A66C124543D5E00609B51 /* Brain */,
 			);
 			productName = mac;
-			productReference = CEF23A7D244C8EA200D02FD7 /* neonlines.app */;
+			productReference = CEF23A7D244C8EA200D02FD7 /* Neon Lines.app */;
 			productType = "com.apple.product-type.application";
 		};
 		CEF23A91244C8EB100D02FD7 /* ios */ = {
@@ -504,6 +504,8 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = neon.lines;
+				PRODUCT_MODULE_NAME = neonlines;
+				PRODUCT_NAME = "Neon Lines";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -567,6 +569,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = neon.lines;
+				PRODUCT_MODULE_NAME = neonlines;
+				PRODUCT_NAME = "Neon Lines";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 			};
