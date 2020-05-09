@@ -94,7 +94,7 @@ final class Settings: NSView {
     @objc private func done() {
         guard active else { return }
         active = false
-        window!.show(Menu())
+        window!.show(Options())
     }
     
     @objc private func change(_ item: Item) {

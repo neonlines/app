@@ -17,7 +17,7 @@ var profile = Profile()
     }
     
     func applicationWillFinishLaunching(_: Notification) {
-//        mainMenu = Menu()
+        mainMenu = Menu()
         Window().makeKeyAndOrderFront(nil)
         balam.nodes(Profile.self).sink {
             guard let stored = $0.first else {

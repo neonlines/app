@@ -194,7 +194,7 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
     }
     
     @objc private func done() {
-        window!.show(Menu())
+        window!.show(Options())
     }
 }
 

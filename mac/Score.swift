@@ -49,6 +49,6 @@ final class Score: NSView {
     }
     
     @objc private func next() {
-        window!.show(Menu())
+        window!.show(Options())
     }
 }

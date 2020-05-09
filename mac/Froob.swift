@@ -97,6 +97,6 @@ final class Froob: NSView {
     @objc private func done() {
         guard active else { return }
         active = false
-        window!.show(Menu())
+        window!.show(Options())
     }
 }

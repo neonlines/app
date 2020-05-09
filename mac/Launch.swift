@@ -38,6 +38,6 @@ final class Launch: NSView {
     override func mouseUp(with: NSEvent) {
         guard show else { return }
         show = false
-        window!.show(Menu())
+        window!.show(Options())
     }
 }
