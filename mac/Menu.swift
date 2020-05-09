@@ -74,6 +74,6 @@ final class Menu: NSView {
     }
     
     @objc private func scores() {
-        
+        (NSApp as! App).leaderboards()
     }
 }

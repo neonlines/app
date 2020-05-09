@@ -6,8 +6,9 @@ import GameKit
 let balam = Balam("lines")
 var profile = Profile()
 
-@NSApplicationMain final class App: NSApplication, NSApplicationDelegate {
+@NSApplicationMain final class App: NSApplication, NSApplicationDelegate, GKGameCenterControllerDelegate {
     private var subs = Set<AnyCancellable>()
+    private let board = "neon.lines.scores"
     
     required init?(coder: NSCoder) { nil }
     override init() {
@@ -28,9 +29,30 @@ var profile = Profile()
     }
     
     func applicationDidFinishLaunching(_: Notification) {
-        GKLocalPlayer.local.authenticateHandler = { [weak self] controller, error in
+        GKLocalPlayer.local.authenticateHandler = { [weak self] controller, _ in
             guard let controller = controller else { return }
             self?.runModal(for: .init(contentViewController: controller))
         }
+    }
+    
+    func leaderboards() {
+        guard GKLocalPlayer.local.isAuthenticated else { return }
+        let controller = GKGameCenterViewController()
+        controller.viewState = .leaderboards
+        controller.gameCenterDelegate = self
+        controller.leaderboardIdentifier = board
+        runModal(for: .init(contentViewController: controller))
+    }
+    
+    func gameCenterViewControllerDidFinish(_: GKGameCenterViewController) {
+        stopModal()
+        modalWindow?.close()
+    }
+    
+    func score(_ points: Int) {
+        guard GKLocalPlayer.local.isAuthenticated else { return }
+        let report = GKScore(leaderboardIdentifier: board)
+        report.value = .init(points)
+        GKScore.report([report])
     }
 }

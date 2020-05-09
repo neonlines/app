@@ -44,6 +44,8 @@ final class Score: NSView {
             max.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
             max.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20).isActive = true
         }
+        
+        (NSApp as! App).score(points)
     }
     
     @objc private func next() {
