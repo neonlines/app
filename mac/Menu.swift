@@ -23,6 +23,11 @@ final class Menu: NSView {
         store.action = #selector(self.store)
         addSubview(store)
         
+        let scores = Button(.key("Scores"))
+        scores.target = self
+        scores.action = #selector(self.scores)
+        addSubview(scores)
+        
         newGame.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         newGame.topAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
@@ -31,6 +36,9 @@ final class Menu: NSView {
         
         store.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         store.topAnchor.constraint(equalTo: settings.bottomAnchor, constant: 10).isActive = true
+        
+        scores.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        scores.topAnchor.constraint(equalTo: store.bottomAnchor, constant: 10).isActive = true
     }
     
     private func startGame() {
@@ -63,5 +71,9 @@ final class Menu: NSView {
         guard active else { return }
         active = false
         window!.show(Store())
+    }
+    
+    @objc private func scores() {
+        
     }
 }

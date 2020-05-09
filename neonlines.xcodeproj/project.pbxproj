@@ -20,6 +20,8 @@
 		CE382D432459DB34004DE132 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE382D422459DB34004DE132 /* Button.swift */; };
 		CE382D452459DB56004DE132 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE382D442459DB56004DE132 /* Color.swift */; };
 		CE46A7012459596E000B1F27 /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46A7002459596E000B1F27 /* Skin.swift */; };
+		CE4E4ECC2466B42200531870 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4E4ECB2466B42200531870 /* GameKit.framework */; };
+		CE4E4ECE2466B42500531870 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4E4ECD2466B42500531870 /* StoreKit.framework */; };
 		CE5A66C224543D5E00609B51 /* Brain in Frameworks */ = {isa = PBXBuildFile; productRef = CE5A66C124543D5E00609B51 /* Brain */; };
 		CE7CE25A2459E91400CD8791 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CE2592459E91400CD8791 /* Settings.swift */; };
 		CE7CE25C2459EC9600CD8791 /* Scroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CE25B2459EC9600CD8791 /* Scroll.swift */; };
@@ -60,6 +62,8 @@
 		CE382D422459DB34004DE132 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		CE382D442459DB56004DE132 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		CE46A7002459596E000B1F27 /* Skin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skin.swift; sourceTree = "<group>"; };
+		CE4E4ECB2466B42200531870 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		CE4E4ECD2466B42500531870 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CE7CE2592459E91400CD8791 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		CE7CE25B2459EC9600CD8791 /* Scroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scroll.swift; sourceTree = "<group>"; };
 		CE7CE25D2459EEED00CD8791 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
@@ -98,8 +102,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4E4ECC2466B42200531870 /* GameKit.framework in Frameworks */,
 				CEF23AAC244C97F000D02FD7 /* Balam in Frameworks */,
 				CE5A66C224543D5E00609B51 /* Brain in Frameworks */,
+				CE4E4ECE2466B42500531870 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +151,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		CEEB08AD2466A8630057041C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE4E4ECD2466B42500531870 /* StoreKit.framework */,
+				CE4E4ECB2466B42200531870 /* GameKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CEF23A72244C8E6F00D02FD7 = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +170,7 @@
 				CEF23A7F244C8EA200D02FD7 /* mac */,
 				CEF23A7E244C8EA200D02FD7 /* Products */,
 				CEF23AA9244C8F3C00D02FD7 /* Shared */,
+				CEEB08AD2466A8630057041C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -453,6 +469,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = mac/mac.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -483,6 +500,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = neon.lines;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 			};
@@ -520,6 +538,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = mac/mac.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -544,6 +563,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = neon.lines;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 			};
 			name = Release;

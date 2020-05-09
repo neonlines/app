@@ -1,6 +1,7 @@
 import AppKit
 import Balam
 import Combine
+import GameKit
 
 let balam = Balam("lines")
 var profile = Profile()
@@ -24,5 +25,12 @@ var profile = Profile()
             }
             profile = stored
         }.store(in: &subs)
+    }
+    
+    func applicationDidFinishLaunching(_: Notification) {
+        GKLocalPlayer.local.authenticateHandler = { [weak self] controller, error in
+            guard let controller = controller else { return }
+            self?.runModal(for: .init(contentViewController: controller))
+        }
     }
 }
