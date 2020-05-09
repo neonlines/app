@@ -73,7 +73,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
-      customArchiveName = "neonlines"
+      customArchiveName = "Neon Lines"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

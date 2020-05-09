@@ -6,6 +6,15 @@ final class Menu: NSView {
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(frame: .zero)
+        let image = NSImageView(image: NSImage(named: "AppIcon")!)
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.imageScaling = .scaleNone
+        addSubview(image)
+        
+        let title = Label(.key("Neon.lines"), .bold(20))
+        title.textColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .indigoLight : .indigoDark
+        addSubview(title)
+        
         let newGame = Button(.key("New.game"))
         newGame.target = self
         newGame.action = #selector(self.newGame)
@@ -28,8 +37,16 @@ final class Menu: NSView {
         scores.action = #selector(self.scores)
         addSubview(scores)
         
+        image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        image.bottomAnchor.constraint(equalTo: title.topAnchor).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        image.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        title.bottomAnchor.constraint(equalTo: newGame.topAnchor, constant: -50).isActive = true
+        
         newGame.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        newGame.topAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        newGame.topAnchor.constraint(equalTo: centerYAnchor, constant: 50).isActive = true
         
         settings.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         settings.topAnchor.constraint(equalTo: newGame.bottomAnchor, constant: 15).isActive = true
