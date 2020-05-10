@@ -13,7 +13,6 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private let brain: Brain
     private let soundPlayer = SKAction.playSoundFileNamed("player", waitForCompletion: false)
     private let soundFoe = SKAction.playSoundFileNamed("foe", waitForCompletion: false)
-    private let soundSpawn = SKAction.playSoundFileNamed("spawn", waitForCompletion: false)
     override var mouseDownCanMoveWindow: Bool { true }
     
     private var score = 0 {
@@ -65,7 +64,18 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         presentScene(scene)
         players.insert(player)
         
-        player.run(soundSpawn)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak scene] in
+            let track: String
+            switch Int.random(in: 0 ... 3) {
+            case 1: track = "fatal1"
+            case 2: track = "fatal2"
+            case 3: track = "fatal3"
+            default: track = "fatal0"
+            }
+            let sound = SKAudioNode(fileNamed: track)
+            sound.isPositional = false
+            scene?.addChild(sound)
+        }
     }
     
     override func viewDidMoveToWindow() {
