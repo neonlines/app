@@ -31,7 +31,7 @@ var profile = Profile()
     func applicationDidFinishLaunching(_: Notification) {
         GKLocalPlayer.local.authenticateHandler = { [weak self] controller, _ in
             guard let controller = controller else { return }
-            self?.runModal(for: .init(contentViewController: controller))
+            NSWindow(contentViewController: controller).makeKeyAndOrderFront(self)
         }
     }
     
@@ -49,7 +49,7 @@ var profile = Profile()
     }
     
     func gameCenterViewControllerDidFinish(_: GKGameCenterViewController) {
-        modalWindow?.close()
+        windows.first { $0.contentViewController is GKGameCenterViewController }?.close()
     }
     
     func score(_ points: Int) {
