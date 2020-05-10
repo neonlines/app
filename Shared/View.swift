@@ -11,6 +11,9 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private var times = Times()
     private var players = Set<Player>()
     private let brain: Brain
+    private let soundPlayer = SKAction.playSoundFileNamed("player", waitForCompletion: false)
+    private let soundFoe = SKAction.playSoundFileNamed("foe", waitForCompletion: false)
+    private let soundSpawn = SKAction.playSoundFileNamed("spawn", waitForCompletion: false)
     override var mouseDownCanMoveWindow: Bool { true }
     
     private var score = 0 {
@@ -62,7 +65,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         presentScene(scene)
         players.insert(player)
         
-        player.run(.playSoundFileNamed("spawn", waitForCompletion: false))
+        player.run(soundSpawn)
     }
     
     override func viewDidMoveToWindow() {
@@ -198,7 +201,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         (node as? Player).map {
             $0.explode()
             if $0 === wheel?.player {
-                $0.run(.playSoundFileNamed("player", waitForCompletion: false))
+                $0.run(soundPlayer)
                 wheel = nil
                 let label = SKLabelNode(text: .key("Game.over"))
                 label.fontSize = 20
@@ -215,7 +218,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 }
             } else if wheel != nil {
                 if scene!.camera!.containedNodeSet().contains($0) {
-                    $0.run(.playSoundFileNamed("foe", waitForCompletion: false))
+                    $0.run(soundFoe)
                 }
                 
                 score += 150
