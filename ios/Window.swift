@@ -49,17 +49,3 @@ var profile = Profile()
         GKScore.report([report])
     }
 }
-
-extension UIWindow {
-    func show(_ view: UIView) {
-        UIView.animate(withDuration: 0.4, animations: {
-            self.rootViewController!.view.alpha = 0
-        }) { _ in
-            view.alpha = 0
-            self.rootViewController!.view = view
-            UIView.animate(withDuration: 0.4) {
-                view.alpha = 1
-            }
-        }
-    }
-}

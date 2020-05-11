@@ -1,65 +1,62 @@
 import UIKit
 
-final class Options: UIView {
-    private var active = true
-    
-    required init?(coder: NSCoder) { nil }
-    init() {
-        super.init(frame: .zero)
+final class Options: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         let image = UIImageView(image: UIImage(named: "logo")!)
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .center
         image.clipsToBounds = true
-        addSubview(image)
+        view.addSubview(image)
         
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.text = .key("Neon.lines")
-        title.font = .preferredFont(forTextStyle: .largeTitle)
+        title.font = .preferredFont(forTextStyle: .title2)
         title.textColor = traitCollection.userInterfaceStyle == .dark ? .indigoLight : .indigoDark
-        addSubview(title)
+        view.addSubview(title)
         
         let newGame = Button(.key("New.game"))
         newGame.target = self
         newGame.action = #selector(self.newGame)
         newGame.label.textColor = .black
         newGame.base.backgroundColor = .indigoLight
-        addSubview(newGame)
+        view.addSubview(newGame)
         
         let settings = Button(.key("Settings"))
         settings.target = self
         settings.action = #selector(self.settings)
-        addSubview(settings)
+        view.addSubview(settings)
         
         let store = Button(.key("Store"))
         store.target = self
         store.action = #selector(self.store)
-        addSubview(store)
+        view.addSubview(store)
         
         let scores = Button(.key("Scores"))
         scores.target = self
         scores.action = #selector(self.scores)
-        addSubview(scores)
+        view.addSubview(scores)
         
-        image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        image.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         image.bottomAnchor.constraint(equalTo: title.topAnchor).isActive = true
         image.widthAnchor.constraint(equalToConstant: 150).isActive = true
         image.heightAnchor.constraint(equalToConstant: 150).isActive = true
 
-        title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        title.bottomAnchor.constraint(equalTo: newGame.topAnchor, constant: -50).isActive = true
+        title.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        title.bottomAnchor.constraint(equalTo: newGame.topAnchor, constant: -80).isActive = true
         
-        newGame.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        newGame.topAnchor.constraint(equalTo: centerYAnchor, constant: 50).isActive = true
+        newGame.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        newGame.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        settings.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        settings.topAnchor.constraint(equalTo: newGame.bottomAnchor, constant: 15).isActive = true
+        settings.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        settings.topAnchor.constraint(equalTo: newGame.bottomAnchor, constant: 10).isActive = true
         
-        store.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        store.topAnchor.constraint(equalTo: settings.bottomAnchor, constant: 10).isActive = true
+        store.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        store.topAnchor.constraint(equalTo: settings.bottomAnchor, constant: 5).isActive = true
         
-        scores.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        scores.topAnchor.constraint(equalTo: store.bottomAnchor, constant: 10).isActive = true
+        scores.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        scores.topAnchor.constraint(equalTo: store.bottomAnchor, constant: 5).isActive = true
     }
     
     private func startGame() {

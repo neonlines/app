@@ -1,21 +1,30 @@
 import UIKit
 
-final class Launch: UIView {
+final class Launch: UIViewController {
     private weak var press: UILabel!
 
-    required init?(coder: NSCoder) { nil }
-    init() {
-        super.init(frame: .zero)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         let press = UILabel()
         press.translatesAutoresizingMaskIntoConstraints = false
         press.font = .preferredFont(forTextStyle: .headline)
         press.text = .key("Press.to.start")
         press.alpha = 0
-        addSubview(press)
+        view.addSubview(press)
         self.press = press
         
-        press.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        press.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        let control = Control()
+        control.target = self
+        control.action = #selector(menu)
+        view.addSubview(control)
+        
+        press.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        press.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        control.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        control.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        control.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        control.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
         animate()
     }
@@ -32,8 +41,7 @@ final class Launch: UIView {
         }
     }
     
-    override func touchesEnded(_: Set<UITouch>, with: UIEvent?) {
-        window!.show(Options())
-        isUserInteractionEnabled = false
+    @objc private func menu() {
+        navigationController?.show(Options())
     }
 }
