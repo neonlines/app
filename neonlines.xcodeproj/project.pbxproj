@@ -21,6 +21,8 @@
 		CE40E01124692A0600549907 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE40E01024692A0600549907 /* Scene.swift */; };
 		CE40E01324692B4200549907 /* Balam in Frameworks */ = {isa = PBXBuildFile; productRef = CE40E01224692B4200549907 /* Balam */; };
 		CE40E01524692B4200549907 /* Brain in Frameworks */ = {isa = PBXBuildFile; productRef = CE40E01424692B4200549907 /* Brain */; };
+		CE40E01624692BEF00549907 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE899EB5245EBD930066824A /* Profile.swift */; };
+		CE40E01724692BF200549907 /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46A7002459596E000B1F27 /* Skin.swift */; };
 		CE46A7012459596E000B1F27 /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46A7002459596E000B1F27 /* Skin.swift */; };
 		CE4E4ECC2466B42200531870 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4E4ECB2466B42200531870 /* GameKit.framework */; };
 		CE4E4ECE2466B42500531870 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4E4ECD2466B42500531870 /* StoreKit.framework */; };
@@ -48,7 +50,7 @@
 		CEED9C3524647B58006AA889 /* Froob.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEED9C3424647B58006AA889 /* Froob.swift */; };
 		CEF23A81244C8EA200D02FD7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23A80244C8EA200D02FD7 /* App.swift */; };
 		CEF23A85244C8EA200D02FD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF23A84244C8EA200D02FD7 /* Assets.xcassets */; };
-		CEF23A95244C8EB100D02FD7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23A94244C8EB100D02FD7 /* App.swift */; };
+		CEF23A95244C8EB100D02FD7 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23A94244C8EB100D02FD7 /* Window.swift */; };
 		CEF23A9E244C8EB100D02FD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF23A9D244C8EB100D02FD7 /* Assets.xcassets */; };
 		CEF23AA1244C8EB100D02FD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEF23A9F244C8EB100D02FD7 /* LaunchScreen.storyboard */; };
 		CEF23AAC244C97F000D02FD7 /* Balam in Frameworks */ = {isa = PBXBuildFile; productRef = CEF23AAB244C97F000D02FD7 /* Balam */; };
@@ -99,7 +101,7 @@
 		CEF23A89244C8EA200D02FD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEF23A8A244C8EA200D02FD7 /* mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mac.entitlements; sourceTree = "<group>"; };
 		CEF23A92244C8EB100D02FD7 /* Neon Lines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Neon Lines.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEF23A94244C8EB100D02FD7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		CEF23A94244C8EB100D02FD7 /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 		CEF23A9D244C8EB100D02FD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEF23AA0244C8EB100D02FD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEF23AA2244C8EB100D02FD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -231,8 +233,8 @@
 			isa = PBXGroup;
 			children = (
 				CEF23AA2244C8EB100D02FD7 /* Info.plist */,
-				CEF23A94244C8EB100D02FD7 /* App.swift */,
 				CE40E01024692A0600549907 /* Scene.swift */,
+				CEF23A94244C8EB100D02FD7 /* Window.swift */,
 				CEF23A9D244C8EB100D02FD7 /* Assets.xcassets */,
 				CEF23A9F244C8EB100D02FD7 /* LaunchScreen.storyboard */,
 			);
@@ -421,9 +423,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEF23A95244C8EB100D02FD7 /* App.swift in Sources */,
+				CEF23A95244C8EB100D02FD7 /* Window.swift in Sources */,
+				CE40E01624692BEF00549907 /* Profile.swift in Sources */,
 				CE40E01124692A0600549907 /* Scene.swift in Sources */,
 				CE2CC6F9244C9B0900C21893 /* String.swift in Sources */,
+				CE40E01724692BF200549907 /* Skin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
