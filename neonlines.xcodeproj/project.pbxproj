@@ -7,10 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE0E09422469AE6300FAD2C8 /* Control.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E09412469AE6300FAD2C8 /* Control.swift */; };
+		CE0E09442469B07200FAD2C8 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E09432469B07200FAD2C8 /* Button.swift */; };
+		CE0E09452469B17400FAD2C8 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE382D442459DB56004DE132 /* Color.swift */; };
 		CE2CC6EE244C996C00C21893 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6ED244C996C00C21893 /* View.swift */; };
 		CE2CC6F0244C997100C21893 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEF23AAF244C98EA00D02FD7 /* Localizable.strings */; };
 		CE2CC6F8244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
 		CE2CC6F9244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
+		CE358AAE2469A66600C7FCAD /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358AAD2469A66600C7FCAD /* Launch.swift */; };
+		CE358AB02469A86900C7FCAD /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358AAF2469A86900C7FCAD /* Options.swift */; };
 		CE382D392459CDE3004DE132 /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE382D382459CDE3004DE132 /* Launch.swift */; };
 		CE382D3B2459CFBE004DE132 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE382D3A2459CFBE004DE132 /* Label.swift */; };
 		CE382D3D2459CFF6004DE132 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE382D3C2459CFF6004DE132 /* Font.swift */; };
@@ -62,8 +67,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE0E09412469AE6300FAD2C8 /* Control.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Control.swift; sourceTree = "<group>"; };
+		CE0E09432469B07200FAD2C8 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		CE2CC6ED244C996C00C21893 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		CE2CC6F7244C9B0900C21893 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		CE358AAD2469A66600C7FCAD /* Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launch.swift; sourceTree = "<group>"; };
+		CE358AAF2469A86900C7FCAD /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		CE382D382459CDE3004DE132 /* Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launch.swift; sourceTree = "<group>"; };
 		CE382D3A2459CFBE004DE132 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		CE382D3C2459CFF6004DE132 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -233,6 +242,10 @@
 			isa = PBXGroup;
 			children = (
 				CEF23AA2244C8EB100D02FD7 /* Info.plist */,
+				CE0E09432469B07200FAD2C8 /* Button.swift */,
+				CE0E09412469AE6300FAD2C8 /* Control.swift */,
+				CE358AAD2469A66600C7FCAD /* Launch.swift */,
+				CE358AAF2469A86900C7FCAD /* Options.swift */,
 				CE40E01024692A0600549907 /* Scene.swift */,
 				CEF23A94244C8EB100D02FD7 /* Window.swift */,
 				CEF23A9D244C8EB100D02FD7 /* Assets.xcassets */,
@@ -424,10 +437,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEF23A95244C8EB100D02FD7 /* Window.swift in Sources */,
+				CE0E09422469AE6300FAD2C8 /* Control.swift in Sources */,
 				CE40E01624692BEF00549907 /* Profile.swift in Sources */,
+				CE0E09452469B17400FAD2C8 /* Color.swift in Sources */,
 				CE40E01124692A0600549907 /* Scene.swift in Sources */,
 				CE2CC6F9244C9B0900C21893 /* String.swift in Sources */,
+				CE358AAE2469A66600C7FCAD /* Launch.swift in Sources */,
 				CE40E01724692BF200549907 /* Skin.swift in Sources */,
+				CE0E09442469B07200FAD2C8 /* Button.swift in Sources */,
+				CE358AB02469A86900C7FCAD /* Options.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
