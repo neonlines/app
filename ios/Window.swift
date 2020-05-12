@@ -21,7 +21,7 @@ var profile = Profile()
             profile = stored
         }.store(in: &subs)
         
-        GKLocalPlayer.local.authenticateHandler = { controller, _ in
+        GKLocalPlayer.local.authenticateHandler = { controller, error in
             guard let controller = controller else { return }
             self.rootViewController!.present(controller, animated: true)
         }
@@ -30,7 +30,12 @@ var profile = Profile()
     }
     
     func leaderboards() {
-        guard GKLocalPlayer.local.isAuthenticated else { return }
+        guard GKLocalPlayer.local.isAuthenticated else {
+            let alert = UIAlertController(title: .key("Game.center.error"), message: .key("Check.you.are.logged"), preferredStyle: .alert)
+            alert.addAction(.init(title: .key("Continue"), style: .cancel, handler: nil))
+            rootViewController!.present(alert, animated: true)
+            return
+        }
         let controller = GKGameCenterViewController()
         controller.viewState = .leaderboards
         controller.gameCenterDelegate = self
