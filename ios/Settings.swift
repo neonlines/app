@@ -1,51 +1,33 @@
-import AppKit
+import UIKit
 
-final class Settings: NSView {
+final class Settings: UIViewController {
     private weak var scroll: Scroll!
-    private var active = true
     private let itemSize = CGFloat(220)
     
-    required init?(coder: NSCoder) { nil }
-    init() {
-        super.init(frame: .zero)
-        wantsLayer = true
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .done, target: navigationController?.presentingViewController, action: #selector(dismiss))
+        navigationItem.title = .key("Choose.your.skin")
         
         let scroll = Scroll()
-        addSubview(scroll)
+        view.addSubview(scroll)
         self.scroll = scroll
         
-        let separator = Separator()
-        addSubview(separator)
-        
-        let done = Button(.key("Done"))
-        done.target = self
-        done.action = #selector(self.done)
-        done.label.textColor = .black
-        done.layer!.backgroundColor = .indigoLight
-        addSubview(done)
-        
-        let title = Label(.key("Choose.your.skin"), .bold(16))
-        scroll.add(title)
-        
-        scroll.topAnchor.constraint(equalTo: topAnchor, constant: 1).isActive = true
-        scroll.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
-        scroll.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
-        scroll.bottomAnchor.constraint(equalTo: separator.topAnchor).isActive = true
+        scroll.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        scroll.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        scroll.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        scroll.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         scroll.width.constraint(equalTo: scroll.widthAnchor).isActive = true
         scroll.height.constraint(greaterThanOrEqualTo: scroll.heightAnchor).isActive = true
         
-        separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
-        separator.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        separator.bottomAnchor.constraint(equalTo: done.topAnchor, constant: -15).isActive = true
-        
-        done.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        done.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15).isActive = true
-        
-        title.topAnchor.constraint(equalTo: scroll.top, constant: 80).isActive = true
-        title.leftAnchor.constraint(equalTo: scroll.left, constant: 20).isActive = true
-        
+        let width = view.frame.width
+        let left = (width / (itemSize + 20)).truncatingRemainder(dividingBy: 1) * (itemSize / 2)
+        var point = CGPoint(x: left, y: 150)
         Skin.Id.allCases.forEach { id in
+            if point.x > width - itemSize {
+                point = .init(x: left, y: point.y + itemSize + 20)
+            }
+            
             let item = Item(id: id)
             item.selected = id == profile.skin
             item.target = self
@@ -60,45 +42,16 @@ final class Settings: NSView {
     
             item.widthAnchor.constraint(equalToConstant: itemSize).isActive = true
             item.heightAnchor.constraint(equalToConstant: itemSize).isActive = true
-            item.top = item.topAnchor.constraint(equalTo: scroll.top)
-            item.left = item.leftAnchor.constraint(equalTo: scroll.left)
+            item.topAnchor.constraint(equalTo: scroll.top, constant: point.y).isActive = true
+            item.leftAnchor.constraint(equalTo: scroll.left, constant: point.x).isActive = true
+            point.x += itemSize + 20
         }
         
         scroll.bottom.constraint(greaterThanOrEqualTo: scroll.views.last!.bottomAnchor, constant: 30).isActive = true
-        arrange()
-    }
-    
-    override func viewDidEndLiveResize() {
-        arrange()
-    }
-    
-    private func arrange() {
-        guard let width = NSApp.keyWindow?.frame.size.width else { return }
-        let left = (width / (itemSize + 20)).truncatingRemainder(dividingBy: 1) * (itemSize / 2)
-        var point = CGPoint(x: left, y: 150)
-        scroll.views.compactMap { $0 as? Item }.forEach {
-            if point.x > width - itemSize {
-                point = .init(x: left, y: point.y + itemSize + 20)
-            }
-            $0.left.constant = point.x
-            $0.top.constant = point.y
-            point.x += itemSize + 20
-        }
-        NSAnimationContext.runAnimationGroup {
-            $0.duration = 0.5
-            $0.allowsImplicitAnimation = true
-            scroll.contentView.layoutSubtreeIfNeeded()
-        }
-    }
-    
-    @objc private func done() {
-        guard active else { return }
-        active = false
-        window!.show(Options())
     }
     
     @objc private func change(_ item: Item) {
-        guard active, !item.selected else { return }
+        guard !item.selected else { return }
         profile.skin = item.id
         balam.update(profile)
         scroll.views.compactMap { $0 as? Item }.forEach {
@@ -107,40 +60,36 @@ final class Settings: NSView {
     }
     
     @objc private func store() {
-        guard active else { return }
-        active = false
-        window!.show(Store())
+
     }
 }
 
 private final class Item: Control {
     let id: Skin.Id
-    weak var top: NSLayoutConstraint! { didSet { top.isActive = true } }
-    weak var left: NSLayoutConstraint! { didSet { left.isActive = true } }
-    private weak var image: NSImageView!
-    private weak var border: NSView!
+    private weak var image: UIImageView!
+    private weak var border: UIView!
     
     required init?(coder: NSCoder) { nil }
     init(id: Skin.Id) {
         self.id = id
         super.init()
-        wantsLayer = true
-        layer!.cornerRadius = 32
-        layer!.borderWidth = 5
+        layer.cornerRadius = 32
+        layer.borderWidth = 5
         
         let skin = Skin.make(id: id)
         
-        let border = NSView()
+        let border = UIView()
+        border.isUserInteractionEnabled = false
         border.translatesAutoresizingMaskIntoConstraints = false
-        border.wantsLayer = true
-        border.layer!.cornerRadius = 45
-        border.layer!.backgroundColor = skin.colour.cgColor
+        border.layer.cornerRadius = 45
+        border.backgroundColor = skin.colour
         addSubview(border)
         self.border = border
         
-        let image = NSImageView(image: NSImage(named: skin.texture)!)
+        let image = UIImageView(image: UIImage(named: skin.texture)!)
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.imageScaling = .scaleProportionallyUpOrDown
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
         addSubview(image)
         self.image = image
         
@@ -157,28 +106,34 @@ private final class Item: Control {
     
     var selected = false {
         didSet {
-            border.alphaValue = selected ? 1 : 0
-            image.alphaValue = selected ? 1 : 0.5
-            layer!.borderColor = selected ? .indigoLight : NSColor.separatorColor.cgColor
+            border.alpha = selected ? 1 : 0
+            image.alpha = selected ? 1 : 0.5
+            layer.borderColor = selected ? .indigoLight : UIColor.separator.cgColor
         }
     }
     
     func purchaseable() {
-        let base = NSView()
+        let base = UIView()
+        base.isUserInteractionEnabled = false
         base.translatesAutoresizingMaskIntoConstraints = false
-        base.wantsLayer = true
-        base.layer!.backgroundColor = .indigoLight
+        base.backgroundColor = .indigoLight
         addSubview(base)
         
-        let title = Label(.key("New.skin"), .medium(16))
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.text = .key("New.skin")
+        title.font = .preferredFont(forTextStyle: .headline)
         title.textColor = .black
-        title.alignment = .center
+        title.textAlignment = .center
         title.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         addSubview(title)
         
-        let subtitle = Label(.key("Purchase.on.store"), .regular(12))
+        let subtitle = UILabel()
+        subtitle.translatesAutoresizingMaskIntoConstraints = false
+        subtitle.text = .key("Purchase.on.store")
+        subtitle.font = .preferredFont(forTextStyle: .caption1)
         subtitle.textColor = .black
-        subtitle.alignment = .center
+        subtitle.textAlignment = .center
         subtitle.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         addSubview(subtitle)
         

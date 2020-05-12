@@ -36,6 +36,8 @@
 		CE5A8DD4246810EC00750A79 /* fatal2.caf in Resources */ = {isa = PBXBuildFile; fileRef = CE5A8DD1246810EC00750A79 /* fatal2.caf */; };
 		CE5A8DD5246810EC00750A79 /* fatal1.caf in Resources */ = {isa = PBXBuildFile; fileRef = CE5A8DD2246810EC00750A79 /* fatal1.caf */; };
 		CE5A8DD6246810EC00750A79 /* fatal3.caf in Resources */ = {isa = PBXBuildFile; fileRef = CE5A8DD3246810EC00750A79 /* fatal3.caf */; };
+		CE5D3B0C246A7DCD0044C1D3 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5D3B0B246A7DCD0044C1D3 /* Settings.swift */; };
+		CE5D3B0E246A7E920044C1D3 /* Scroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5D3B0D246A7E920044C1D3 /* Scroll.swift */; };
 		CE7CE25A2459E91400CD8791 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CE2592459E91400CD8791 /* Settings.swift */; };
 		CE7CE25C2459EC9600CD8791 /* Scroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CE25B2459EC9600CD8791 /* Scroll.swift */; };
 		CE7CE25E2459EEED00CD8791 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7CE25D2459EEED00CD8791 /* Store.swift */; };
@@ -88,6 +90,8 @@
 		CE5A8DD1246810EC00750A79 /* fatal2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fatal2.caf; sourceTree = "<group>"; };
 		CE5A8DD2246810EC00750A79 /* fatal1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fatal1.caf; sourceTree = "<group>"; };
 		CE5A8DD3246810EC00750A79 /* fatal3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fatal3.caf; sourceTree = "<group>"; };
+		CE5D3B0B246A7DCD0044C1D3 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		CE5D3B0D246A7E920044C1D3 /* Scroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scroll.swift; sourceTree = "<group>"; };
 		CE7CE2592459E91400CD8791 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		CE7CE25B2459EC9600CD8791 /* Scroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scroll.swift; sourceTree = "<group>"; };
 		CE7CE25D2459EEED00CD8791 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
@@ -247,6 +251,8 @@
 				CE358AAD2469A66600C7FCAD /* Launch.swift */,
 				CE358AAF2469A86900C7FCAD /* Options.swift */,
 				CE40E01024692A0600549907 /* Scene.swift */,
+				CE5D3B0D246A7E920044C1D3 /* Scroll.swift */,
+				CE5D3B0B246A7DCD0044C1D3 /* Settings.swift */,
 				CEF23A94244C8EB100D02FD7 /* Window.swift */,
 				CEF23A9D244C8EB100D02FD7 /* Assets.xcassets */,
 				CEF23A9F244C8EB100D02FD7 /* LaunchScreen.storyboard */,
@@ -438,6 +444,7 @@
 			files = (
 				CEF23A95244C8EB100D02FD7 /* Window.swift in Sources */,
 				CE0E09422469AE6300FAD2C8 /* Control.swift in Sources */,
+				CE5D3B0E246A7E920044C1D3 /* Scroll.swift in Sources */,
 				CE40E01624692BEF00549907 /* Profile.swift in Sources */,
 				CE0E09452469B17400FAD2C8 /* Color.swift in Sources */,
 				CE40E01124692A0600549907 /* Scene.swift in Sources */,
@@ -445,6 +452,7 @@
 				CE358AAE2469A66600C7FCAD /* Launch.swift in Sources */,
 				CE40E01724692BF200549907 /* Skin.swift in Sources */,
 				CE0E09442469B07200FAD2C8 /* Button.swift in Sources */,
+				CE5D3B0C246A7DCD0044C1D3 /* Settings.swift in Sources */,
 				CE358AB02469A86900C7FCAD /* Options.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
