@@ -10,6 +10,7 @@ Scores = "Scores";
 Continue = "Continue";
 Game.center.error = "Game Center Error";
 Check.you.are.logged = "Seems you are not signed to Game Center";
+Go.to.settings = "Go to Settings";
 New.max.score = "New Personal Max!";
 Choose.your.skin = "Choose your skin";
 New.skin = "New Skin";
