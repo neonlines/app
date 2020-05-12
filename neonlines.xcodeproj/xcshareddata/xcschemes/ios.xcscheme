@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CEF23A91244C8EB100D02FD7"
-               BuildableName = "Neon Lines.app"
-               BlueprintName = "ios"
+               BuildableName = "Lines.app"
+               BlueprintName = "iOS"
                ReferencedContainer = "container:neonlines.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CEF23A91244C8EB100D02FD7"
-            BuildableName = "Neon Lines.app"
-            BlueprintName = "ios"
+            BuildableName = "Lines.app"
+            BlueprintName = "iOS"
             ReferencedContainer = "container:neonlines.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CEF23A91244C8EB100D02FD7"
-            BuildableName = "Neon Lines.app"
-            BlueprintName = "ios"
+            BuildableName = "Lines.app"
+            BlueprintName = "iOS"
             ReferencedContainer = "container:neonlines.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
