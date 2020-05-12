@@ -2,11 +2,12 @@ import UIKit
 
 final class Settings: UIViewController {
     private weak var scroll: Scroll!
-    private let itemSize = CGFloat(220)
+    private let itemSize = CGFloat(160)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .done, target: navigationController?.presentingViewController, action: #selector(dismiss))
+        view.backgroundColor = .systemBackground
+        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .done, target: self, action: #selector(done))
         navigationItem.title = .key("Choose.your.skin")
         
         let scroll = Scroll()
@@ -20,12 +21,11 @@ final class Settings: UIViewController {
         scroll.width.constraint(equalTo: scroll.widthAnchor).isActive = true
         scroll.height.constraint(greaterThanOrEqualTo: scroll.heightAnchor).isActive = true
         
-        let width = view.frame.width
-        let left = (width / (itemSize + 20)).truncatingRemainder(dividingBy: 1) * (itemSize / 2)
-        var point = CGPoint(x: left, y: 150)
+        let left = ((view.frame.width + 10) / (itemSize + 10)).truncatingRemainder(dividingBy: 1) * (itemSize / 2)
+        var point = CGPoint(x: left, y: 40)
         Skin.Id.allCases.forEach { id in
-            if point.x > width - itemSize {
-                point = .init(x: left, y: point.y + itemSize + 20)
+            if point.x > view.frame.width - itemSize {
+                point = .init(x: left, y: point.y + itemSize + 10)
             }
             
             let item = Item(id: id)
@@ -44,10 +44,10 @@ final class Settings: UIViewController {
             item.heightAnchor.constraint(equalToConstant: itemSize).isActive = true
             item.topAnchor.constraint(equalTo: scroll.top, constant: point.y).isActive = true
             item.leftAnchor.constraint(equalTo: scroll.left, constant: point.x).isActive = true
-            point.x += itemSize + 20
+            point.x += itemSize + 10
         }
         
-        scroll.bottom.constraint(greaterThanOrEqualTo: scroll.views.last!.bottomAnchor, constant: 30).isActive = true
+        scroll.bottom.constraint(greaterThanOrEqualTo: scroll.views.last!.bottomAnchor, constant: 40).isActive = true
     }
     
     @objc private func change(_ item: Item) {
@@ -57,6 +57,10 @@ final class Settings: UIViewController {
         scroll.views.compactMap { $0 as? Item }.forEach {
             $0.selected = $0.id == profile.skin
         }
+    }
+    
+    @objc private func done() {
+        navigationController?.presentingViewController?.dismiss(animated: true)
     }
     
     @objc private func store() {
@@ -73,6 +77,7 @@ private final class Item: Control {
     init(id: Skin.Id) {
         self.id = id
         super.init()
+        clipsToBounds = true
         layer.cornerRadius = 32
         layer.borderWidth = 5
         
@@ -81,7 +86,7 @@ private final class Item: Control {
         let border = UIView()
         border.isUserInteractionEnabled = false
         border.translatesAutoresizingMaskIntoConstraints = false
-        border.layer.cornerRadius = 45
+        border.layer.cornerRadius = 20
         border.backgroundColor = skin.colour
         addSubview(border)
         self.border = border
@@ -93,13 +98,13 @@ private final class Item: Control {
         addSubview(image)
         self.image = image
         
-        border.widthAnchor.constraint(equalToConstant: 90).isActive = true
-        border.heightAnchor.constraint(equalToConstant: 90).isActive = true
+        border.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        border.heightAnchor.constraint(equalToConstant: 40).isActive = true
         border.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         border.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
-        image.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        image.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        image.heightAnchor.constraint(equalToConstant: 30).isActive = true
         image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         image.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
@@ -131,7 +136,7 @@ private final class Item: Control {
         let subtitle = UILabel()
         subtitle.translatesAutoresizingMaskIntoConstraints = false
         subtitle.text = .key("Purchase.on.store")
-        subtitle.font = .preferredFont(forTextStyle: .caption1)
+        subtitle.font = .preferredFont(forTextStyle: .footnote)
         subtitle.textColor = .black
         subtitle.textAlignment = .center
         subtitle.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)

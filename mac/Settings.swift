@@ -74,7 +74,7 @@ final class Settings: NSView {
     
     private func arrange() {
         guard let width = NSApp.keyWindow?.frame.size.width else { return }
-        let left = (width / (itemSize + 20)).truncatingRemainder(dividingBy: 1) * (itemSize / 2)
+        let left = ((width + 20) / (itemSize + 20)).truncatingRemainder(dividingBy: 1) * (itemSize / 2)
         var point = CGPoint(x: left, y: 150)
         scroll.views.compactMap { $0 as? Item }.forEach {
             if point.x > width - itemSize {

@@ -78,7 +78,7 @@ final class Options: UIViewController {
     }
 
     @objc private func settings() {
-//        window!.show(Settings())
+        present(UINavigationController(rootViewController: Settings()), animated: true)
     }
 
     @objc private func store() {
