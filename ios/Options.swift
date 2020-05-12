@@ -12,7 +12,7 @@ final class Options: UIViewController {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.text = .key("Neon.lines")
-        title.font = .preferredFont(forTextStyle: .title2)
+        title.font = .preferredFont(forTextStyle: .headline)
         title.textColor = traitCollection.userInterfaceStyle == .dark ? .indigoLight : .indigoDark
         view.addSubview(title)
         
@@ -39,12 +39,12 @@ final class Options: UIViewController {
         view.addSubview(scores)
         
         image.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        image.bottomAnchor.constraint(equalTo: title.topAnchor).isActive = true
-        image.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        image.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        image.bottomAnchor.constraint(equalTo: title.topAnchor, constant: 10).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        image.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
         title.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        title.bottomAnchor.constraint(equalTo: newGame.topAnchor, constant: -80).isActive = true
+        title.bottomAnchor.constraint(equalTo: newGame.topAnchor, constant: -120).isActive = true
         
         newGame.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         newGame.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
