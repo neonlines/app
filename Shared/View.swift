@@ -1,19 +1,18 @@
 import Brain
 import SpriteKit
 
-final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
-    private weak var wheel: Wheel?
+class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
+    var drag: CGFloat?
+    var rotation = CGFloat()
+    private(set) weak var wheel: Wheel?
+    private(set) weak var pointers: SKNode!
     private weak var hud: Hud!
     private weak var minimap: Minimap!
-    private weak var pointers: SKNode!
-    private var drag: CGFloat?
-    private var rotation = CGFloat()
     private var times = Times()
     private var players = Set<Player>()
     private let brain: Brain
     private let soundPlayer = SKAction.playSoundFileNamed("player", waitForCompletion: false)
     private let soundFoe = SKAction.playSoundFileNamed("foe", waitForCompletion: false)
-    override var mouseDownCanMoveWindow: Bool { true }
     
     private var score = 0 {
         didSet {
@@ -30,7 +29,7 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         scene.delegate = self
         scene.anchorPoint = .init(x: 0.5, y: 0.5)
         scene.scaleMode = .resizeFill
-        scene.backgroundColor = .windowBackgroundColor
+        scene.backgroundColor = .background
         scene.physicsWorld.contactDelegate = self
         
         let borders = Borders(radius: radius)
@@ -78,48 +77,12 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         }
     }
     
-    override func viewDidMoveToWindow() {
-        align()
-    }
-    
-    override func viewDidEndLiveResize() {
-        align()
-    }
-    
-    override func mouseDown(with: NSEvent) {
-        guard let wheel = self.wheel, let radians = with.radians else {
-            drag = nil
-            return
-        }
-        drag = radians
-        rotation = wheel.zRotation
-        wheel.on = true
-        NSCursor.pointingHand.set()
-    }
-    
-    override func mouseDragged(with: NSEvent) {
-        guard let wheel = self.wheel, let radians = with.radians, let drag = self.drag else {
-            self.drag = nil
-            self.wheel?.on = false
-            NSCursor.arrow.set()
-            return
-        }
-        wheel.zRotation = rotation - (radians - drag)
-        pointers.zRotation = -wheel.zRotation
-    }
-    
-    override func mouseUp(with: NSEvent) {
-        drag = nil
-        wheel?.on = false
-        NSCursor.arrow.set()
-    }
-    
-    func didBegin(_ contact: SKPhysicsContact) {
+    final func didBegin(_ contact: SKPhysicsContact) {
         contact.bodyA.node.map(explode)
         contact.bodyB.node.map(explode)
     }
     
-    func update(_ time: TimeInterval, for: SKScene) {
+    final func update(_ time: TimeInterval, for: SKScene) {
         let delta = times.delta(time)
         if times.move.timeout(delta) {
             move()
@@ -143,11 +106,11 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         }
     }
     
-    func remove(_ line: Line) {
+    final func remove(_ line: Line) {
         players.remove(at: players.firstIndex { $0.line === line }!).remove()
     }
     
-    private func align() {
+    final func align() {
         wheel?.align()
         hud.align()
         minimap.align()
@@ -249,27 +212,6 @@ final class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 base.run(.sequence([.fadeIn(withDuration: 3), .wait(forDuration: 2), .fadeOut(withDuration: 1)]))
             }
         }
-    }
-}
-
-private extension NSEvent {
-    var radians: CGFloat? {
-        {
-            let point = CGPoint(x: $0.x - window!.contentView!.frame.midX, y: $0.y - 140)
-            guard point.valid else { return nil }
-            return point.radians
-        } (window!.contentView!.convert(locationInWindow, from: nil))
-    }
-}
-
-private extension CGPoint {
-    var valid: Bool {
-        let distance = pow(x, 2) + pow(y, 2)
-        return distance > 50 && distance < 19_600
-    }
-    
-    var radians: CGFloat {
-        atan2(x, y)
     }
 }
 

@@ -11,7 +11,7 @@ final class Minimap: SKShapeNode {
         self.radius = radius
         super.init()
         path = .init(rect: .init(x: size / -2, y: size / -2, width: size, height: size), transform: nil)
-        fillColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .init(white: 0, alpha: 0.2) : .init(white: 0.7, alpha: 0.2)
+        fillColor = UI.darkMode ? .init(white: 0, alpha: 0.2) : .init(white: 0.7, alpha: 0.2)
         lineWidth = 0
         zPosition = 12
     }
@@ -28,7 +28,7 @@ final class Minimap: SKShapeNode {
         let node = SKShapeNode(circleOfRadius: 4)
         node.fillColor = color
         node.lineWidth = 1
-        node.strokeColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .black : .init(white: 0.7, alpha: 1)
+        node.strokeColor = UI.darkMode ? .black : .init(white: 0.7, alpha: 1)
         node.zPosition = 13
         node.position = .init(x: point.x * ratio, y: point.y * ratio)
         addChild(node)

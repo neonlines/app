@@ -3,8 +3,8 @@ import Balam
 import Combine
 import GameKit
 
-let balam = Balam("lines")
 var profile = Profile()
+let balam = Balam("lines")
 
 @NSApplicationMain final class App: NSApplication, NSApplicationDelegate, GKGameCenterControllerDelegate {
     private var subs = Set<AnyCancellable>()

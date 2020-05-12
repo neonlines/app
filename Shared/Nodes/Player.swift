@@ -29,7 +29,7 @@ final class Player: SKSpriteNode {
         physicsBody = nil
         
         let emitter = SKEmitterNode()
-        emitter.particleTexture = .init(image: NSImage(named: "particle")!)
+        emitter.particleTexture = .init(imageNamed: "particle")
         emitter.particleSize = .init(width: 8, height: 8)
         emitter.particleBirthRate = 50
         emitter.emissionAngleRange = .pi * 2

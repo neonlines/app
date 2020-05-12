@@ -15,7 +15,7 @@ final class Hud: SKShapeNode {
         label.horizontalAlignmentMode = .left
         label.fontSize = 18
         label.fontName = "bold"
-        label.fontColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .white : .black
+        label.fontColor = UI.darkMode ? .white : .black
         label.position.y = -6
         addChild(label)
         self.label = label

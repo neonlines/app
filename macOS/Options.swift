@@ -61,7 +61,7 @@ final class Options: NSView {
     private func startGame() {
         profile.lastGame = .init()
         balam.update(profile)
-        window!.show(View(radius: 2_500))
+        window!.show(Game(radius: 2_500))
     }
     
     @objc private func newGame() {
