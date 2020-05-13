@@ -21,14 +21,14 @@ import UIKit
 extension UIColor {
     static let indigoLight = UIColor(named: "indigoLight")!
     static let indigoDark = UIColor(named: "indigoDark")!
-    static let background = UIColor.systemBackground
+    static let background = UIColor.tertiarySystemBackground
     static let text = UIColor.label
 }
 
 extension CGColor {
     static let indigoLight = UIColor.indigoLight.cgColor
     static let indigoDark = UIColor.indigoDark.cgColor
-    static let background = UIColor.systemBackground.cgColor
+    static let background = UIColor.tertiarySystemBackground.cgColor
     static let text = UIColor.label.cgColor
 }
 #endif

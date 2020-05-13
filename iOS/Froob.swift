@@ -14,6 +14,7 @@ final class Froob: UIViewController {
         title.font = .preferredFont(forTextStyle: .headline)
         title.text = .key("You.have.a.limit")
         title.textAlignment = .center
+        title.numberOfLines = 0
         title.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         view.addSubview(title)
         
@@ -22,12 +23,13 @@ final class Froob: UIViewController {
         subtitle.text = .key("Your.next.game.is")
         subtitle.textAlignment = .center
         subtitle.textColor = .secondaryLabel
+        subtitle.numberOfLines = 0
         subtitle.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         view.addSubview(subtitle)
         
         let timer = UILabel()
         timer.translatesAutoresizingMaskIntoConstraints = false
-        timer.font = .preferredFont(forTextStyle: .title1)
+        timer.font = .preferredFont(forTextStyle: .largeTitle)
         timer.textAlignment = .center
         view.addSubview(timer)
         self.timer = timer
@@ -37,6 +39,8 @@ final class Froob: UIViewController {
         option.text = .key("Your.can.also")
         option.textAlignment = .center
         option.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        option.numberOfLines = 0
+        option.font = .preferredFont(forTextStyle: .caption1)
         view.addSubview(option)
         
         let done = Button(.key("Done"))
@@ -63,7 +67,7 @@ final class Froob: UIViewController {
         subtitle.leftAnchor.constraint(greaterThanOrEqualTo: view.leftAnchor, constant: 40).isActive = true
         subtitle.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor, constant: -40).isActive = true
         
-        timer.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -40).isActive = true
+        timer.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -100).isActive = true
         timer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         option.topAnchor.constraint(equalTo: timer.bottomAnchor, constant: 50).isActive = true
@@ -71,7 +75,7 @@ final class Froob: UIViewController {
         option.leftAnchor.constraint(greaterThanOrEqualTo: view.leftAnchor, constant: 40).isActive = true
         option.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor, constant: -40).isActive = true
         
-        done.topAnchor.constraint(equalTo: store.bottomAnchor, constant: 20).isActive = true
+        done.topAnchor.constraint(equalTo: store.bottomAnchor, constant: 10).isActive = true
         done.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         store.topAnchor.constraint(equalTo: option.bottomAnchor, constant: 30).isActive = true

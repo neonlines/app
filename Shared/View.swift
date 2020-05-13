@@ -179,8 +179,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 $0.run(soundPlayer)
                 wheel = nil
                 let label = SKLabelNode(text: .key("Game.over"))
-                label.fontSize = 20
-                label.fontName = "bold"
+                label.bold(20)
                 label.alpha = 0
                 label.fontColor = .text
                 scene!.camera!.addChild(label)
@@ -205,8 +204,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 $0.addChild(base)
                 
                 let label = SKLabelNode(text: "150")
-                label.fontSize = 18
-                label.fontName = "bold"
+                label.bold(18)
                 label.fontColor = .black
                 label.verticalAlignmentMode = .center
                 label.horizontalAlignmentMode = .center

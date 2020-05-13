@@ -30,7 +30,7 @@ final class Score: UIViewController {
         title.bottomAnchor.constraint(equalTo: label.topAnchor, constant: -10).isActive = true
         
         label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        label.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100).isActive = true
         
         next.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         next.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 150).isActive = true
@@ -41,6 +41,7 @@ final class Score: UIViewController {
             let max = UILabel()
             max.translatesAutoresizingMaskIntoConstraints = false
             max.text = .key("New.max.score")
+            max.font = .preferredFont(forTextStyle: .headline)
             max.textColor = UI.darkMode ? .indigoLight : .indigoDark
             view.addSubview(max)
             
@@ -50,10 +51,10 @@ final class Score: UIViewController {
             max.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20).isActive = true
         }
         
-        (UIApplication.shared.delegate!.window as! Window).score(points)
+        (UIApplication.shared.delegate as! Window).score(points)
     }
     
     @objc private func done() {
-//        window!.show(Options())
+        navigationController?.show(Options())
     }
 }

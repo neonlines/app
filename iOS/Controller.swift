@@ -10,6 +10,8 @@ final class Controller: UIViewController {
     }
     
     override func loadView() {
-        view = Game(radius: radius)
+        let game = Game(radius: radius)
+        game.controller = self
+        view = game
     }
 }

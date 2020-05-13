@@ -79,6 +79,8 @@
 		CEC9488E24573D3F00A458E3 /* Pointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC9488D24573D3F00A458E3 /* Pointer.swift */; };
 		CED29E48245015BC00AE2F7F /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED29E47245015BC00AE2F7F /* Player.swift */; };
 		CED910AC246BCA79003FEE51 /* Froob.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED910AB246BCA79003FEE51 /* Froob.swift */; };
+		CED910AE246BCF0D003FEE51 /* LabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED910AD246BCF0D003FEE51 /* LabelNode.swift */; };
+		CED910AF246BCF0D003FEE51 /* LabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED910AD246BCF0D003FEE51 /* LabelNode.swift */; };
 		CEDDDE1A2451C6F800C97E0A /* UInt32.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDDE192451C6F800C97E0A /* UInt32.swift */; };
 		CEED9C3524647B58006AA889 /* Froob.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEED9C3424647B58006AA889 /* Froob.swift */; };
 		CEF23A81244C8EA200D02FD7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23A80244C8EA200D02FD7 /* App.swift */; };
@@ -141,6 +143,7 @@
 		CEC9488D24573D3F00A458E3 /* Pointer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pointer.swift; sourceTree = "<group>"; };
 		CED29E47245015BC00AE2F7F /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		CED910AB246BCA79003FEE51 /* Froob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Froob.swift; sourceTree = "<group>"; };
+		CED910AD246BCF0D003FEE51 /* LabelNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelNode.swift; sourceTree = "<group>"; };
 		CEDDDE192451C6F800C97E0A /* UInt32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt32.swift; sourceTree = "<group>"; };
 		CEED9C3424647B58006AA889 /* Froob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Froob.swift; sourceTree = "<group>"; };
 		CEF23A7D244C8EA200D02FD7 /* Lines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lines.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				CE382D442459DB56004DE132 /* Color.swift */,
+				CED910AD246BCF0D003FEE51 /* LabelNode.swift */,
 				CE42523B246B190300FA14D5 /* Point.swift */,
 				CE2CC6F7244C9B0900C21893 /* String.swift */,
 				CEDDDE192451C6F800C97E0A /* UInt32.swift */,
@@ -463,6 +467,7 @@
 				CE382D3D2459CFF6004DE132 /* Font.swift in Sources */,
 				CEFADD882467304B00A4A185 /* Menu.swift in Sources */,
 				CE382D3B2459CFBE004DE132 /* Label.swift in Sources */,
+				CED910AE246BCF0D003FEE51 /* LabelNode.swift in Sources */,
 				CE382D392459CDE3004DE132 /* Launch.swift in Sources */,
 				CE7D03392455E8E0001AC44B /* Hud.swift in Sources */,
 				CE382D432459DB34004DE132 /* Button.swift in Sources */,
@@ -503,6 +508,7 @@
 				CE5D3B0E246A7E920044C1D3 /* Scroll.swift in Sources */,
 				CE86FBB7246B14610094A54C /* Borders.swift in Sources */,
 				CEAD7B12246AFFDE005A34B1 /* Separator.swift in Sources */,
+				CED910AF246BCF0D003FEE51 /* LabelNode.swift in Sources */,
 				CE5E2184246BC5AA00FAD5AA /* Score.swift in Sources */,
 				CE40E01624692BEF00549907 /* Profile.swift in Sources */,
 				CE5E2186246BC88700FAD5AA /* Game.swift in Sources */,

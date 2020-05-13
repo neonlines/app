@@ -13,8 +13,7 @@ final class Hud: SKShapeNode {
         
         let label = SKLabelNode()
         label.horizontalAlignmentMode = .left
-        label.fontSize = 18
-        label.fontName = "bold"
+        label.bold(18)
         label.fontColor = UI.darkMode ? .white : .black
         label.position.y = -6
         addChild(label)
