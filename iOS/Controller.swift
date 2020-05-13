@@ -14,4 +14,9 @@ final class Controller: UIViewController {
         game.controller = self
         view = game
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        (view as! Game).align()
+    }
 }

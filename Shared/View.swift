@@ -2,12 +2,12 @@ import Brain
 import SpriteKit
 
 class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
-    var drag: CGFloat?
-    var rotation = CGFloat()
-    private(set) weak var wheel: Wheel?
-    private(set) weak var pointers: SKNode!
+    private weak var wheel: Wheel?
+    private weak var pointers: SKNode!
     private weak var hud: Hud!
     private weak var minimap: Minimap!
+    private var drag: CGFloat?
+    private var rotation = CGFloat()
     private var times = Times()
     private var players = Set<Player>()
     private let brain: Brain
@@ -117,6 +117,31 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     func show(_ score: Int) { }
+    
+    func start(radians: CGFloat) {
+        guard let wheel = self.wheel else {
+            drag = nil
+            return
+        }
+        drag = radians
+        rotation = wheel.zRotation
+        wheel.on = true
+    }
+    
+    func update(radians: CGFloat) {
+        guard let wheel = self.wheel, let drag = self.drag else {
+            self.drag = nil
+            self.wheel?.on = false
+            return
+        }
+        wheel.zRotation = rotation - (radians - drag)
+        pointers.zRotation = -wheel.zRotation
+    }
+    
+    func stop() {
+        drag = nil
+        wheel?.on = false
+    }
     
     private func move() {
         players.filter { $0.physicsBody != nil }.forEach {

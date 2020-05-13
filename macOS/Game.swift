@@ -12,30 +12,22 @@ final class Game: View {
     }
     
     override func mouseDown(with: NSEvent) {
-        guard let wheel = self.wheel, let radians = with.radians else {
-            drag = nil
-            return
-        }
-        drag = radians
-        rotation = wheel.zRotation
-        wheel.on = true
+        guard let radians = with.radians else { return }
+        start(radians: radians)
         NSCursor.pointingHand.set()
     }
     
     override func mouseDragged(with: NSEvent) {
-        guard let wheel = self.wheel, let radians = with.radians, let drag = self.drag else {
-            self.drag = nil
-            self.wheel?.on = false
+        guard let radians = with.radians else {
+            stop()
             NSCursor.arrow.set()
             return
         }
-        wheel.zRotation = rotation - (radians - drag)
-        pointers.zRotation = -wheel.zRotation
+        update(radians: radians)
     }
     
     override func mouseUp(with: NSEvent) {
-        drag = nil
-        wheel?.on = false
+        stop()
         NSCursor.arrow.set()
     }
     
