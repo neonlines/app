@@ -61,8 +61,7 @@ final class Options: UIViewController {
     
     private func startGame() {
         profile.lastGame = .init()
-        balam.update(profile)
-//        window!.show(View(radius: 2_500))
+        navigationController?.show(Controller(radius: 2_500))
     }
 
     @objc private func newGame() {

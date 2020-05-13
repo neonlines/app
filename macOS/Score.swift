@@ -32,7 +32,6 @@ final class Score: NSView {
         
         if profile.maxScore < points {
             profile.maxScore = points
-            balam.update(profile)
             
             let max = Label(.key("New.max.score"), .bold(16))
             max.textColor = UI.darkMode ? .indigoLight : .indigoDark

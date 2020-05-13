@@ -100,7 +100,6 @@ final class Settings: NSView {
     @objc private func change(_ item: Item) {
         guard active, !item.selected else { return }
         profile.skin = item.id
-        balam.update(profile)
         scroll.views.compactMap { $0 as? Item }.forEach {
             $0.selected = $0.id == profile.skin
         }

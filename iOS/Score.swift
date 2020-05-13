@@ -37,7 +37,6 @@ final class Score: UIViewController {
         
         if profile.maxScore < points {
             profile.maxScore = points
-            balam.update(profile)
             
             let max = UILabel()
             max.translatesAutoresizingMaskIntoConstraints = false

@@ -89,11 +89,9 @@ final class Store: UINavigationController, SKRequestDelegate, SKProductsRequestD
                 SKPaymentQueue.default().finishTransaction(transaction)
             case .restored:
                 profile.purchases.insert(transaction.payment.productIdentifier)
-                balam.update(profile)
                 break
             case .purchased:
                 profile.purchases.insert(transaction.payment.productIdentifier)
-                balam.update(profile)
                 SKPaymentQueue.default().finishTransaction(transaction)
             default: break
             }
