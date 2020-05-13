@@ -69,7 +69,7 @@ final class Options: UIViewController {
             if Date() > Calendar.current.date(byAdding: .hour, value: 12, to: profile.lastGame)! {
                 startGame()
             } else {
-//                window!.show(Froob())
+                navigationController?.show(Froob())
             }
             return
         }
