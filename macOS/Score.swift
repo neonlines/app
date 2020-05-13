@@ -4,7 +4,6 @@ final class Score: NSView {
     required init?(coder: NSCoder) { nil }
     init(points: Int) {
         super.init(frame: .zero)
-        
         let title = Label(.key("Score"), .bold(16))
         title.textColor = .headerColor
         addSubview(title)
@@ -36,7 +35,7 @@ final class Score: NSView {
             balam.update(profile)
             
             let max = Label(.key("New.max.score"), .bold(16))
-            max.textColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .indigoLight : .indigoDark
+            max.textColor = UI.darkMode ? .indigoLight : .indigoDark
             addSubview(max)
             
             label.textColor = max.textColor

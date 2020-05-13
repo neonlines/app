@@ -38,6 +38,10 @@ final class Game: View {
         wheel?.on = false
         NSCursor.arrow.set()
     }
+    
+    override func show(_ score: Int) {
+        window!.show(Score(points: score))
+    }
 }
 
 private extension NSEvent {

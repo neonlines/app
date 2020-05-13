@@ -12,7 +12,7 @@ final class Options: NSView {
         addSubview(image)
         
         let title = Label(.key("Neon.lines"), .bold(20))
-        title.textColor = NSApp.effectiveAppearance == NSAppearance(named: .darkAqua) ? .indigoLight : .indigoDark
+        title.textColor = UI.darkMode ? .indigoLight : .indigoDark
         addSubview(title)
         
         let newGame = Button(.key("New.game"))

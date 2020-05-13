@@ -116,6 +116,8 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         minimap.align()
     }
     
+    func show(_ score: Int) { }
+    
     private func move() {
         players.filter { $0.physicsBody != nil }.forEach {
             $0.move()
@@ -180,13 +182,13 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 label.fontSize = 20
                 label.fontName = "bold"
                 label.alpha = 0
-                label.fontColor = .labelColor
+                label.fontColor = .text
                 scene!.camera!.addChild(label)
                 
                 label.run(.fadeIn(withDuration: 3)) { [weak self] in
                     self?.scene!.run(.fadeOut(withDuration: 2)) {
                         guard let score = self?.score else { return }
-                        self?.window!.show(Score(points: score))
+                        self?.show(score)
                     }
                 }
             } else if wheel != nil {
