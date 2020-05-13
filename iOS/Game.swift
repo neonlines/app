@@ -2,11 +2,19 @@ import UIKit
 
 final class Game: View {
     weak var controller: Controller!
+    private let haptics = UIImpactFeedbackGenerator(style: .heavy)
+    
+    required init?(coder: NSCoder) { nil }
+    override init(radius: CGFloat) {
+        super.init(radius: radius)
+        haptics.prepare()
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with: UIEvent?) {
         super.touchesBegan(touches, with: with)
         guard let radian = touches.first!.radians else { return }
         start(radians: radian)
+        haptics.impactOccurred()
     }
     
     override func show(_ score: Int) {
@@ -36,7 +44,7 @@ final class Game: View {
 private extension UITouch {
     var radians: CGFloat? {
         {
-            let point = CGPoint(x: $0.x - view!.frame.midX, y: $0.y - 140)
+            let point = CGPoint(x: $0.x - view!.frame.midX, y: (view!.frame.maxY - 140) - $0.y)
             guard point.valid else { return nil }
             return point.radians
         } (location(in: view!))

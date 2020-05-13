@@ -21,7 +21,7 @@ import UIKit
 extension UIColor {
     static let indigoLight = UIColor(named: "indigoLight")!
     static let indigoDark = UIColor(named: "indigoDark")!
-    static let background = UIColor.tertiarySystemBackground
+    static let background = UIColor.secondarySystemBackground
     static let text = UIColor.label
 }
 
