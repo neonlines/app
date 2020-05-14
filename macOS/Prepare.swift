@@ -4,8 +4,7 @@ final class Prepare: NSView {
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(frame: .zero)
-        
-        let title = Label(.key("Choose.your.enemy"), .bold(16))
+        let title = Label(.key("New.game"), .bold(16))
         addSubview(title)
         
         let ai = Button(.key("Ai"))
@@ -22,22 +21,33 @@ final class Prepare: NSView {
         multiplayer.label.textColor = .black
         addSubview(multiplayer)
         
+        let cancel = Button(.key("Cancel"))
+        cancel.target = self
+        cancel.action = #selector(self.cancel)
+        addSubview(cancel)
+        
         title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        title.bottomAnchor.constraint(equalTo: ai.topAnchor, constant: -40).isActive = true
+        title.bottomAnchor.constraint(equalTo: ai.topAnchor, constant: -100).isActive = true
         
         ai.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         ai.bottomAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
         multiplayer.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         multiplayer.topAnchor.constraint(equalTo: ai.bottomAnchor, constant: 20).isActive = true
+        
+        cancel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        cancel.topAnchor.constraint(equalTo: multiplayer.bottomAnchor, constant: 25).isActive = true
     }
     
     @objc private func ai() {
-        profile.lastGame = .init()
-        window!.show(Game(radius: 2_500, match: nil))
+        (NSApp as! App).newGame(nil)
     }
     
     @objc private func multiplayer() {
         (NSApp as! App).match()
+    }
+    
+    @objc private func cancel() {
+        window!.show(Options())
     }
 }

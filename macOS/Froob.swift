@@ -1,7 +1,6 @@
 import AppKit
 
 final class Froob: NSView {
-    private var active = true
     private weak var timer: Label!
     private let formatter = DateComponentsFormatter()
     private let expected = Calendar.current.date(byAdding: .hour, value: 12, to: profile.lastGame)!
@@ -87,14 +86,10 @@ final class Froob: NSView {
     }
     
     @objc private func store() {
-        guard active else { return }
-        active = false
         window!.show(Store())
     }
     
     @objc private func done() {
-        guard active else { return }
-        active = false
         window!.show(Options())
     }
 }

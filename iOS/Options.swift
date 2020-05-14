@@ -58,22 +58,17 @@ final class Options: UIViewController {
         scores.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         scores.topAnchor.constraint(equalTo: store.bottomAnchor, constant: 5).isActive = true
     }
-    
-    private func startGame() {
-        profile.lastGame = .init()
-        navigationController?.show(Controller(radius: 2_500))
-    }
 
     @objc private func newGame() {
         guard profile.purchases.contains("neon.lines.premium.unlimited") else {
             if Date() > Calendar.current.date(byAdding: .hour, value: 12, to: profile.lastGame)! {
-                startGame()
+                present(Prepare(), animated: true)
             } else {
                 navigationController?.show(Froob())
             }
             return
         }
-        startGame()
+        present(Prepare(), animated: true)
     }
 
     @objc private func settings() {

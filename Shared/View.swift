@@ -23,6 +23,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate, GKMatchDelegate {
     
     required init?(coder: NSCoder) { nil }
     init(radius: CGFloat, match: GKMatch?) {
+        profile.lastGame = .init()
         brain = .init(borders: .init(radius: radius), wheel: .init(delta: .pi / 30))
         self.match = match
         super.init(frame: .zero)

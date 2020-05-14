@@ -1,8 +1,6 @@
 import AppKit
 
 final class Options: NSView {
-    private var active = true
-    
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(frame: .zero)
@@ -59,8 +57,6 @@ final class Options: NSView {
     }
     
     @objc private func newGame() {
-        guard active else { return }
-        active = false
         guard profile.purchases.contains("neon.lines.premium.unlimited") else {
             if Date() > Calendar.current.date(byAdding: .hour, value: 12, to: profile.lastGame)! {
                 window!.show(Prepare())
@@ -73,14 +69,10 @@ final class Options: NSView {
     }
     
     @objc private func settings() {
-        guard active else { return }
-        active = false
         window!.show(Settings())
     }
     
     @objc private func store() {
-        guard active else { return }
-        active = false
         window!.show(Store())
     }
     

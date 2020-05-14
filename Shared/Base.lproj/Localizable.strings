@@ -24,7 +24,6 @@ Go.store = "Go to Store";
 You.have.a.limit = "You have reached the limit\nof 1 game every 12 hours";
 Your.next.game.is = "Next game available in";
 Your.can.also = "To remove this restriction get\nUnlimited In-App Purchase\non the Store";
-Choose.your.enemy = "Choose your enemy";
 Ai = "Aritificial Intelligence";
 Multiplayer.game = "Multiplayer Game";
 About = "About";

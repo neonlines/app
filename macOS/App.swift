@@ -37,8 +37,7 @@ let balam = Balam("lines")
     
     func matchmakerViewController(_: GKMatchmakerViewController, didFind: GKMatch) {
         GKDialogController.shared().dismiss(self)
-        profile.lastGame = .init()
-        windows.first!.show(Game(radius: 2_500, match: didFind))
+        newGame(didFind)
     }
     
     func matchmakerViewControllerWasCancelled(_: GKMatchmakerViewController) {
@@ -46,6 +45,10 @@ let balam = Balam("lines")
     }
     
     func matchmakerViewController(_: GKMatchmakerViewController, didFailWithError: Error) {
+        GKDialogController.shared().dismiss(self)
+    }
+    
+    func gameCenterViewControllerDidFinish(_: GKGameCenterViewController) {
         GKDialogController.shared().dismiss(self)
     }
     
@@ -60,10 +63,6 @@ let balam = Balam("lines")
         controller.leaderboardIdentifier = board
         GKDialogController.shared().parentWindow = windows.first
         GKDialogController.shared().present(controller)
-    }
-    
-    func gameCenterViewControllerDidFinish(_: GKGameCenterViewController) {
-        GKDialogController.shared().dismiss(self)
     }
     
     func score(_ points: Int) {
@@ -88,6 +87,10 @@ let balam = Balam("lines")
         
         GKDialogController.shared().parentWindow = windows.first
         GKDialogController.shared().present(controller)
+    }
+    
+    func newGame(_ match: GKMatch?) {
+        windows.first!.show(Game(radius: 2_500, match: match))
     }
     
     private func gameCenterError() {

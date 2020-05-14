@@ -177,7 +177,7 @@ final class Store: UINavigationController, SKRequestDelegate, SKProductsRequestD
     }
     
     @objc private func done() {
-        presentingViewController?.dismiss(animated: true)
+        dismiss(animated: true)
     }
 }
 

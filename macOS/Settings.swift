@@ -2,7 +2,6 @@ import AppKit
 
 final class Settings: NSView {
     private weak var scroll: Scroll!
-    private var active = true
     private let itemSize = CGFloat(220)
     
     required init?(coder: NSCoder) { nil }
@@ -92,13 +91,11 @@ final class Settings: NSView {
     }
     
     @objc private func done() {
-        guard active else { return }
-        active = false
         window!.show(Options())
     }
     
     @objc private func change(_ item: Item) {
-        guard active, !item.selected else { return }
+        guard !item.selected else { return }
         profile.skin = item.id
         scroll.views.compactMap { $0 as? Item }.forEach {
             $0.selected = $0.id == profile.skin
@@ -106,8 +103,6 @@ final class Settings: NSView {
     }
     
     @objc private func store() {
-        guard active else { return }
-        active = false
         window!.show(Store())
     }
 }

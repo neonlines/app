@@ -1,12 +1,12 @@
-import UIKit
+import GameKit
 
 final class Game: View {
     weak var controller: Controller!
     private let haptics = UIImpactFeedbackGenerator(style: .heavy)
     
     required init?(coder: NSCoder) { nil }
-    override init(radius: CGFloat) {
-        super.init(radius: radius)
+    override init(radius: CGFloat, match: GKMatch?) {
+        super.init(radius: radius, match: match)
         haptics.prepare()
     }
     

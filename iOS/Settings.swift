@@ -68,7 +68,7 @@ final class Settings: UINavigationController {
     }
     
     @objc private func done() {
-        presentingViewController?.dismiss(animated: true)
+        super.dismiss(animated: true)
     }
     
     @objc private func store() {
