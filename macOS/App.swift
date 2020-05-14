@@ -36,9 +36,18 @@ let balam = Balam("lines")
     }
     
     func leaderboards() {
-        guard GKLocalPlayer.local.isAuthenticated, !windows.contains(where: { $0.contentViewController is GKGameCenterViewController }) else {
-            windows.first { $0.contentViewController is GKGameCenterViewController }?.makeKeyAndOrderFront(true)
-            windows.first { $0.contentViewController is GKGameCenterViewController }?.center()
+        guard false && GKLocalPlayer.local.isAuthenticated else {
+            let alert = NSAlert()
+            alert.messageText = .key("Game.center.error")
+            alert.informativeText = .key("Check.you.are.logged")
+            alert.addButton(withTitle: .key("Continue"))
+            alert.addButton(withTitle: .key("Go.to.settings"))
+            alert.alertStyle = .informational
+            alert.beginSheetModal(for: windows.first!) {
+                if $0 == .alertSecondButtonReturn {
+                    NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.internet_accounts")!)
+                }
+            }
             return
         }
         let controller = GKGameCenterViewController()
