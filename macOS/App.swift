@@ -45,11 +45,12 @@ let balam = Balam("lines")
         controller.viewState = .leaderboards
         controller.gameCenterDelegate = self
         controller.leaderboardIdentifier = board
-        NSWindow(contentViewController: controller).makeKeyAndOrderFront(self)
+        GKDialogController.shared().parentWindow = windows.first
+        GKDialogController.shared().present(controller)
     }
     
     func gameCenterViewControllerDidFinish(_: GKGameCenterViewController) {
-        windows.first { $0.contentViewController is GKGameCenterViewController }?.close()
+        GKDialogController.shared().dismiss(self)
     }
     
     func score(_ points: Int) {
