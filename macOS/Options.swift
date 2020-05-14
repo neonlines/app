@@ -58,23 +58,18 @@ final class Options: NSView {
         scores.topAnchor.constraint(equalTo: store.bottomAnchor, constant: 10).isActive = true
     }
     
-    private func startGame() {
-        profile.lastGame = .init()
-        window!.show(Game(radius: 2_500))
-    }
-    
     @objc private func newGame() {
         guard active else { return }
         active = false
         guard profile.purchases.contains("neon.lines.premium.unlimited") else {
             if Date() > Calendar.current.date(byAdding: .hour, value: 12, to: profile.lastGame)! {
-                startGame()
+                window!.show(Prepare())
             } else {
                 window!.show(Froob())
             }
             return
         }
-        startGame()
+        window!.show(Prepare())
     }
     
     @objc private func settings() {
