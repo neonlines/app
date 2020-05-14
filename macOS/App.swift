@@ -35,6 +35,12 @@ let balam = Balam("lines")
         }
     }
     
+    func matchmakerViewController(_: GKMatchmakerViewController, didFind: GKMatch) {
+        GKDialogController.shared().dismiss(self)
+        profile.lastGame = .init()
+        windows.first!.show(Game(radius: 2_500, match: didFind))
+    }
+    
     func matchmakerViewControllerWasCancelled(_: GKMatchmakerViewController) {
         GKDialogController.shared().dismiss(self)
     }

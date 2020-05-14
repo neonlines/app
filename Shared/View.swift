@@ -1,7 +1,7 @@
 import Brain
-import SpriteKit
+import GameKit
 
-class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
+class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate, GKMatchDelegate {
     private weak var wheel: Wheel?
     private weak var pointers: SKNode!
     private weak var hud: Hud!
@@ -13,6 +13,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private let brain: Brain
     private let soundPlayer = SKAction.playSoundFileNamed("player", waitForCompletion: false)
     private let soundFoe = SKAction.playSoundFileNamed("foe", waitForCompletion: false)
+    private let match: GKMatch?
     
     private var score = 0 {
         didSet {
@@ -21,8 +22,9 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     required init?(coder: NSCoder) { nil }
-    init(radius: CGFloat) {
+    init(radius: CGFloat, match: GKMatch?) {
         brain = .init(borders: .init(radius: radius), wheel: .init(delta: .pi / 30))
+        self.match = match
         super.init(frame: .zero)
         ignoresSiblingOrder = true
         let scene = SKScene()
@@ -75,6 +77,8 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             sound.isPositional = false
             scene?.addChild(sound)
         }
+        
+        match?.delegate = self
     }
     
     final func didBegin(_ contact: SKPhysicsContact) {
@@ -90,14 +94,16 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         if times.lines.timeout(delta) {
             lines()
         }
-        if times.foes.timeout(delta) {
-            foes()
-        }
-        if times.spawn.timeout(delta) {
-            spawn()
-        }
         if times.radar.timeout(delta) {
             radar()
+        }
+        if match == nil {
+            if times.foes.timeout(delta) {
+                foes()
+            }
+            if times.spawn.timeout(delta) {
+                spawn()
+            }
         }
         if wheel != nil {
             if times.scoring.timeout(delta) {

@@ -33,16 +33,11 @@ final class Prepare: NSView {
     }
     
     @objc private func ai() {
-        
+        profile.lastGame = .init()
+        window!.show(Game(radius: 2_500, match: nil))
     }
     
     @objc private func multiplayer() {
         (NSApp as! App).match()
     }
 }
-
-
-/*
- profile.lastGame = .init()
- window!.show(Game(radius: 2_500))
- */
