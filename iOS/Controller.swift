@@ -1,24 +1,22 @@
 import GameKit
 
 final class Controller: UIViewController {
-    private let match: GKMatch?
-    private let radius: CGFloat
+    let haptics = UIImpactFeedbackGenerator(style: .heavy)
+    private let game: View
     
     required init?(coder: NSCoder) { nil }
-    init(radius: CGFloat, match: GKMatch?) {
-        self.radius = radius
-        self.match = match
+    init(_ view: View) {
+        game = view
         super.init(nibName: nil, bundle: nil)
+        haptics.prepare()
     }
     
     override func loadView() {
-        let game = Game(radius: radius, match: match)
-        game.controller = self
         view = game
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        (view as! Game).align()
+        (view as! View).align()
     }
 }

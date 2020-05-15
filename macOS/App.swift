@@ -37,7 +37,7 @@ let balam = Balam("lines")
     
     func matchmakerViewController(_: GKMatchmakerViewController, didFind: GKMatch) {
         GKDialogController.shared().dismiss(self)
-        newGame(didFind)
+        newGame(MultiplayerView(radius: 2_500, match: didFind))
     }
     
     func matchmakerViewControllerWasCancelled(_: GKMatchmakerViewController) {
@@ -89,8 +89,8 @@ let balam = Balam("lines")
         GKDialogController.shared().present(controller)
     }
     
-    func newGame(_ match: GKMatch?) {
-        windows.first!.show(Game(radius: 2_500, match: match))
+    func newGame(_ view: View) {
+        windows.first!.show(view)
     }
     
     private func gameCenterError() {

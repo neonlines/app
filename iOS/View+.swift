@@ -1,24 +1,11 @@
 import GameKit
 
-final class Game: View {
-    weak var controller: Controller!
-    private let haptics = UIImpactFeedbackGenerator(style: .heavy)
-    
-    required init?(coder: NSCoder) { nil }
-    override init(radius: CGFloat, match: GKMatch?) {
-        super.init(radius: radius, match: match)
-        haptics.prepare()
-    }
-    
+extension View {
     override func touchesBegan(_ touches: Set<UITouch>, with: UIEvent?) {
         super.touchesBegan(touches, with: with)
         guard let radian = touches.first!.radians else { return }
         start(radians: radian)
-        haptics.impactOccurred()
-    }
-    
-    override func show(_ score: Int) {
-        controller.navigationController?.show(Score(points: score))
+        (controller as? Controller)?.haptics.impactOccurred()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with: UIEvent?) {
@@ -38,6 +25,10 @@ final class Game: View {
     override func touchesCancelled(_ touches: Set<UITouch>, with: UIEvent?) {
         super.touchesCancelled(touches, with: with)
         stop()
+    }
+    
+    func finish(_ score: Int) {
+        controller?.navigationController?.show(Score(points: score))
     }
 }
 

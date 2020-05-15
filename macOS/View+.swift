@@ -1,6 +1,6 @@
 import AppKit
 
-final class Game: View {
+extension View {
     override var mouseDownCanMoveWindow: Bool { true }
     
     override func viewDidMoveToWindow() {
@@ -31,7 +31,7 @@ final class Game: View {
         NSCursor.arrow.set()
     }
     
-    override func show(_ score: Int) {
+    func finish(_ score: Int) {
         window!.show(Score(points: score))
     }
 }

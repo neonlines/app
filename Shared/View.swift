@@ -1,19 +1,18 @@
 import Brain
-import GameKit
+import SpriteKit
 
-class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate, GKMatchDelegate {
-    private weak var wheel: Wheel?
+class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
+    var times = Times()
+    var players = Set<Player>()
+    let brain: Brain
+    private(set) weak var wheel: Wheel?
     private weak var pointers: SKNode!
     private weak var hud: Hud!
     private weak var minimap: Minimap!
     private var drag: CGFloat?
     private var rotation = CGFloat()
-    private var times = Times()
-    private var players = Set<Player>()
-    private let brain: Brain
     private let soundPlayer = SKAction.playSoundFileNamed("player", waitForCompletion: false)
     private let soundFoe = SKAction.playSoundFileNamed("foe", waitForCompletion: false)
-    private let match: GKMatch?
     
     private var score = 0 {
         didSet {
@@ -22,10 +21,9 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate, GKMatchDelegate {
     }
     
     required init?(coder: NSCoder) { nil }
-    init(radius: CGFloat, match: GKMatch?) {
+    init(radius: CGFloat) {
         profile.lastGame = .init()
         brain = .init(borders: .init(radius: radius), wheel: .init(delta: .pi / 30))
-        self.match = match
         super.init(frame: .zero)
         ignoresSiblingOrder = true
         let scene = SKScene()
@@ -78,8 +76,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate, GKMatchDelegate {
             sound.isPositional = false
             scene?.addChild(sound)
         }
-        
-        match?.delegate = self
     }
     
     final func didBegin(_ contact: SKPhysicsContact) {
@@ -88,29 +84,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate, GKMatchDelegate {
     }
     
     final func update(_ time: TimeInterval, for: SKScene) {
-        let delta = times.delta(time)
-        if times.move.timeout(delta) {
-            move()
-        }
-        if times.lines.timeout(delta) {
-            lines()
-        }
-        if times.radar.timeout(delta) {
-            radar()
-        }
-        if match == nil {
-            if times.foes.timeout(delta) {
-                foes()
-            }
-            if times.spawn.timeout(delta) {
-                spawn()
-            }
-        }
-        if wheel != nil {
-            if times.scoring.timeout(delta) {
-                score += 1
-            }
-        }
+        update(times.delta(time))
     }
     
     final func remove(_ line: Line) {
@@ -123,7 +97,26 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate, GKMatchDelegate {
         minimap.align()
     }
     
-    func show(_ score: Int) { }
+    func update(_ delta: TimeInterval) {
+        if times.move.timeout(delta) {
+            move()
+        }
+        if times.lines.timeout(delta) {
+            lines()
+        }
+        if times.radar.timeout(delta) {
+            radar()
+        }
+        if wheel != nil {
+            if times.scoring.timeout(delta) {
+                score += 1
+            }
+        }
+    }
+    
+    open func gameOver(_ score: Int) {
+        finish(score)
+    }
     
     func start(radians: CGFloat) {
         guard let wheel = self.wheel else {
@@ -162,31 +155,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate, GKMatchDelegate {
         }
     }
     
-    private func foes() {
-        guard let player = wheel?.player else { return }
-        players.filter { $0.physicsBody != nil }.filter { $0 !== player }.forEach { foe in
-            foe.zRotation = brain.orient(foe.position, current: foe.zRotation, player: player.position)
-        }
-    }
-    
-    private func spawn() {
-        guard players.filter({ $0.physicsBody != nil }).count < 6, let position = brain.position(players.flatMap({ $0.line.points })) else { return }
-        let skin: Skin.Id
-        switch Int.random(in: 0 ... 4) {
-        case 1: skin = .foe1
-        case 2: skin = .foe2
-        case 3: skin = .foe3
-        case 4: skin = .foe4
-        default: skin = .foe0
-        }
-        let foe = Player(line: .init(skin: skin))
-        foe.position = position
-        foe.zRotation = .random(in: 0 ..< .pi * 2)
-        scene!.addChild(foe.line)
-        scene!.addChild(foe)
-        players.insert(foe)
-    }
-    
     private func radar() {
         guard let player = wheel?.player else { return }
         minimap.clear()
@@ -219,9 +187,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate, GKMatchDelegate {
                 label.run(.fadeIn(withDuration: 3)) { [weak self] in
                     self?.scene!.run(.fadeOut(withDuration: 2)) {
                         guard let score = self?.score else { return }
-                        self?.match?.disconnect()
-                        self?.match?.delegate = nil
-                        self?.show(score)
+                        self?.gameOver(score)
                     }
                 }
             } else if wheel != nil {
@@ -246,42 +212,5 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate, GKMatchDelegate {
                 base.run(.sequence([.fadeIn(withDuration: 3), .wait(forDuration: 2), .fadeOut(withDuration: 1)]))
             }
         }
-    }
-}
-
-private struct Times {
-    struct Item {
-        private var current: TimeInterval
-        private let max: TimeInterval
-        
-        init(_ max: TimeInterval) {
-            self.max = max
-            current = max
-        }
-        
-        mutating func timeout(_ with: TimeInterval) -> Bool {
-            current -= with
-            guard current <= 0 else { return false }
-            current = max
-            return true
-        }
-    }
-    
-    var move = Item(0.05)
-    var lines = Item(0.02)
-    var foes = Item(0.02)
-    var spawn = Item(0.05)
-    var radar = Item(0.5)
-    var scoring = Item(1.5)
-    private var last = TimeInterval()
-    
-    mutating func delta(_ time: TimeInterval) -> TimeInterval {
-        guard last > 0 else {
-            last = time
-            return 0
-        }
-        let delta = time - last
-        last = time
-        return delta
     }
 }

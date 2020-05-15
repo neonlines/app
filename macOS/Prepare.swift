@@ -40,7 +40,7 @@ final class Prepare: NSView {
     }
     
     @objc private func ai() {
-        (NSApp as! App).newGame(nil)
+        (NSApp as! App).newGame(AiView(radius: 2_500))
     }
     
     @objc private func multiplayer() {

@@ -31,7 +31,7 @@ final class Prepare: UINavigationController {
     
     @objc private func ai() {
         dismiss(animated: true) {
-            (UIApplication.shared.delegate as! Window).newGame(nil)
+            (UIApplication.shared.delegate as! Window).newGame(AiView(radius: 2_500))
         }
     }
     
