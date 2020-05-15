@@ -34,35 +34,25 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         scene.physicsWorld.contactDelegate = self
         
         let borders = Borders(radius: radius)
-        let player = Player(line: .init(skin: profile.skin))
-        let wheel = Wheel(player: player)
         let hud = Hud()
         let minimap = Minimap(radius: radius)
         let pointers = SKNode()
         pointers.position.y = 100
         
-        player.position = brain.position([])!
-        wheel.zRotation = .random(in: 0 ..< .pi * 2)
-        pointers.zRotation = -wheel.zRotation
-        
         let camera = SKCameraNode()
-        camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 100), to: player)]
-        camera.addChild(wheel)
+        camera.setScale(15)
         camera.addChild(hud)
         camera.addChild(minimap)
         camera.addChild(pointers)
         
         scene.addChild(camera)
         scene.addChild(borders)
-        scene.addChild(player.line)
-        scene.addChild(player)
         scene.camera = camera
         self.hud = hud
-        self.wheel = wheel
+        
         self.minimap = minimap
         self.pointers = pointers
         presentScene(scene)
-        players.insert(player)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak scene] in
             let track: String
@@ -76,11 +66,32 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             sound.isPositional = false
             scene?.addChild(sound)
         }
+        
+        camera.run(.sequence([.scale(to: 1, duration: 5), .run { [weak self] in
+            self?.start()
+        }]))
     }
     
     final func didBegin(_ contact: SKPhysicsContact) {
         contact.bodyA.node.map(explode)
         contact.bodyB.node.map(explode)
+    }
+    
+    func start() {
+        let player = Player(line: .init(skin: profile.skin))
+        let wheel = Wheel(player: player)
+        player.position = brain.position([])!
+        wheel.zRotation = .random(in: 0 ..< .pi * 2)
+        pointers.zRotation = -wheel.zRotation
+        
+        scene!.camera!.addChild(wheel)
+        scene!.camera!.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 100), to: player)]
+        scene!.addChild(player.line)
+        scene!.addChild(player)
+        
+        self.wheel = wheel
+        players.insert(player)
+        wheel.align()
     }
     
     final func update(_ time: TimeInterval, for: SKScene) {
@@ -183,6 +194,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 label.alpha = 0
                 label.fontColor = .text
                 scene!.camera!.addChild(label)
+                scene!.camera!.run(.scale(to: 10, duration: 6))
                 
                 label.run(.fadeIn(withDuration: 3)) { [weak self] in
                     self?.scene!.run(.fadeOut(withDuration: 2)) {

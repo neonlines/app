@@ -33,6 +33,7 @@
 		CE42523C246B190300FA14D5 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE42523B246B190300FA14D5 /* Point.swift */; };
 		CE42523D246B190300FA14D5 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE42523B246B190300FA14D5 /* Point.swift */; };
 		CE46A7012459596E000B1F27 /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46A7002459596E000B1F27 /* Skin.swift */; };
+		CE4BB9F9246EE59500BE032E /* SpawnReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4BB9F8246EE59500BE032E /* SpawnReport.swift */; };
 		CE4E4ECC2466B42200531870 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4E4ECB2466B42200531870 /* GameKit.framework */; };
 		CE4E4ECE2466B42500531870 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4E4ECD2466B42500531870 /* StoreKit.framework */; };
 		CE5A66C224543D5E00609B51 /* Brain in Frameworks */ = {isa = PBXBuildFile; productRef = CE5A66C124543D5E00609B51 /* Brain */; };
@@ -124,6 +125,7 @@
 		CE40E01024692A0600549907 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		CE42523B246B190300FA14D5 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		CE46A7002459596E000B1F27 /* Skin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skin.swift; sourceTree = "<group>"; };
+		CE4BB9F8246EE59500BE032E /* SpawnReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpawnReport.swift; sourceTree = "<group>"; };
 		CE4E4ECB2466B42200531870 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		CE4E4ECD2466B42500531870 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CE5A8DCF24680BF100750A79 /* fatal0.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fatal0.caf; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			children = (
 				CE899EB5245EBD930066824A /* Profile.swift */,
 				CE46A7002459596E000B1F27 /* Skin.swift */,
+				CE4BB9F8246EE59500BE032E /* SpawnReport.swift */,
 				CEE5DBAB246E732F00C2FE73 /* Times.swift */,
 			);
 			path = Models;
@@ -508,6 +511,7 @@
 				CEC9488E24573D3F00A458E3 /* Pointer.swift in Sources */,
 				CE899EB6245EBD930066824A /* Profile.swift in Sources */,
 				CE86FBC5246B15AA0094A54C /* UI.swift in Sources */,
+				CE4BB9F9246EE59500BE032E /* SpawnReport.swift in Sources */,
 				CE2CC6EE244C996C00C21893 /* View.swift in Sources */,
 				CE46A7012459596E000B1F27 /* Skin.swift in Sources */,
 				CE7CE25C2459EC9600CD8791 /* Scroll.swift in Sources */,
