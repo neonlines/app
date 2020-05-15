@@ -219,6 +219,8 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate, GKMatchDelegate {
                 label.run(.fadeIn(withDuration: 3)) { [weak self] in
                     self?.scene!.run(.fadeOut(withDuration: 2)) {
                         guard let score = self?.score else { return }
+                        self?.match?.disconnect()
+                        self?.match?.delegate = nil
                         self?.show(score)
                     }
                 }
