@@ -40,7 +40,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         pointers.position.y = 100
         
         let camera = SKCameraNode()
-        camera.setScale(15)
+        camera.setScale(5)
         camera.addChild(hud)
         camera.addChild(minimap)
         camera.addChild(pointers)
@@ -67,9 +67,9 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             scene?.addChild(sound)
         }
         
-        camera.run(.sequence([.scale(to: 1, duration: 5), .run { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
             self?.start()
-        }]))
+        }
     }
     
     final func didBegin(_ contact: SKPhysicsContact) {
@@ -84,6 +84,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         wheel.zRotation = .random(in: 0 ..< .pi * 2)
         pointers.zRotation = -wheel.zRotation
         
+        scene!.camera!.run(.scale(to: 1, duration: 5))
         scene!.camera!.addChild(wheel)
         scene!.camera!.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 100), to: player)]
         scene!.addChild(player.line)

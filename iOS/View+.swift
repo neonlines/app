@@ -3,14 +3,14 @@ import GameKit
 extension View {
     override func touchesBegan(_ touches: Set<UITouch>, with: UIEvent?) {
         super.touchesBegan(touches, with: with)
-        guard let radian = touches.first!.radians else { return }
+        guard wheel != nil, let radian = touches.first!.radians else { return }
         start(radians: radian)
         (controller as? Controller)?.haptics.impactOccurred()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with: UIEvent?) {
         super.touchesMoved(touches, with: with)
-        guard let radians = touches.first!.radians else {
+        guard wheel != nil, let radians = touches.first!.radians else {
             stop()
             return
         }
