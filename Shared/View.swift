@@ -67,7 +67,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             scene?.addChild(sound)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.start()
         }
     }
@@ -86,13 +86,20 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         
         scene!.camera!.run(.scale(to: 1, duration: 5))
         scene!.camera!.addChild(wheel)
-        scene!.camera!.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 100), to: player)]
         scene!.addChild(player.line)
         scene!.addChild(player)
         
         self.wheel = wheel
         players.insert(player)
         wheel.align()
+        
+        scene!.camera!.run(.sequence([
+            .group([.rotate(toAngle: -player.zRotation, duration: 3),
+                    .move(to: player.position, duration: 1)]), .run { [weak self, weak player] in
+            guard let camera = self?.scene?.camera, let player = player else { return }
+            camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)),
+                                  .distance(.init(upperLimit: 100), to: player)]
+        }]))
     }
     
     final func update(_ time: TimeInterval, for: SKScene) {
