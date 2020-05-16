@@ -201,7 +201,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 $0.run(soundPlayer)
                 wheel = nil
                 let label = SKLabelNode(text: .key("Game.over"))
-                label.bold(25)
+                label.bold(30)
                 label.alpha = 0
                 label.fontColor = .text
                 scene!.camera!.addChild(label)

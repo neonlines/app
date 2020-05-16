@@ -26,7 +26,7 @@ final class Line: SKShapeNode {
     init(skin: Skin.Id) {
         self.skin = .make(id: skin)
         super.init()
-        lineWidth = 6
+        lineWidth = 12
         lineCap = .round
         zPosition = 1
         strokeColor = self.skin.colour
