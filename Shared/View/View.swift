@@ -27,6 +27,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         brain = .init(borders: .init(radius: radius), wheel: .init(delta: .pi / 30))
         super.init(frame: .zero)
         ignoresSiblingOrder = true
+        
         let scene = SKScene()
         scene.delegate = self
         scene.anchorPoint = .init(x: 0.5, y: 0.5)
@@ -200,7 +201,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 $0.run(soundPlayer)
                 wheel = nil
                 let label = SKLabelNode(text: .key("Game.over"))
-                label.bold(20)
+                label.bold(25)
                 label.alpha = 0
                 label.fontColor = .text
                 scene!.camera!.addChild(label)
