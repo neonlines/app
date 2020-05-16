@@ -3,6 +3,8 @@ import AppKit
 final class Launch: NSView {
     private weak var press: Label!
     private var show = true
+    override var canBecomeKeyView: Bool { true }
+    override var acceptsFirstResponder: Bool { true }
 
     required init?(coder: NSCoder) { nil }    
     init() {
@@ -36,6 +38,14 @@ final class Launch: NSView {
     }
     
     override func mouseUp(with: NSEvent) {
+        launch()
+    }
+    
+    override func keyUp(with: NSEvent) {
+        launch()
+    }
+    
+    private func launch() {
         guard show else { return }
         show = false
         window!.show(Options())

@@ -104,6 +104,8 @@
 		CEFADD882467304B00A4A185 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFADD872467304B00A4A185 /* Menu.swift */; };
 		CEFADD8C246737FD00A4A185 /* foe.caf in Resources */ = {isa = PBXBuildFile; fileRef = CEFADD8A246737FD00A4A185 /* foe.caf */; };
 		CEFADD8D246737FD00A4A185 /* player.caf in Resources */ = {isa = PBXBuildFile; fileRef = CEFADD8B246737FD00A4A185 /* player.caf */; };
+		CEFE4D2E246FD3750077F44E /* spawn.caf in Resources */ = {isa = PBXBuildFile; fileRef = CEFE4D2D246FD3750077F44E /* spawn.caf */; };
+		CEFE4D2F246FD3750077F44E /* spawn.caf in Resources */ = {isa = PBXBuildFile; fileRef = CEFE4D2D246FD3750077F44E /* spawn.caf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -181,6 +183,7 @@
 		CEFADD872467304B00A4A185 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		CEFADD8A246737FD00A4A185 /* foe.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = foe.caf; sourceTree = "<group>"; };
 		CEFADD8B246737FD00A4A185 /* player.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = player.caf; sourceTree = "<group>"; };
+		CEFE4D2D246FD3750077F44E /* spawn.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = spawn.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,16 +335,13 @@
 		CEF23AA9244C8F3C00D02FD7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				CEE5DBAE246E736D00C2FE73 /* AiView.swift */,
-				CEE5DBB1246E739800C2FE73 /* MultiplayerView.swift */,
-				CE86FBC4246B15AA0094A54C /* UI.swift */,
-				CE2CC6ED244C996C00C21893 /* View.swift */,
 				CE9443CF244CA2E30087CDA9 /* Media.xcassets */,
 				CEA411E92452BC95000A80B9 /* Extensions */,
 				CEF23AAF244C98EA00D02FD7 /* Localizable.strings */,
 				CE46A6FF2459595C000B1F27 /* Models */,
 				CEA411E82452BC7F000A80B9 /* Nodes */,
 				CEFADD89246737FD00A4A185 /* Sounds */,
+				CEFE4D2C246FD3250077F44E /* View */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -355,8 +355,20 @@
 				CE5A8DD3246810EC00750A79 /* fatal3.caf */,
 				CEFADD8A246737FD00A4A185 /* foe.caf */,
 				CEFADD8B246737FD00A4A185 /* player.caf */,
+				CEFE4D2D246FD3750077F44E /* spawn.caf */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		CEFE4D2C246FD3250077F44E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CEE5DBAE246E736D00C2FE73 /* AiView.swift */,
+				CEE5DBB1246E739800C2FE73 /* MultiplayerView.swift */,
+				CE86FBC4246B15AA0094A54C /* UI.swift */,
+				CE2CC6ED244C996C00C21893 /* View.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -451,6 +463,7 @@
 			files = (
 				CE5A8DD024680BF100750A79 /* fatal0.caf in Resources */,
 				CEF23A85244C8EA200D02FD7 /* Assets.xcassets in Resources */,
+				CEFE4D2E246FD3750077F44E /* spawn.caf in Resources */,
 				CEFADD8D246737FD00A4A185 /* player.caf in Resources */,
 				CE5A8DD5246810EC00750A79 /* fatal1.caf in Resources */,
 				CEFADD8C246737FD00A4A185 /* foe.caf in Resources */,
@@ -475,6 +488,7 @@
 				CE86FBC1246B14800094A54C /* fatal3.caf in Resources */,
 				CE86FBC0246B147D0094A54C /* fatal2.caf in Resources */,
 				CEF23A9E244C8EB100D02FD7 /* Assets.xcassets in Resources */,
+				CEFE4D2F246FD3750077F44E /* spawn.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

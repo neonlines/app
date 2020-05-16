@@ -13,7 +13,7 @@ extension View {
     
     override func mouseDown(with: NSEvent) {
         guard wheel != nil, let radians = with.radians else { return }
-        start(radians: radians)
+        beginMove(radians: radians)
         NSCursor.pointingHand.set()
     }
     

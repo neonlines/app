@@ -13,6 +13,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private var rotation = CGFloat()
     private let soundPlayer = SKAction.playSoundFileNamed("player", waitForCompletion: false)
     private let soundFoe = SKAction.playSoundFileNamed("foe", waitForCompletion: false)
+    private let soundSpawn = SKAction.playSoundFileNamed("spawn", waitForCompletion: false)
     
     private var score = 0 {
         didSet {
@@ -93,6 +94,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         players.insert(player)
         wheel.align()
         
+        player.run(soundSpawn)
         scene!.camera!.run(.sequence([
             .group([.rotate(toAngle: -player.zRotation, duration: 3),
                     .move(to: player.position, duration: 1)]), .run { [weak self, weak player] in
@@ -137,7 +139,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         finish(score)
     }
     
-    func start(radians: CGFloat) {
+    func beginMove(radians: CGFloat) {
         guard let wheel = self.wheel else {
             drag = nil
             return
