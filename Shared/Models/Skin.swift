@@ -16,8 +16,8 @@ struct Skin {
     
     static func make(id: Id) -> Skin {
         switch id {
-        case .basic: return .init(id, colour: .init(white: 0.85, alpha: 1))
-        case .foe0: return .init(id, colour: .init(white: 0.55, alpha: 1))
+        case .basic: return .init(id, colour: .init(white: 0.75, alpha: 1))
+        case .foe0: return .init(id, colour: .init(white: 0.45, alpha: 1))
         case .foe1: return .init(id, colour: .init(red: 0.74, green: 0.65, blue: 0.04, alpha: 1))
         case .foe2: return .init(id, colour: .init(red: 0.56, green: 0.69, blue: 0.17, alpha: 1))
         case .foe3: return .init(id, colour: .init(red: 0.66, green: 0.04, blue: 0.68, alpha: 1))
