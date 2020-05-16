@@ -3,16 +3,20 @@ import SpriteKit
 class AiView: View {
     override func update(_ delta: TimeInterval) {
         super.update(delta)
-        if times.foes.timeout(delta) {
-            foes()
-        }
-        if times.spawn.timeout(delta) {
-            spawn()
+        switch state {
+        case .play:
+            if times.foes.timeout(delta) {
+                foes()
+            }
+            if times.spawn.timeout(delta) {
+                spawn()
+            }
+        default: break
         }
     }
     
     private func foes() {
-        guard let player = wheel?.player else { return }
+        guard let player = wheel.player else { return }
         players.filter { $0.physicsBody != nil }.filter { $0 !== player }.forEach { foe in
             foe.zRotation = brain.orient(foe.position, current: foe.zRotation, player: player.position)
         }

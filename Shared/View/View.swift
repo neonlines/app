@@ -5,7 +5,8 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     var times = Times()
     var players = Set<Player>()
     let brain: Brain
-    private(set) weak var wheel: Wheel?
+    private(set) weak var wheel: Wheel!
+    private(set) var state = State.start
     private weak var pointers: SKNode!
     private weak var hud: Hud!
     private weak var minimap: Minimap!
@@ -35,6 +36,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         scene.backgroundColor = .background
         scene.physicsWorld.contactDelegate = self
         
+        let wheel = Wheel()
         let borders = Borders(radius: radius)
         let hud = Hud()
         let minimap = Minimap(radius: radius)
@@ -46,12 +48,14 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         camera.addChild(hud)
         camera.addChild(minimap)
         camera.addChild(pointers)
+        camera.addChild(wheel)
         
         scene.addChild(camera)
         scene.addChild(borders)
         scene.camera = camera
-        self.hud = hud
         
+        self.hud = hud
+        self.wheel = wheel
         self.minimap = minimap
         self.pointers = pointers
         presentScene(scene)
@@ -81,19 +85,16 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     func start() {
         let player = Player(line: .init(skin: profile.skin))
-        let wheel = Wheel(player: player)
         player.position = brain.position([])!
         wheel.zRotation = .random(in: 0 ..< .pi * 2)
         pointers.zRotation = -wheel.zRotation
         
         scene!.camera!.run(.scale(to: 1, duration: 5))
-        scene!.camera!.addChild(wheel)
         scene!.addChild(player.line)
         scene!.addChild(player)
-        
-        self.wheel = wheel
+
         players.insert(player)
-        wheel.align()
+        wheel.player = player
         
         player.run(soundSpawn)
         scene!.camera!.run(.sequence([
@@ -114,25 +115,32 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     final func align() {
-        wheel?.align()
+        wheel.align()
         hud.align()
         minimap.align()
     }
     
     func update(_ delta: TimeInterval) {
-        if times.move.timeout(delta) {
-            move()
+        switch state {
+        case .play, .died:
+            if times.move.timeout(delta) {
+                move()
+            }
+            if times.lines.timeout(delta) {
+                lines()
+            }
+        default: break
         }
-        if times.lines.timeout(delta) {
-            lines()
-        }
-        if times.radar.timeout(delta) {
-            radar()
-        }
-        if wheel != nil {
+        
+        switch state {
+        case .play:
+            if times.radar.timeout(delta) {
+                radar()
+            }
             if times.scoring.timeout(delta) {
                 score += 1
             }
+        default: break
         }
     }
     
@@ -140,20 +148,16 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         finish(score)
     }
     
-    func beginMove(radians: CGFloat) {
-        guard let wheel = self.wheel else {
-            drag = nil
-            return
-        }
+    func beginMove(_ radians: CGFloat) {
         drag = radians
         rotation = wheel.zRotation
         wheel.on = true
     }
     
     func update(radians: CGFloat) {
-        guard let wheel = self.wheel, let drag = self.drag else {
+        guard let drag = self.drag else {
             self.drag = nil
-            self.wheel?.on = false
+            self.wheel.on = false
             return
         }
         wheel.zRotation = rotation - (radians - drag)
@@ -162,7 +166,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     func stop() {
         drag = nil
-        wheel?.on = false
+        wheel.on = false
     }
     
     private func move() {
@@ -178,7 +182,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     private func radar() {
-        guard let player = wheel?.player else { return }
+        guard let player = wheel.player else { return }
         minimap.clear()
         pointers.children.forEach { $0.removeFromParent() }
         players.filter { $0.physicsBody != nil }.forEach {
@@ -197,9 +201,9 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private func explode(_ node: SKNode) {
         (node as? Player).map {
             $0.explode()
-            if $0 === wheel?.player {
+            if $0 === wheel.player {
+                state = .died
                 $0.run(soundPlayer)
-                wheel = nil
                 let label = SKLabelNode(text: .key("Game.over"))
                 label.bold(30)
                 label.alpha = 0
@@ -213,14 +217,15 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                         self?.gameOver(score)
                     }
                 }
-            } else if wheel != nil {
+            } else {
+                guard state == .play, let player = wheel.player else { return }
                 if scene!.camera!.containedNodeSet().contains($0) {
                     $0.run(soundFoe)
                 }
                 
                 score += 150
                 let base = SKShapeNode(rect: .init(x: -30, y: -30, width: 60, height: 60), cornerRadius: 30)
-                base.fillColor = wheel!.player.line.skin.colour
+                base.fillColor = player.line.skin.colour
                 base.lineWidth = 0
                 base.alpha = 0
                 base.zPosition = 4

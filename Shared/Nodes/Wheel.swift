@@ -1,11 +1,11 @@
 import SpriteKit
 
 final class Wheel: SKSpriteNode {
-    private(set) weak var player: Player!
+    weak var player: Player?
     
     override var zRotation: CGFloat {
         didSet {
-            player.zRotation = -zRotation
+            player?.zRotation = -zRotation
         }
     }
     
@@ -16,10 +16,9 @@ final class Wheel: SKSpriteNode {
     }
     
     required init?(coder: NSCoder) { nil }
-    init(player: Player) {
+    init() {
         super.init(texture: nil, color: .clear, size: .init(width: 182, height: 182))
         zPosition = 10
-        self.player = player
         update()
     }
     

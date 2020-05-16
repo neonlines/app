@@ -16,10 +16,12 @@ class MultiplayerView: View, GKMatchDelegate {
     
     override func update(_ delta: TimeInterval) {
         super.update(delta)
-        if wheel != nil {
+        switch state {
+        case .play:
             if times.send.timeout(delta) {
                 send()
             }
+        default: break
         }
     }
     

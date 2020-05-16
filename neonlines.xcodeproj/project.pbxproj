@@ -93,6 +93,8 @@
 		CEE5DBB3246E739800C2FE73 /* MultiplayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE5DBB1246E739800C2FE73 /* MultiplayerView.swift */; };
 		CEE5DBB6246E76E600C2FE73 /* UIResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE5DBB4246E76E600C2FE73 /* UIResponder.swift */; };
 		CEED9C3524647B58006AA889 /* Froob.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEED9C3424647B58006AA889 /* Froob.swift */; };
+		CEF10FF5246FEF5A009FA1DD /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF10FF4246FEF5A009FA1DD /* State.swift */; };
+		CEF10FF6246FEF5A009FA1DD /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF10FF4246FEF5A009FA1DD /* State.swift */; };
 		CEF23A81244C8EA200D02FD7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23A80244C8EA200D02FD7 /* App.swift */; };
 		CEF23A85244C8EA200D02FD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF23A84244C8EA200D02FD7 /* Assets.xcassets */; };
 		CEF23A95244C8EB100D02FD7 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23A94244C8EB100D02FD7 /* Window.swift */; };
@@ -165,6 +167,7 @@
 		CEE5DBB1246E739800C2FE73 /* MultiplayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerView.swift; sourceTree = "<group>"; };
 		CEE5DBB4246E76E600C2FE73 /* UIResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIResponder.swift; sourceTree = "<group>"; };
 		CEED9C3424647B58006AA889 /* Froob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Froob.swift; sourceTree = "<group>"; };
+		CEF10FF4246FEF5A009FA1DD /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		CEF23A7D244C8EA200D02FD7 /* Lines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lines.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF23A80244C8EA200D02FD7 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		CEF23A84244C8EA200D02FD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -216,6 +219,7 @@
 				CE899EB5245EBD930066824A /* Profile.swift */,
 				CE46A7002459596E000B1F27 /* Skin.swift */,
 				CE4BB9F8246EE59500BE032E /* SpawnReport.swift */,
+				CEF10FF4246FEF5A009FA1DD /* State.swift */,
 				CEE5DBAB246E732F00C2FE73 /* Times.swift */,
 			);
 			path = Models;
@@ -528,6 +532,7 @@
 				CE4BB9F9246EE59500BE032E /* SpawnReport.swift in Sources */,
 				CE2CC6EE244C996C00C21893 /* View.swift in Sources */,
 				CE46A7012459596E000B1F27 /* Skin.swift in Sources */,
+				CEF10FF5246FEF5A009FA1DD /* State.swift in Sources */,
 				CE7CE25C2459EC9600CD8791 /* Scroll.swift in Sources */,
 				CE382D3F2459D363004DE132 /* Options.swift in Sources */,
 				CEB5047A2450991E00D5B1BC /* Borders.swift in Sources */,
@@ -566,6 +571,7 @@
 				CE0F77B4246AFAD100EA3955 /* Store.swift in Sources */,
 				CE86FBBC246B14720094A54C /* Pointer.swift in Sources */,
 				CE358AAE2469A66600C7FCAD /* Launch.swift in Sources */,
+				CEF10FF6246FEF5A009FA1DD /* State.swift in Sources */,
 				CEE5DBB0246E736D00C2FE73 /* AiView.swift in Sources */,
 				CE40E01724692BF200549907 /* Skin.swift in Sources */,
 				CE86FBB6246B14340094A54C /* UInt32.swift in Sources */,
