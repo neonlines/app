@@ -19,15 +19,15 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         let restore = Button(.key("Restore.purchases"))
         restore.target = self
         restore.action = #selector(self.restore)
-        restore.label.textColor = .white
-        restore.layer!.backgroundColor = .indigoDark
+        restore.layer!.borderColor = NSColor.labelColor.cgColor
+        restore.layer!.borderWidth = 1
         addSubview(restore)
         
         let done = Button(.key("Done"))
         done.target = self
         done.action = #selector(self.done)
         done.label.textColor = .black
-        done.layer!.backgroundColor = .indigoLight
+        done.layer!.backgroundColor = .indigo
         addSubview(done)
         
         let separator = Separator()
@@ -246,7 +246,7 @@ private class Item: NSView {
             addSubview(price)
             
             let purchase = Button(.key("Purchase"))
-            purchase.layer!.backgroundColor = .indigoLight
+            purchase.layer!.backgroundColor = .indigo
             purchase.label.textColor = .black
             addSubview(purchase)
             self.purchase = purchase

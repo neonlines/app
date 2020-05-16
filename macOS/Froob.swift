@@ -37,14 +37,14 @@ final class Froob: NSView {
         done.target = self
         done.action = #selector(self.done)
         done.label.textColor = .black
-        done.layer!.backgroundColor = .indigoLight
+        done.layer!.backgroundColor = .indigo
         addSubview(done)
         
         let store = Button(.key("Go.store"))
         store.target = self
         store.action = #selector(self.store)
-        store.label.textColor = .white
-        store.layer!.backgroundColor = .indigoDark
+        store.layer!.borderWidth = 1
+        store.layer!.borderColor = NSColor.labelColor.cgColor
         addSubview(store)
         
         title.bottomAnchor.constraint(equalTo: subtitle.topAnchor, constant: -5).isActive = true

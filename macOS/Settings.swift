@@ -20,7 +20,7 @@ final class Settings: NSView {
         done.target = self
         done.action = #selector(self.done)
         done.label.textColor = .black
-        done.layer!.backgroundColor = .indigoLight
+        done.layer!.backgroundColor = .indigo
         addSubview(done)
         
         let title = Label(.key("Choose.your.skin"), .bold(16))
@@ -153,7 +153,7 @@ private final class Item: Control {
         didSet {
             border.alphaValue = selected ? 1 : 0
             image.alphaValue = selected ? 1 : 0.5
-            layer!.borderColor = selected ? .indigoLight : NSColor.separatorColor.cgColor
+            layer!.borderColor = selected ? .indigo : NSColor.separatorColor.cgColor
         }
     }
     
@@ -161,7 +161,7 @@ private final class Item: Control {
         let base = NSView()
         base.translatesAutoresizingMaskIntoConstraints = false
         base.wantsLayer = true
-        base.layer!.backgroundColor = .indigoLight
+        base.layer!.backgroundColor = .indigo
         addSubview(base)
         
         let title = Label(.key("New.skin"), .medium(16))

@@ -17,7 +17,7 @@ final class Score: NSView {
         let next = Button(.key("Continue"))
         next.target = self
         next.action = #selector(self.next)
-        next.layer!.backgroundColor = .indigoLight
+        next.layer!.backgroundColor = .indigo
         next.label.textColor = .black
         addSubview(next)
         
@@ -34,7 +34,7 @@ final class Score: NSView {
             profile.maxScore = points
             
             let max = Label(.key("New.max.score"), .bold(14))
-            max.textColor = UI.darkMode ? .indigoLight : .indigoDark
+            max.textColor = .indigo
             addSubview(max)
             
             label.textColor = max.textColor

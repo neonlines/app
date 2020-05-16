@@ -10,14 +10,14 @@ final class Prepare: NSView {
         let ai = Button(.key("Ai"))
         ai.target = self
         ai.action = #selector(self.ai)
-        ai.layer!.backgroundColor = .indigoLight
+        ai.layer!.backgroundColor = .indigo
         ai.label.textColor = .black
         addSubview(ai)
         
         let multiplayer = Button(.key("Multiplayer.game"))
         multiplayer.target = self
         multiplayer.action = #selector(self.multiplayer)
-        multiplayer.layer!.backgroundColor = .indigoLight
+        multiplayer.layer!.backgroundColor = .indigo
         multiplayer.label.textColor = .black
         addSubview(multiplayer)
         
