@@ -94,7 +94,7 @@ final class Options: UIViewController {
             navigationController?.show(Froob())
             return
         }
-        (UIApplication.shared.delegate as! Window).newGame(AiView(radius: 2_500))
+        (UIApplication.shared.delegate as! Window).newGame(AiView(radius: 3_000))
     }
     
     @objc private func multiplayer() {

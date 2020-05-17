@@ -42,6 +42,6 @@ final class Line: SKShapeNode {
             (scene!.view as! View).remove(self)
             return
         }
-        points.removeFirst()
+        points.removeFirst(points.count >= 5 ? 5 : points.count)
     }
 }

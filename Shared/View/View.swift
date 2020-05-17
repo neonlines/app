@@ -60,20 +60,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         self.pointers = pointers
         presentScene(scene)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak scene] in
-            let track: String
-            switch Int.random(in: 0 ... 3) {
-            case 1: track = "fatal1"
-            case 2: track = "fatal2"
-            case 3: track = "fatal3"
-            default: track = "fatal0"
-            }
-            let sound = SKAudioNode(fileNamed: track)
-            sound.isPositional = false
-            scene?.addChild(sound)
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.start()
         }
     }
@@ -84,26 +71,34 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     func start() {
+        let track: String
+        switch Int.random(in: 0 ... 3) {
+        case 1: track = "fatal1"
+        case 2: track = "fatal2"
+        case 3: track = "fatal3"
+        default: track = "fatal0"
+        }
+        let sound = SKAudioNode(fileNamed: track)
+        sound.isPositional = false
+        scene!.addChild(sound)
+        
         let player = Player(line: .init(skin: profile.skin))
         player.position = brain.position([])!
+        wheel.player = player
         wheel.zRotation = .random(in: 0 ..< .pi * 2)
         pointers.zRotation = -wheel.zRotation
         
-        scene!.camera!.run(.scale(to: 1, duration: 5))
+        scene!.camera!.zRotation = wheel.zRotation - (.pi / 2)
+        scene!.camera!.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 100), to: player)]
         scene!.addChild(player.line)
         scene!.addChild(player)
 
-        players.insert(player)
-        wheel.player = player
-        
-        player.run(soundSpawn)
-        scene!.camera!.run(.sequence([
-            .group([.rotate(toAngle: -player.zRotation, duration: 3),
-                    .move(to: player.position, duration: 1)]), .run { [weak self, weak player] in
-            guard let camera = self?.scene?.camera, let player = player else { return }
-            camera.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)),
-                                  .distance(.init(upperLimit: 100), to: player)]
+        scene!.camera!.run(.sequence([.scale(to: 1, duration: 2), .run { [weak self] in
+            guard let self = self else { return }
+            player.run(self.soundSpawn)
+            self.state = .play
         }]))
+        players.insert(player)
     }
     
     final func update(_ time: TimeInterval, for: SKScene) {
@@ -210,6 +205,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 label.fontColor = .text
                 scene!.camera!.addChild(label)
                 scene!.camera!.run(.scale(to: 10, duration: 6))
+                wheel.alpha = 0
                 
                 label.run(.fadeIn(withDuration: 3)) { [weak self] in
                     self?.scene!.run(.fadeOut(withDuration: 2)) {

@@ -88,7 +88,7 @@ final class Options: NSView {
             window!.show(Froob())
             return
         }
-        (NSApp as! App).newGame(AiView(radius: 2_500))
+        (NSApp as! App).newGame(AiView(radius: 3_000))
     }
     
     @objc private func multiplayer() {
