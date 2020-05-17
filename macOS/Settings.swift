@@ -2,20 +2,11 @@ import AppKit
 
 final class Settings: NSView {
     private weak var scroll: Scroll!
-    private let itemSize = CGFloat(220)
+    private let itemSize = CGFloat(180)
     
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(frame: .zero)
-        wantsLayer = true
-        
-        let scroll = Scroll()
-        addSubview(scroll)
-        self.scroll = scroll
-        
-        let separator = Separator()
-        addSubview(separator)
-        
         let done = Button(.key("Done"))
         done.target = self
         done.action = #selector(self.done)
@@ -23,26 +14,33 @@ final class Settings: NSView {
         done.layer!.backgroundColor = .indigo
         addSubview(done)
         
-        let title = Label(.key("Choose.your.skin"), .bold(16))
-        scroll.add(title)
+        let separator = Separator()
+        addSubview(separator)
         
-        scroll.topAnchor.constraint(equalTo: topAnchor, constant: 1).isActive = true
-        scroll.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
-        scroll.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
-        scroll.bottomAnchor.constraint(equalTo: separator.topAnchor).isActive = true
-        scroll.width.constraint(equalTo: scroll.widthAnchor).isActive = true
-        scroll.height.constraint(greaterThanOrEqualTo: scroll.heightAnchor).isActive = true
+        let scroll = Scroll()
+        addSubview(scroll)
+        self.scroll = scroll
+        
+        let title = Label(.key("Choose.your.skin"), .bold(14))
+        addSubview(title)
+        
+        title.centerYAnchor.constraint(equalTo: done.centerYAnchor).isActive = true
+        title.leftAnchor.constraint(equalTo: leftAnchor, constant: 100).isActive = true
         
         separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
         separator.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
+        separator.topAnchor.constraint(equalTo: topAnchor, constant: 60).isActive = true
         separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        separator.bottomAnchor.constraint(equalTo: done.topAnchor, constant: -15).isActive = true
         
-        done.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        done.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15).isActive = true
+        done.rightAnchor.constraint(equalTo: rightAnchor, constant: -15).isActive = true
+        done.bottomAnchor.constraint(equalTo: separator.topAnchor, constant: -13).isActive = true
         
-        title.topAnchor.constraint(equalTo: scroll.top, constant: 80).isActive = true
-        title.leftAnchor.constraint(equalTo: scroll.left, constant: 20).isActive = true
+        scroll.topAnchor.constraint(equalTo: separator.bottomAnchor).isActive = true
+        scroll.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
+        scroll.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
+        scroll.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1).isActive = true
+        scroll.width.constraint(equalTo: scroll.widthAnchor).isActive = true
+        scroll.height.constraint(greaterThanOrEqualTo: scroll.heightAnchor).isActive = true
         
         Skin.Id.allCases.forEach { id in
             let item = Item(id: id)
@@ -73,8 +71,10 @@ final class Settings: NSView {
     
     private func arrange() {
         guard let width = NSApp.keyWindow?.frame.size.width else { return }
-        let left = ((width + 20) / (itemSize + 20)).truncatingRemainder(dividingBy: 1) * (itemSize / 2)
-        var point = CGPoint(x: left, y: 150)
+        let ratio = (width + 20) / (itemSize + 20)
+        let empty = Int(ratio) > Skin.Id.allCases.count ? ceil(CGFloat(.init(ratio) - Skin.Id.allCases.count)) : 0
+        let left = (ratio.truncatingRemainder(dividingBy: 1) + empty) * (itemSize / 2)
+        var point = CGPoint(x: left, y: 40)
         scroll.views.compactMap { $0 as? Item }.forEach {
             if point.x > width - itemSize {
                 point = .init(x: left, y: point.y + itemSize + 20)
@@ -127,7 +127,7 @@ private final class Item: Control {
         let border = NSView()
         border.translatesAutoresizingMaskIntoConstraints = false
         border.wantsLayer = true
-        border.layer!.cornerRadius = 45
+        border.layer!.cornerRadius = 25
         border.layer!.backgroundColor = skin.colour.cgColor
         addSubview(border)
         self.border = border
@@ -138,13 +138,13 @@ private final class Item: Control {
         addSubview(image)
         self.image = image
         
-        border.widthAnchor.constraint(equalToConstant: 90).isActive = true
-        border.heightAnchor.constraint(equalToConstant: 90).isActive = true
+        border.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        border.heightAnchor.constraint(equalToConstant: 50).isActive = true
         border.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         border.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
-        image.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        image.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        image.heightAnchor.constraint(equalToConstant: 40).isActive = true
         image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         image.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }

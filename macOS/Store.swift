@@ -53,7 +53,8 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         scroll.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
         scroll.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1).isActive = true
         scroll.bottom.constraint(greaterThanOrEqualTo: scroll.bottomAnchor).isActive = true
-        scroll.right.constraint(equalTo: scroll.rightAnchor).isActive = true
+        scroll.right.constraint(lessThanOrEqualTo: scroll.rightAnchor).isActive = true
+        scroll.width.constraint(equalToConstant: 400).isActive = true
         
         loading()
         
@@ -102,16 +103,13 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
     
     private func update(_ transactions: [SKPaymentTransaction]) {
         guard !transactions.contains(where: { $0.transactionState == .purchasing }) else { return }
-        transactions.forEach { transaction in
-            switch transaction.transactionState {
+        transactions.forEach {
+            switch $0.transactionState {
             case .failed:
-                SKPaymentQueue.default().finishTransaction(transaction)
-            case .restored:
-                profile.purchases.insert(transaction.payment.productIdentifier)
-                break
-            case .purchased:
-                profile.purchases.insert(transaction.payment.productIdentifier)
-                SKPaymentQueue.default().finishTransaction(transaction)
+                SKPaymentQueue.default().finishTransaction($0)
+            case .restored, .purchased:
+                profile.purchases.insert($0.payment.productIdentifier)
+                SKPaymentQueue.default().finishTransaction($0)
             default: break
             }
         }
@@ -134,14 +132,14 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         }
         
         let skins = header(title: .key("Skins"))
-        skins.topAnchor.constraint(equalTo: top).isActive = true
+        skins.topAnchor.constraint(equalTo: top, constant: 40).isActive = true
         top = skins.bottomAnchor
         
         products.filter { $0.productIdentifier.contains(".skin.") }.sorted { $0.productIdentifier < $1.productIdentifier }.forEach {
             top = item(SkinItem(product: $0), top: top)
         }
         
-        scroll.bottom.constraint(greaterThanOrEqualTo: top).isActive = true
+        scroll.bottom.constraint(greaterThanOrEqualTo: top, constant: 40).isActive = true
     }
     
     private func item(_ item: Item, top: NSLayoutYAxisAnchor) -> NSLayoutYAxisAnchor {
@@ -168,8 +166,7 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         header.translatesAutoresizingMaskIntoConstraints = false
         scroll.add(header)
         
-        let label = Label(title, .bold(16))
-        label.textColor = .tertiaryLabelColor
+        let label = Label(title, .bold(14))
         header.addSubview(label)
         
         header.leftAnchor.constraint(equalTo: scroll.left, constant: 30).isActive = true
@@ -235,7 +232,7 @@ private class Item: NSView {
             subtitle.rightAnchor.constraint(lessThanOrEqualTo: purchased.leftAnchor, constant: -10).isActive = true
             
             purchased.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-            purchased.rightAnchor.constraint(equalTo: rightAnchor, constant: -40).isActive = true
+            purchased.rightAnchor.constraint(equalTo: rightAnchor, constant: -30).isActive = true
             purchased.widthAnchor.constraint(equalToConstant: 30).isActive = true
             purchased.heightAnchor.constraint(equalToConstant: 30).isActive = true
         } else {
@@ -257,14 +254,14 @@ private class Item: NSView {
             subtitle.rightAnchor.constraint(lessThanOrEqualTo: purchase.leftAnchor, constant: -10).isActive = true
             subtitle.rightAnchor.constraint(lessThanOrEqualTo: price.leftAnchor, constant: -10).isActive = true
             
-            price.rightAnchor.constraint(equalTo: rightAnchor, constant: -40).isActive = true
+            price.rightAnchor.constraint(equalTo: rightAnchor, constant: -30).isActive = true
             price.topAnchor.constraint(equalTo: image.topAnchor).isActive = true
             
             purchase.topAnchor.constraint(equalTo: price.bottomAnchor, constant: 5).isActive = true
-            purchase.rightAnchor.constraint(equalTo: rightAnchor, constant: -40).isActive = true
+            purchase.rightAnchor.constraint(equalTo: rightAnchor, constant: -30).isActive = true
         }
         
-        image.leftAnchor.constraint(equalTo: leftAnchor, constant: 40).isActive = true
+        image.leftAnchor.constraint(equalTo: leftAnchor, constant: 30).isActive = true
         image.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
         title.leftAnchor.constraint(equalTo: image.rightAnchor, constant: 10).isActive = true
@@ -289,8 +286,8 @@ private final class PremiumItem: Item {
         
         heightAnchor.constraint(equalToConstant: 180).isActive = true
         
-        image.widthAnchor.constraint(equalToConstant: 88).isActive = true
-        image.heightAnchor.constraint(equalToConstant: 88).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        image.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 }
 
@@ -308,7 +305,7 @@ private final class SkinItem: Item {
         
         heightAnchor.constraint(equalToConstant: 140).isActive = true
         
-        image.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        image.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        image.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
 }

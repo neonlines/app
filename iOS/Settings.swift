@@ -30,7 +30,9 @@ final class Settings: UINavigationController {
     
     private func refresh() {
         scroll.views.forEach { $0.removeFromSuperview() }
-        let left = ((viewControllers.first!.view.frame.width + 10) / (itemSize + 10)).truncatingRemainder(dividingBy: 1) * (itemSize / 2)
+        let ratio = (viewControllers.first!.view.frame.width + 10) / (itemSize + 10)
+        let empty = Int(ratio) > Skin.Id.allCases.count ? ceil(CGFloat(.init(ratio) - Skin.Id.allCases.count)) : 0
+        let left = (ratio.truncatingRemainder(dividingBy: 1) + empty) * (itemSize / 2)
         var point = CGPoint(x: left, y: 40)
         Skin.Id.allCases.forEach { id in
             if point.x > viewControllers.first!.view.frame.width - itemSize {
