@@ -35,6 +35,7 @@ final class Options: UIViewController {
         againstOthers.action = #selector(multiplayer)
         againstOthers.label.textColor = .black
         againstOthers.base.backgroundColor = .indigo
+        againstOthers.isHidden = true
         view.addSubview(againstOthers)
         
         let settings = Button(.key("Settings"))
