@@ -17,6 +17,11 @@ let balam = Balam("lines")
     }
     
     func applicationWillFinishLaunching(_: Notification) {
+        GKLocalPlayer.local.authenticateHandler = { [weak self] controller, _ in
+            guard let controller = controller else { return }
+            NSWindow(contentViewController: controller).makeKeyAndOrderFront(self)
+        }
+        
         mainMenu = Menu()
         Window().makeKeyAndOrderFront(nil)
         balam.nodes(Profile.self).sink {
@@ -26,13 +31,6 @@ let balam = Balam("lines")
             }
             profile = stored
         }.store(in: &subs)
-    }
-    
-    func applicationDidFinishLaunching(_: Notification) {
-        GKLocalPlayer.local.authenticateHandler = { [weak self] controller, _ in
-            guard let controller = controller else { return }
-            NSWindow(contentViewController: controller).makeKeyAndOrderFront(self)
-        }
     }
     
     func matchmakerViewController(_: GKMatchmakerViewController, didFind: GKMatch) {

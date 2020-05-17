@@ -10,7 +10,12 @@ let balam = Balam("lines")
     private var subs = Set<AnyCancellable>()
     private let board = "neon.lines.scores"
     
-    func application(_: UIApplication, didFinishLaunchingWithOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_: UIApplication, willFinishLaunchingWithOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        GKLocalPlayer.local.authenticateHandler = { controller, _ in
+            guard let controller = controller else { return }
+            self.rootViewController!.present(controller, animated: true)
+        }
+
         backgroundColor = .systemBackground
         
         balam.nodes(Profile.self).sink {
@@ -21,12 +26,7 @@ let balam = Balam("lines")
             profile = stored
         }.store(in: &subs)
         
-        GKLocalPlayer.local.authenticateHandler = { controller, error in
-            guard let controller = controller else { return }
-            self.rootViewController!.present(controller, animated: true)
-        }
-        
-        return true
+        return false
     }
     
     func matchmakerViewController(_: GKMatchmakerViewController, didFind: GKMatch) {
