@@ -55,6 +55,7 @@ final class Froob: UIViewController {
         store.action = #selector(self.store)
         store.label.textColor = .white
         store.base.layer.borderColor = UIColor.label.cgColor
+        store.base.layer.borderWidth = 1
         view.addSubview(store)
         
         title.bottomAnchor.constraint(equalTo: subtitle.topAnchor, constant: -5).isActive = true
