@@ -22,7 +22,7 @@ final class Score: UIViewController {
         let next = Button(.key("Continue"))
         next.target = self
         next.action = #selector(done)
-        next.base.backgroundColor = .indigoLight
+        next.base.backgroundColor = .indigo
         next.label.textColor = .black
         view.addSubview(next)
         
@@ -42,7 +42,7 @@ final class Score: UIViewController {
             max.translatesAutoresizingMaskIntoConstraints = false
             max.text = .key("New.max.score")
             max.font = .preferredFont(forTextStyle: .headline)
-            max.textColor = UI.darkMode ? .indigoLight : .indigoDark
+            max.textColor = .indigo
             view.addSubview(max)
             
             label.textColor = max.textColor

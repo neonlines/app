@@ -126,7 +126,7 @@ private final class Item: Control {
             border.alpha = selected ? 1 : 0
             image.alpha = selected ? 1 : 0.5
             layer.borderWidth = selected ? 5 : 2
-            layer.borderColor = selected ? .indigoLight : UIColor.separator.cgColor
+            layer.borderColor = selected ? .indigo : UIColor.separator.cgColor
         }
     }
     
@@ -134,7 +134,7 @@ private final class Item: Control {
         let base = UIView()
         base.isUserInteractionEnabled = false
         base.translatesAutoresizingMaskIntoConstraints = false
-        base.backgroundColor = .indigoLight
+        base.backgroundColor = .indigo
         addSubview(base)
         
         let title = UILabel()

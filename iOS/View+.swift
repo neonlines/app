@@ -4,7 +4,7 @@ extension View {
     override func touchesBegan(_ touches: Set<UITouch>, with: UIEvent?) {
         super.touchesBegan(touches, with: with)
         guard wheel != nil, let radian = touches.first!.radians else { return }
-        beginMove(radians: radian)
+        beginMove(radian)
         (controller as? Controller)?.haptics.impactOccurred()
     }
     

@@ -11,14 +11,14 @@ final class Prepare: UINavigationController {
         let ai = Button(.key("Ai"))
         ai.target = self
         ai.action = #selector(self.ai)
-        ai.base.backgroundColor = .indigoLight
+        ai.base.backgroundColor = .indigo
         ai.label.textColor = .black
         viewControllers.first!.view.addSubview(ai)
         
         let multiplayer = Button(.key("Multiplayer.game"))
         multiplayer.target = self
         multiplayer.action = #selector(self.multiplayer)
-        multiplayer.base.backgroundColor = .indigoLight
+        multiplayer.base.backgroundColor = .indigo
         multiplayer.label.textColor = .black
         viewControllers.first!.view.addSubview(multiplayer)
         

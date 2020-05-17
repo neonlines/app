@@ -34,7 +34,7 @@ final class Store: UINavigationController, SKRequestDelegate, SKProductsRequestD
         loading()
         
         SKPaymentQueue.default().add(self)
-
+        
         let request = SKProductsRequest(productIdentifiers: .init(["neon.lines.premium.unlimited"] + Skin.Id.allCases.map {
             "neon.lines.skin." + $0.rawValue
         }))
@@ -83,16 +83,13 @@ final class Store: UINavigationController, SKRequestDelegate, SKProductsRequestD
     
     private func update(_ transactions: [SKPaymentTransaction]) {
         guard !transactions.contains(where: { $0.transactionState == .purchasing }) else { return }
-        transactions.forEach { transaction in
-            switch transaction.transactionState {
+        transactions.forEach {
+            switch $0.transactionState {
             case .failed:
-                SKPaymentQueue.default().finishTransaction(transaction)
-            case .restored:
-                profile.purchases.insert(transaction.payment.productIdentifier)
-                break
-            case .purchased:
-                profile.purchases.insert(transaction.payment.productIdentifier)
-                SKPaymentQueue.default().finishTransaction(transaction)
+                SKPaymentQueue.default().finishTransaction($0)
+            case .restored, .purchased:
+                profile.purchases.insert($0.payment.productIdentifier)
+                SKPaymentQueue.default().finishTransaction($0)
             default: break
             }
         }
@@ -154,7 +151,6 @@ final class Store: UINavigationController, SKRequestDelegate, SKProductsRequestD
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .preferredFont(forTextStyle: .subheadline)
         label.text = title
-        label.textColor = .secondaryLabel
         header.addSubview(label)
         
         header.leftAnchor.constraint(equalTo: scroll.left, constant: 16).isActive = true
@@ -242,7 +238,7 @@ private class Item: UIView {
             addSubview(price)
             
             let purchase = Button(.key("Purchase"))
-            purchase.base.backgroundColor = .indigoLight
+            purchase.base.backgroundColor = .indigo
             purchase.label.textColor = .black
             addSubview(purchase)
             self.purchase = purchase

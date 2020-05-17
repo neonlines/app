@@ -13,14 +13,14 @@ final class Options: UIViewController {
         title.translatesAutoresizingMaskIntoConstraints = false
         title.text = .key("Neon.lines")
         title.font = .preferredFont(forTextStyle: .headline)
-        title.textColor = traitCollection.userInterfaceStyle == .dark ? .indigoLight : .indigoDark
+        title.textColor = .indigo
         view.addSubview(title)
         
         let newGame = Button(.key("New.game"))
         newGame.target = self
         newGame.action = #selector(self.newGame)
         newGame.label.textColor = .black
-        newGame.base.backgroundColor = .indigoLight
+        newGame.base.backgroundColor = .indigo
         view.addSubview(newGame)
         
         let settings = Button(.key("Settings"))
