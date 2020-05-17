@@ -206,6 +206,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 scene!.camera!.addChild(label)
                 scene!.camera!.run(.scale(to: 10, duration: 6))
                 wheel.alpha = 0
+                pointers.alpha = 0
                 
                 label.run(.fadeIn(withDuration: 3)) { [weak self] in
                     self?.scene!.run(.fadeOut(withDuration: 2)) {
@@ -214,26 +215,25 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                     }
                 }
             } else {
-                guard state == .play, let player = wheel.player else { return }
+                guard state == .play, let colour = wheel.player?.line.skin.colour else { return }
                 if scene!.camera!.containedNodeSet().contains($0) {
                     $0.run(soundFoe)
                 }
                 
                 score += 150
-                let base = SKShapeNode(rect: .init(x: -30, y: -30, width: 60, height: 60), cornerRadius: 30)
-                base.fillColor = player.line.skin.colour
-                base.lineWidth = 0
-                base.alpha = 0
-                base.zPosition = 4
-                $0.addChild(base)
-                
                 let label = SKLabelNode(text: "150")
-                label.bold(18)
-                label.fontColor = .black
+                label.bold(30)
+                label.fontColor = colour
                 label.verticalAlignmentMode = .center
                 label.horizontalAlignmentMode = .center
-                base.addChild(label)
-                base.run(.sequence([.fadeIn(withDuration: 3), .wait(forDuration: 2), .fadeOut(withDuration: 1)]))
+                label.position = $0.position
+                label.alpha = 0
+                label.zPosition = 4
+                
+                scene!.addChild(label)
+                label.run(.sequence([.fadeIn(withDuration: 2), .fadeOut(withDuration: 3), .run {
+                    label.removeFromParent()
+                }]))
             }
         }
     }
