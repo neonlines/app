@@ -66,6 +66,8 @@ class MultiplayerView: View, GKMatchDelegate {
         let rotation = randomRotation
         let report = Report.profile(playerId, position: position, rotation: rotation, skin: profile.skin)
         startPlayer(position, rotation: rotation)
-        try? match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) { [weak self] in
+            try? self?.match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)
+        }
     }
 }
