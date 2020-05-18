@@ -29,7 +29,6 @@ final class Options: NSView {
         againstOthers.action = #selector(multiplayer)
         againstOthers.label.textColor = .black
         againstOthers.layer!.backgroundColor = .indigo
-        againstOthers.isHidden = true
         addSubview(againstOthers)
         
         let settings = Button(.key("Settings"))
