@@ -77,8 +77,7 @@ let balam = Balam("lines")
         }
         let request = GKMatchRequest()
         request.minPlayers = 2
-        request.maxPlayers = 3
-        request.defaultNumberOfPlayers = 2
+        request.maxPlayers = 2
         
         guard let controller = GKMatchmakerViewController(matchRequest: request) else { return }
         controller.matchmakerDelegate = self
