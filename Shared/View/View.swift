@@ -6,6 +6,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     var players = Set<Player>()
     let brain: Brain
     private(set) weak var wheel: Wheel!
+    private(set) weak var others: Others!
     private(set) var state = State.start
     private weak var pointers: SKNode!
     private weak var hud: Hud!
@@ -40,6 +41,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         let borders = Borders(radius: radius)
         let hud = Hud()
         let minimap = Minimap(radius: radius)
+        let others = Others()
         let pointers = SKNode()
         pointers.position.y = 100
         
@@ -47,6 +49,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         camera.setScale(5)
         camera.addChild(hud)
         camera.addChild(minimap)
+        camera.addChild(others)
         camera.addChild(pointers)
         camera.addChild(wheel)
         
@@ -57,6 +60,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         self.hud = hud
         self.wheel = wheel
         self.minimap = minimap
+        self.others = others
         self.pointers = pointers
         presentScene(scene)
         
@@ -113,6 +117,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         wheel.align()
         hud.align()
         minimap.align()
+        others.align()
     }
     
     func update(_ delta: TimeInterval) {

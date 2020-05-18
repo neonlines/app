@@ -8,11 +8,10 @@ class MultiplayerView: View, GKMatchDelegate {
         self.match = match
         super.init(radius: radius)
         match.delegate = self
+        others.load(match)
         
-        if !match.players.filter { $0.playerID > GKLocalPlayer.local.playerID }.isEmpty {
+        if !match.players.filter { $0.teamPlayerID > GKLocalPlayer.local.teamPlayerID }.isEmpty {
             master()
-        } else {
-            print("no master")
         }
     }
     
