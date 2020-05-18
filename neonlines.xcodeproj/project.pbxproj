@@ -73,6 +73,7 @@
 		CE899EB4245EBAA00066824A /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE899EB3245EBAA00066824A /* Score.swift */; };
 		CE899EB6245EBD930066824A /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE899EB5245EBD930066824A /* Profile.swift */; };
 		CE899EB8245EC3B10066824A /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE899EB7245EC3B10066824A /* Separator.swift */; };
+		CE900BF72472ED1400D80AFA /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4BB9F8246EE59500BE032E /* Report.swift */; };
 		CE9443D0244CA2E30087CDA9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9443CF244CA2E30087CDA9 /* Media.xcassets */; };
 		CE9443D1244CA2E30087CDA9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9443CF244CA2E30087CDA9 /* Media.xcassets */; };
 		CE9443D3244CA5000087CDA9 /* Wheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443D2244CA5000087CDA9 /* Wheel.swift */; };
@@ -562,6 +563,7 @@
 				CE0F77B4246AFAD100EA3955 /* Store.swift in Sources */,
 				CE769E6A247267DF0038D0D8 /* Others.swift in Sources */,
 				CE86FBBC246B14720094A54C /* Pointer.swift in Sources */,
+				CE900BF72472ED1400D80AFA /* Report.swift in Sources */,
 				CE358AAE2469A66600C7FCAD /* Launch.swift in Sources */,
 				CEF10FF6246FEF5A009FA1DD /* State.swift in Sources */,
 				CEE5DBB0246E736D00C2FE73 /* AiView.swift in Sources */,

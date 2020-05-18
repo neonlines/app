@@ -3,30 +3,34 @@ import CoreGraphics
 struct Report: Codable {
     enum Mode: UInt8, Codable {
         case
-        positions,
+        position,
         profile,
         move
     }
     
-    struct Position: Codable {
-        let player: String
-        let position: CGPoint
-    }
-
-    struct Profile: Codable {
-        let player: String
-        let position: CGPoint
-        let rotation: CGFloat
-        let skin: Skin.Id
+    let mode: Mode
+    let player: Int
+    let position: CGPoint
+    let rotation: CGFloat!
+    let skin: Skin.Id!
+    
+    static func position(_ player: Int, position: CGPoint) -> Report {
+        .init(.position, player: player, position: position, rotation: nil, skin: nil)
     }
     
-    struct Move: Codable {
-        let player: String
-        let position: CGPoint
-        let rotation: CGFloat
+    static func profile(_ player: Int, position: CGPoint, rotation: CGFloat, skin: Skin.Id) -> Report {
+        .init(.profile, player: player, position: position, rotation: rotation, skin: skin)
     }
     
-    var positions: [Position]?
-    var profile: Profile?
-    var move: Move?
+    static func move(_ player: Int, position: CGPoint, rotation: CGFloat) -> Report {
+        .init(.move, player: player, position: position, rotation: rotation, skin: nil)
+    }
+    
+    private init(_ mode: Mode, player: Int, position: CGPoint, rotation: CGFloat?, skin: Skin.Id?) {
+        self.mode = mode
+        self.player = player
+        self.position = position
+        self.rotation = rotation
+        self.skin = skin
+    }
 }

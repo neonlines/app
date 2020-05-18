@@ -5,6 +5,9 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     var times = Times()
     var players = Set<Player>()
     let brain: Brain
+    
+    final var randomRotation: CGFloat { .random(in: 0 ..< .pi * 2) }
+    
     private(set) weak var wheel: Wheel!
     private(set) weak var others: Others!
     private(set) var state = State.start
@@ -96,23 +99,32 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     final func startPlayer(_ position: CGPoint, rotation: CGFloat) {
-        let player = Player(line: .init(skin: profile.skin))
-        player.position = position
+        let player = spawn(position, rotation: rotation, skin: profile.skin)
         wheel.player = player
         wheel.zRotation = rotation
         pointers.zRotation = -rotation
-        
         scene!.camera!.zRotation = rotation - (.pi / 2)
         scene!.camera!.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 100), to: player)]
-        scene!.addChild(player.line)
-        scene!.addChild(player)
 
         scene!.camera!.run(.sequence([.scale(to: 1, duration: 2), .run { [weak self] in
             guard let self = self else { return }
             player.run(self.soundSpawn)
             self.state = .play
         }]))
+    }
+    
+    final func spawn(_ position: CGPoint, rotation: CGFloat, skin: Skin.Id) -> Player {
+        let player = Player(line: .init(skin: skin))
+        player.position = position
+        player.zRotation = randomRotation
+        scene!.addChild(player.line)
+        scene!.addChild(player)
         players.insert(player)
+        return player
+    }
+    
+    final func certainPosition(_ positions: [CGPoint]) -> CGPoint {
+        brain.position(positions, retry: 100_000)!
     }
     
     func update(_ delta: TimeInterval) {

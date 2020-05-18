@@ -4,7 +4,7 @@ class AiView: View {
     required init?(coder: NSCoder) { nil }
     override init(radius: CGFloat) {
         super.init(radius: radius)
-        startPlayer(brain.position([])!, rotation: .random(in: 0 ..< .pi * 2))
+        startPlayer(certainPosition([]), rotation: randomRotation)
     }
     
     final override func update(_ delta: TimeInterval) {
@@ -38,11 +38,6 @@ class AiView: View {
         case 4: skin = .foe4
         default: skin = .foe0
         }
-        let foe = Player(line: .init(skin: skin))
-        foe.position = position
-        foe.zRotation = .random(in: 0 ..< .pi * 2)
-        scene!.addChild(foe.line)
-        scene!.addChild(foe)
-        players.insert(foe)
+        _ = spawn(position, rotation: randomRotation, skin: skin)
     }
 }
