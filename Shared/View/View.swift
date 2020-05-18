@@ -64,17 +64,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         self.pointers = pointers
         presentScene(scene)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            self?.start()
-        }
-    }
-    
-    final func didBegin(_ contact: SKPhysicsContact) {
-        contact.bodyA.node.map(explode)
-        contact.bodyB.node.map(explode)
-    }
-    
-    func start() {
         let track: String
         switch Int.random(in: 0 ... 3) {
         case 1: track = "fatal1"
@@ -84,25 +73,14 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         }
         let sound = SKAudioNode(fileNamed: track)
         sound.isPositional = false
-        scene!.addChild(sound)
+        scene.addChild(sound)
         
-        let player = Player(line: .init(skin: profile.skin))
-        player.position = brain.position([])!
-        wheel.player = player
-        wheel.zRotation = .random(in: 0 ..< .pi * 2)
-        pointers.zRotation = -wheel.zRotation
-        
-        scene!.camera!.zRotation = wheel.zRotation - (.pi / 2)
-        scene!.camera!.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 100), to: player)]
-        scene!.addChild(player.line)
-        scene!.addChild(player)
-
-        scene!.camera!.run(.sequence([.scale(to: 1, duration: 2), .run { [weak self] in
-            guard let self = self else { return }
-            player.run(self.soundSpawn)
-            self.state = .play
-        }]))
-        players.insert(player)
+        gameReady()
+    }
+    
+    final func didBegin(_ contact: SKPhysicsContact) {
+        contact.bodyA.node.map(explode)
+        contact.bodyB.node.map(explode)
     }
     
     final func update(_ time: TimeInterval, for: SKScene) {
@@ -118,6 +96,30 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         hud.align()
         minimap.align()
         others.align()
+    }
+    
+    final func startPlayer(_ position: CGPoint, rotation: CGFloat) {
+        let player = Player(line: .init(skin: profile.skin))
+        player.position = position
+        wheel.player = player
+        wheel.zRotation = rotation
+        pointers.zRotation = -rotation
+        
+        scene!.camera!.zRotation = rotation - (.pi / 2)
+        scene!.camera!.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 100), to: player)]
+        scene!.addChild(player.line)
+        scene!.addChild(player)
+
+        scene!.camera!.run(.sequence([.scale(to: 1, duration: 2), .run { [weak self] in
+            guard let self = self else { return }
+            player.run(self.soundSpawn)
+            self.state = .play
+        }]))
+        players.insert(player)
+    }
+    
+    func gameReady() {
+        
     }
     
     func update(_ delta: TimeInterval) {
@@ -144,7 +146,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         }
     }
     
-    open func gameOver(_ score: Int) {
+    func gameOver(_ score: Int) {
         finish(score)
     }
     

@@ -1,7 +1,7 @@
 import SpriteKit
 
 class AiView: View {
-    override func update(_ delta: TimeInterval) {
+    final override func update(_ delta: TimeInterval) {
         super.update(delta)
         switch state {
         case .play:
@@ -13,6 +13,10 @@ class AiView: View {
             }
         default: break
         }
+    }
+    
+    final override func gameReady() {
+        startPlayer(brain.position([])!, rotation: .random(in: 0 ..< .pi * 2))
     }
     
     private func foes() {
