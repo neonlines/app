@@ -17,7 +17,7 @@ final class Minimap: SKShapeNode {
     }
     
     func align() {
-        position = .init(x: (scene!.frame.width / 2) - 30, y: (scene!.frame.height / -2) + 30)
+        position = .init(x: (scene!.frame.width / 2) - 30, y: (scene!.frame.height / -2) + 40)
     }
     
     func clear() {

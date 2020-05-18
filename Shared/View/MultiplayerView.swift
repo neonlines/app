@@ -8,6 +8,12 @@ class MultiplayerView: View, GKMatchDelegate {
         self.match = match
         super.init(radius: radius)
         match.delegate = self
+        
+        if !match.players.filter { $0.playerID > GKLocalPlayer.local.playerID }.isEmpty {
+            master()
+        } else {
+            print("no master")
+        }
     }
     
     final func match(_: GKMatch, didReceive: Data, fromRemotePlayer: GKPlayer) {
@@ -33,5 +39,9 @@ class MultiplayerView: View, GKMatchDelegate {
     
     private func send() {
         try? match.sendData(toAllPlayers: .init(), with: .unreliable)
+    }
+    
+    private func master() {
+        print("master")
     }
 }
