@@ -1,6 +1,12 @@
 import SpriteKit
 
 class AiView: View {
+    required init?(coder: NSCoder) { nil }
+    override init(radius: CGFloat) {
+        super.init(radius: radius)
+        startPlayer(brain.position([])!, rotation: .random(in: 0 ..< .pi * 2))
+    }
+    
     final override func update(_ delta: TimeInterval) {
         super.update(delta)
         switch state {
@@ -13,10 +19,6 @@ class AiView: View {
             }
         default: break
         }
-    }
-    
-    final override func gameReady() {
-        startPlayer(brain.position([])!, rotation: .random(in: 0 ..< .pi * 2))
     }
     
     private func foes() {

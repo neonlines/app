@@ -13,8 +13,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private weak var minimap: Minimap!
     private var drag: CGFloat?
     private var rotation = CGFloat()
-    private let soundPlayer = SKAction.playSoundFileNamed("player", waitForCompletion: false)
-    private let soundFoe = SKAction.playSoundFileNamed("foe", waitForCompletion: false)
+    private let soundCrash = SKAction.playSoundFileNamed("crash", waitForCompletion: false)
     private let soundSpawn = SKAction.playSoundFileNamed("spawn", waitForCompletion: false)
     
     private var score = 0 {
@@ -74,8 +73,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         let sound = SKAudioNode(fileNamed: track)
         sound.isPositional = false
         scene.addChild(sound)
-        
-        gameReady()
     }
     
     final func didBegin(_ contact: SKPhysicsContact) {
@@ -116,10 +113,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             self.state = .play
         }]))
         players.insert(player)
-    }
-    
-    func gameReady() {
-        
     }
     
     func update(_ delta: TimeInterval) {
@@ -205,7 +198,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             $0.explode()
             if $0 === wheel.player {
                 state = .died
-                $0.run(soundPlayer)
+                $0.run(soundCrash)
                 let label = SKLabelNode(text: .key("Game.over"))
                 label.bold(30)
                 label.alpha = 0
@@ -224,7 +217,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             } else {
                 guard state == .play, let colour = wheel.player?.line.skin.colour else { return }
                 if scene!.camera!.containedNodeSet().contains($0) {
-                    $0.run(soundFoe)
+                    $0.run(soundCrash)
                 }
                 
                 score += 150
