@@ -10,7 +10,7 @@ struct Report: Codable {
     
     let mode: Mode
     let player: Int
-    let position: CGPoint
+    let position: CGPoint!
     let rotation: CGFloat!
     let skin: Skin.Id!
     
@@ -22,11 +22,11 @@ struct Report: Codable {
         .init(.profile, player: player, position: position, rotation: rotation, skin: skin)
     }
     
-    static func move(_ player: Int, position: CGPoint, rotation: CGFloat) -> Report {
-        .init(.move, player: player, position: position, rotation: rotation, skin: nil)
+    static func move(_ player: Int, rotation: CGFloat) -> Report {
+        .init(.move, player: player, position: nil, rotation: rotation, skin: nil)
     }
     
-    private init(_ mode: Mode, player: Int, position: CGPoint, rotation: CGFloat?, skin: Skin.Id?) {
+    private init(_ mode: Mode, player: Int, position: CGPoint?, rotation: CGFloat?, skin: Skin.Id?) {
         self.mode = mode
         self.player = player
         self.position = position

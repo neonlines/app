@@ -23,9 +23,11 @@ class MultiplayerView: View, GKMatchDelegate {
             playerId = report.player
             start(report.position)
         case .profile:
-            _ = spawn(report.position, rotation: report.rotation, skin: report.skin)
+            spawn(report.position, rotation: report.rotation, skin: report.skin).id = report.player
         case .move:
-            break
+            players.first { $0.id == report.player }.map {
+                $0.zRotation = report.rotation
+            }
         }
     }
     
@@ -34,7 +36,9 @@ class MultiplayerView: View, GKMatchDelegate {
         switch state {
         case .play:
             if times.send.timeout(delta) {
-//                send()
+                guard let player = wheel.player else { return }
+                let report = Report.move(playerId, rotation: player.zRotation)
+                try? match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)
             }
         default: break
         }

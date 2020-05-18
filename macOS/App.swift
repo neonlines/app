@@ -35,7 +35,7 @@ let balam = Balam("lines")
     
     func matchmakerViewController(_: GKMatchmakerViewController, didFind: GKMatch) {
         GKDialogController.shared().dismiss(self)
-        newGame(MultiplayerView(radius: 3_000, match: didFind))
+        newGame(MultiplayerView(radius: 1_000, match: didFind))
     }
     
     func matchmakerViewControllerWasCancelled(_: GKMatchmakerViewController) {
