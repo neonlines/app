@@ -50,6 +50,30 @@ final class MultiplayerView: View, GKMatchDelegate {
         match.delegate = nil
     }
     
+    override func explode(_ player: Player) {
+        others.explode(player.id)
+        
+        if players.filter({ $0.physicsBody != nil }).filter({ $0.id != playerId }).isEmpty {
+            state = .victory
+            
+            let label = SKLabelNode(text: .key("Victory"))
+            label.bold(30)
+            label.alpha = 0
+            label.fontColor = .text
+            scene!.camera!.addChild(label)
+            scene!.camera!.run(.scale(to: 10, duration: 6))
+            wheel.alpha = 0
+            pointers.alpha = 0
+            
+            label.run(.fadeIn(withDuration: 3)) { [weak self] in
+                self?.scene!.run(.fadeOut(withDuration: 2)) {
+                    guard let score = self?.score else { return }
+                    self?.gameOver(score)
+                }
+            }
+        }
+    }
+    
     private func master() {
         var positions = [CGPoint]()
         match.players.forEach {
@@ -66,6 +90,7 @@ final class MultiplayerView: View, GKMatchDelegate {
         let rotation = randomRotation
         let report = Report.profile(playerId, position: position, rotation: rotation, skin: profile.skin, name: GKLocalPlayer.local.displayName)
         startPlayer(position, rotation: rotation)
+        wheel.player!.id = playerId
         try? match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)
     }
 }

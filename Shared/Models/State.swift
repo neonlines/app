@@ -4,5 +4,6 @@ enum State {
     case
     start,
     play,
-    died
+    died,
+    victory
 }

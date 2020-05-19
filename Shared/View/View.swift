@@ -2,28 +2,28 @@ import Brain
 import SpriteKit
 
 class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
+    var score = 0 {
+        didSet {
+            hud.counter(score)
+        }
+    }
+    
     var times = Times()
     var players = Set<Player>()
+    var state = State.start
     let brain: Brain
     
     final var randomRotation: CGFloat { .random(in: 0 ..< .pi * 2) }
     
     private(set) weak var wheel: Wheel!
     private(set) weak var others: Others!
-    private(set) var state = State.start
-    private weak var pointers: SKNode!
+    private(set) weak var pointers: SKNode!
     private weak var hud: Hud!
     private weak var minimap: Minimap!
     private var drag: CGFloat?
     private var rotation = CGFloat()
     private let soundCrash = SKAction.playSoundFileNamed("crash", waitForCompletion: false)
     private let soundSpawn = SKAction.playSoundFileNamed("spawn", waitForCompletion: false)
-    
-    private var score = 0 {
-        didSet {
-            hud.counter(score)
-        }
-    }
     
     required init?(coder: NSCoder) { nil }
     init(radius: CGFloat) {
@@ -79,8 +79,8 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     final func didBegin(_ contact: SKPhysicsContact) {
-        contact.bodyA.node.map(explode)
-        contact.bodyB.node.map(explode)
+        contact.bodyA.node.map(crash)
+        contact.bodyB.node.map(crash)
     }
     
     final func update(_ time: TimeInterval, for: SKScene) {
@@ -107,7 +107,9 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         scene!.camera!.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 100), to: player)]
 
         scene!.camera!.run(.sequence([.scale(to: 1, duration: 2), .run { [weak self] in
-            self?.play()
+            guard let self = self else { return }
+            player.run(self.soundSpawn)
+            self.state = .play
         }]))
     }
     
@@ -125,18 +127,13 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         brain.position(positions, retry: 100_000)!
     }
     
-    final func play() {
-        wheel.player!.run(soundSpawn)
-        state = .play
-    }
-    
     func update(_ delta: TimeInterval) {
         if times.radar.timeout(delta) {
             radar()
         }
         
         switch state {
-        case .play, .died:
+        case .play, .died, .victory:
             if times.move.timeout(delta) {
                 move()
             }
@@ -180,6 +177,10 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         wheel.on = false
     }
     
+    func explode(_ player: Player) {
+
+    }
+    
     private func move() {
         players.filter { $0.physicsBody != nil }.forEach {
             $0.move()
@@ -209,9 +210,11 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         }
     }
     
-    private func explode(_ node: SKNode) {
+    private func crash(_ node: SKNode) {
         (node as? Player).map {
             $0.explode()
+            guard state == .play else { return }
+            
             if $0 === wheel.player {
                 state = .died
                 $0.run(soundCrash)
@@ -231,25 +234,10 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                     }
                 }
             } else {
-                guard state == .play, let colour = wheel.player?.line.skin.colour else { return }
                 if scene!.camera!.containedNodeSet().contains($0) {
                     $0.run(soundCrash)
                 }
-                
-                score += 150
-                let label = SKLabelNode(text: "150")
-                label.bold(30)
-                label.fontColor = colour
-                label.verticalAlignmentMode = .center
-                label.horizontalAlignmentMode = .center
-                label.position = $0.position
-                label.alpha = 0
-                label.zPosition = 4
-                
-                scene!.addChild(label)
-                label.run(.sequence([.fadeIn(withDuration: 2), .fadeOut(withDuration: 3), .run {
-                    label.removeFromParent()
-                }]))
+                explode($0)
             }
         }
     }

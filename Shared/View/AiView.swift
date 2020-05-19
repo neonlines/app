@@ -21,6 +21,25 @@ final class AiView: View {
         }
     }
     
+    override func explode(_ player: Player) {
+        guard let colour = wheel.player?.line.skin.colour else { return }
+        
+        score += 150
+        let label = SKLabelNode(text: "150")
+        label.bold(30)
+        label.fontColor = colour
+        label.verticalAlignmentMode = .center
+        label.horizontalAlignmentMode = .center
+        label.position = player.position
+        label.alpha = 0
+        label.zPosition = 4
+        
+        scene!.addChild(label)
+        label.run(.sequence([.fadeIn(withDuration: 2), .fadeOut(withDuration: 3), .run {
+            label.removeFromParent()
+        }]))
+    }
+    
     private func foes() {
         guard let player = wheel.player else { return }
         players.filter { $0.physicsBody != nil }.filter { $0 !== player }.forEach { foe in

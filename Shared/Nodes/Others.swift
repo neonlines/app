@@ -17,6 +17,10 @@ final class Others: SKNode {
         addChild(Item(id: id, skin: skin, name: name, y: y))
         y += 28
     }
+    
+    func explode(_ player: Int) {
+        children.map { $0 as! Item }.first { $0.id == player }?.run(.fadeOut(withDuration: 1))
+    }
 }
 
 private final class Item: SKShapeNode {
