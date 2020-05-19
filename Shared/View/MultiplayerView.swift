@@ -1,6 +1,6 @@
 import GameKit
 
-class MultiplayerView: View, GKMatchDelegate {
+final class MultiplayerView: View, GKMatchDelegate {
     private var playerId = 0
     private let match: GKMatch
     
@@ -16,7 +16,7 @@ class MultiplayerView: View, GKMatchDelegate {
         }
     }
     
-    final func match(_: GKMatch, didReceive: Data, fromRemotePlayer: GKPlayer) {
+    func match(_: GKMatch, didReceive: Data, fromRemotePlayer: GKPlayer) {
         guard let report = try? JSONDecoder().decode(Report.self, from: didReceive) else { return }
         switch report.mode {
         case .position:
@@ -44,6 +44,12 @@ class MultiplayerView: View, GKMatchDelegate {
         }
     }
     
+    override func play() {
+        super.play()
+        let report = Report.profile(playerId, position: wheel.player!.position, rotation: wheel.player!.zRotation, skin: profile.skin)
+        try? match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)
+    }
+    
     override func gameOver(_ score: Int) {
         super.gameOver(score)
         match.disconnect()
@@ -64,10 +70,6 @@ class MultiplayerView: View, GKMatchDelegate {
     
     private func start(_ position: CGPoint) {
         let rotation = randomRotation
-        let report = Report.profile(playerId, position: position, rotation: rotation, skin: profile.skin)
         startPlayer(position, rotation: rotation)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.9) { [weak self] in
-            try? self?.match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)
-        }
     }
 }

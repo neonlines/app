@@ -1,13 +1,13 @@
 import SpriteKit
 
-class AiView: View {
+final class AiView: View {
     required init?(coder: NSCoder) { nil }
     override init(radius: CGFloat) {
         super.init(radius: radius)
         startPlayer(certainPosition([]), rotation: randomRotation)
     }
     
-    final override func update(_ delta: TimeInterval) {
+    override func update(_ delta: TimeInterval) {
         super.update(delta)
         switch state {
         case .play:

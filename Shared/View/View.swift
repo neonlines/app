@@ -107,9 +107,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         scene!.camera!.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 100), to: player)]
 
         scene!.camera!.run(.sequence([.scale(to: 1, duration: 2), .run { [weak self] in
-            guard let self = self else { return }
-            player.run(self.soundSpawn)
-            self.state = .play
+            self?.play()
         }]))
     }
     
@@ -149,6 +147,11 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             }
         default: break
         }
+    }
+    
+    func play() {
+        wheel.player!.run(soundSpawn)
+        state = .play
     }
     
     func gameOver(_ score: Int) {
