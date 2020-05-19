@@ -31,7 +31,7 @@ private final class Item: SKShapeNode {
         self.id = id
         super.init()
         lineWidth = 0
-        fillColor = Skin.make(id: skin).colour.withAlphaComponent(0.8)
+        fillColor = Skin.make(id: skin).colour.withAlphaComponent(0.95)
         position.y = y
         path = .init(roundedRect: .init(x: 0, y: 0, width: 110, height: 22), cornerWidth: 6, cornerHeight: 6, transform: nil)
         
