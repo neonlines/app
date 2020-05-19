@@ -1,16 +1,24 @@
 import SpriteKit
 
 final class Others: SKNode {
-    private var y = CGFloat()
+    private var y = CGFloat(30)
     
     required init?(coder: NSCoder) { nil }
     override init() {
         super.init()
         zPosition = 11
+        
+        let label = SKLabelNode()
+        label.horizontalAlignmentMode = .left
+        label.bold(12)
+        label.text = .key("Duel")
+        label.verticalAlignmentMode = .bottom
+        label.position = .init(x: 5, y: 5)
+        addChild(label)
     }
     
     func align() {
-        position = .init(x: (scene!.frame.width / -2) + 10, y: (scene!.frame.height / -2) + 18)
+        position = .init(x: (scene!.frame.width / -2) + 10, y: (scene!.frame.height / -2) + 80)
     }
     
     func player(_ id: Int, skin: Skin.Id, name: String) {
@@ -19,7 +27,7 @@ final class Others: SKNode {
     }
     
     func explode(_ player: Int) {
-        children.map { $0 as! Item }.first { $0.id == player }?.run(.fadeOut(withDuration: 1))
+        children.compactMap { $0 as? Item }.first { $0.id == player }?.run(.fadeOut(withDuration: 1))
     }
 }
 

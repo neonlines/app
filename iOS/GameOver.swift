@@ -9,13 +9,13 @@ final class GameOver: UIViewController {
         super.init(nibName: nil, bundle: nil)
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.font = .preferredFont(forTextStyle: .headline)
+        title.font = .preferredFont(forTextStyle: .largeTitle)
         title.text = victory ? .key("Victory") : .key("Game.over")
         view.addSubview(title)
         
         let subtitle = UILabel()
         subtitle.translatesAutoresizingMaskIntoConstraints = false
-        subtitle.text = .key("Seconds.survived")
+        subtitle.text = .key("Seconds")
         view.addSubview(subtitle)
         
         let label = UILabel()
@@ -34,10 +34,10 @@ final class GameOver: UIViewController {
         title.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         title.bottomAnchor.constraint(equalTo: subtitle.topAnchor, constant: -80).isActive = true
         
-        subtitle.rightAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        subtitle.rightAnchor.constraint(equalTo: view.centerXAnchor, constant: 30).isActive = true
         subtitle.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
         
-        label.leftAnchor.constraint(equalTo: view.centerXAnchor, constant: 20).isActive = true
+        label.leftAnchor.constraint(equalTo: view.centerXAnchor, constant: 50).isActive = true
         label.centerYAnchor.constraint(equalTo: subtitle.centerYAnchor).isActive = true
         
         next.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -59,10 +59,10 @@ final class GameOver: UIViewController {
             aiLabel.font = .preferredFont(forTextStyle: .largeTitle)
             view.addSubview(aiLabel)
             
-            aiTitle.rightAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            aiTitle.rightAnchor.constraint(equalTo: view.centerXAnchor, constant: 30).isActive = true
             aiTitle.topAnchor.constraint(equalTo: subtitle.bottomAnchor, constant: 70).isActive = true
             
-            aiLabel.leftAnchor.constraint(equalTo: view.centerXAnchor, constant: 20).isActive = true
+            aiLabel.leftAnchor.constraint(equalTo: view.centerXAnchor, constant: 50).isActive = true
             aiLabel.centerYAnchor.constraint(equalTo: aiTitle.centerYAnchor).isActive = true
             
             if game.profile.ai < ai {
@@ -87,7 +87,7 @@ final class GameOver: UIViewController {
         max.text = .key("New.max")
         view.addSubview(max)
         
-        max.leftAnchor.constraint(equalTo: view.centerXAnchor, constant: 20).isActive = true
+        max.leftAnchor.constraint(equalTo: view.centerXAnchor, constant: 50).isActive = true
         return max
     }
     
