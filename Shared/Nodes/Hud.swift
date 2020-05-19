@@ -2,6 +2,7 @@ import SpriteKit
 
 final class Hud: SKNode {
     private weak var label: SKLabelNode!
+    private weak var title: SKLabelNode!
     private let formatter = NumberFormatter()
     
     required init?(coder: NSCoder) { nil }
@@ -10,15 +11,25 @@ final class Hud: SKNode {
         zPosition = 11
         formatter.numberStyle = .decimal
         
+        let title = SKLabelNode()
+        title.horizontalAlignmentMode = .left
+        title.text = .key("Seconds")
+        title.alpha = 0.7
+        title.bold(12)
+        addChild(title)
+        self.title = title
+        
         let label = SKLabelNode()
-        label.horizontalAlignmentMode = .right
+        label.horizontalAlignmentMode = .left
+        label.text = "0"
         label.bold(18)
         addChild(label)
         self.label = label
     }
     
     func align() {
-        label.position = .init(x: (scene!.frame.width / 2) - 8, y: (scene!.frame.height / -2) + 72)
+        title.position = .init(x: (scene!.frame.width / -2) + 12, y: (scene!.frame.height / -2) + 50)
+        label.position = .init(x: (scene!.frame.width / -2) + 14, y: (scene!.frame.height / -2) + 25)
     }
     
     func counter(_ count: Int) {

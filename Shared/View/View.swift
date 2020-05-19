@@ -2,16 +2,16 @@ import Brain
 import SpriteKit
 
 class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
-    var score = 0 {
-        didSet {
-            hud.counter(score)
-        }
-    }
-    
     var times = Times()
     var players = Set<Player>()
     var state = State.start
     let brain: Brain
+    
+    private var seconds = 0 {
+        didSet {
+            hud.counter(seconds)
+        }
+    }
     
     final var randomRotation: CGFloat { .random(in: 0 ..< .pi * 2) }
     
@@ -145,8 +145,8 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         
         switch state {
         case .play:
-            if times.scoring.timeout(delta) {
-                score += 1
+            if times.seconds.timeout(delta) {
+                seconds += 1
             }
         default: break
         }
@@ -229,8 +229,8 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 
                 label.run(.fadeIn(withDuration: 3)) { [weak self] in
                     self?.scene!.run(.fadeOut(withDuration: 2)) {
-                        guard let score = self?.score else { return }
-                        self?.gameOver(score)
+//                        guard let score = self?.score else { return }
+//                        self?.gameOver(score)
                     }
                 }
             } else {

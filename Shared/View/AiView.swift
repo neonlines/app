@@ -24,7 +24,7 @@ final class AiView: View {
     override func explode(_ player: Player) {
         guard let colour = wheel.player?.line.skin.colour else { return }
         
-        score += 150
+//        score += 150
         let label = SKLabelNode(text: "150")
         label.bold(30)
         label.fontColor = colour
