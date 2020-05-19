@@ -9,7 +9,6 @@ final class MultiplayerView: View, GKMatchDelegate {
         self.match = match
         super.init(radius: radius)
         match.delegate = self
-        others.load(match)
 
         if !match.players.filter({ $0.displayName > GKLocalPlayer.local.displayName }).isEmpty {
             master()
@@ -24,6 +23,7 @@ final class MultiplayerView: View, GKMatchDelegate {
             start(report.position)
         case .profile:
             spawn(report.position, rotation: report.rotation, skin: report.skin).id = report.player
+            others.player(report.player, skin: report.skin, name: report.name)
         case .move:
             players.first { $0.id == report.player }.map {
                 $0.zRotation = report.rotation
@@ -64,7 +64,7 @@ final class MultiplayerView: View, GKMatchDelegate {
     
     private func start(_ position: CGPoint) {
         let rotation = randomRotation
-        let report = Report.profile(playerId, position: position, rotation: rotation, skin: profile.skin)
+        let report = Report.profile(playerId, position: position, rotation: rotation, skin: profile.skin, name: GKLocalPlayer.local.displayName)
         startPlayer(position, rotation: rotation)
         try? match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)
     }
