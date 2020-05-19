@@ -1,21 +1,15 @@
 import UIKit
 import Balam
 import Combine
-import GameKit
 
 var profile = Profile()
 let balam = Balam("lines")
 
-@UIApplicationMain final class Window: UIWindow, UIApplicationDelegate, GKGameCenterControllerDelegate, GKMatchmakerViewControllerDelegate {
+@UIApplicationMain final class Window: UIWindow, GameMaster, UIApplicationDelegate {
     private var subs = Set<AnyCancellable>()
-    private let board = "neon.lines.scores"
     
     func application(_: UIApplication, willFinishLaunchingWithOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        GKLocalPlayer.local.authenticateHandler = { controller, _ in
-            guard let controller = controller else { return }
-            self.rootViewController!.present(controller, animated: true)
-        }
-
+        playerAuth()
         backgroundColor = .systemBackground
         
         balam.nodes(Profile.self).sink {
@@ -28,6 +22,14 @@ let balam = Balam("lines")
         
         return false
     }
+    
+    func auth(_ controller: UIViewController) {
+        rootViewController!.present(controller, animated: true)
+    }
+    
+    
+    
+    
     
     func matchmakerViewController(_: GKMatchmakerViewController, didFind: GKMatch) {
         rootViewController!.dismiss(animated: true)

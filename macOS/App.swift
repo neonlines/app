@@ -6,9 +6,8 @@ import GameKit
 var profile = Profile()
 let balam = Balam("lines")
 
-@NSApplicationMain final class App: NSApplication, NSApplicationDelegate, GKGameCenterControllerDelegate, GKMatchmakerViewControllerDelegate {
+@NSApplicationMain final class App: NSApplication, GameMaster, NSApplicationDelegate {
     private var subs = Set<AnyCancellable>()
-    private let board = "neon.lines.scores"
     
     required init?(coder: NSCoder) { nil }
     override init() {
@@ -17,10 +16,7 @@ let balam = Balam("lines")
     }
     
     func applicationWillFinishLaunching(_: Notification) {
-        GKLocalPlayer.local.authenticateHandler = { [weak self] controller, _ in
-            guard let controller = controller else { return }
-            NSWindow(contentViewController: controller).makeKeyAndOrderFront(self)
-        }
+        playerAuth()
         
         mainMenu = Menu()
         Window().makeKeyAndOrderFront(nil)
@@ -33,64 +29,30 @@ let balam = Balam("lines")
         }.store(in: &subs)
     }
     
-    func matchmakerViewController(_: GKMatchmakerViewController, didFind: GKMatch) {
+    func auth(_ controller: NSViewController) {
+        NSWindow(contentViewController: controller).makeKeyAndOrderFront(self)
+    }
+    
+    func dismissGameCenter() {
         GKDialogController.shared().dismiss(self)
-        newGame(MultiplayerView(radius: 1_000, match: didFind))
-    }
-    
-    func matchmakerViewControllerWasCancelled(_: GKMatchmakerViewController) {
-        GKDialogController.shared().dismiss(self)
-    }
-    
-    func matchmakerViewController(_: GKMatchmakerViewController, didFailWithError: Error) {
-        GKDialogController.shared().dismiss(self)
-    }
-    
-    func gameCenterViewControllerDidFinish(_: GKGameCenterViewController) {
-        GKDialogController.shared().dismiss(self)
-    }
-    
-    func leaderboards() {
-        guard GKLocalPlayer.local.isAuthenticated else {
-            gameCenterError()
-            return
-        }
-        let controller = GKGameCenterViewController()
-        controller.viewState = .leaderboards
-        controller.gameCenterDelegate = self
-        controller.leaderboardIdentifier = board
-        GKDialogController.shared().parentWindow = windows.first
-        GKDialogController.shared().present(controller)
-    }
-    
-    func score(_ points: Int) {
-        guard GKLocalPlayer.local.isAuthenticated else { return }
-        let report = GKScore(leaderboardIdentifier: board)
-        report.value = .init(points)
-        GKScore.report([report])
-    }
-    
-    func match() {
-        guard GKLocalPlayer.local.isAuthenticated else {
-            gameCenterError()
-            return
-        }
-        let request = GKMatchRequest()
-        request.minPlayers = 2
-        request.maxPlayers = 2
-        
-        guard let controller = GKMatchmakerViewController(matchRequest: request) else { return }
-        controller.matchmakerDelegate = self
-        
-        GKDialogController.shared().parentWindow = windows.first
-        GKDialogController.shared().present(controller)
     }
     
     func newGame(_ view: View) {
         windows.first!.show(view)
     }
     
-    private func gameCenterError() {
+    func show(_ controller: GKViewController) {
+        GKDialogController.shared().parentWindow = windows.first
+        switch controller {
+        case let controller as GKMatchmakerViewController:
+            GKDialogController.shared().present(controller)
+        case let controller as GKGameCenterViewController:
+            GKDialogController.shared().present(controller)
+        default: break
+        }
+    }
+    
+    func gameCenterError() {
         let alert = NSAlert()
         alert.messageText = .key("Game.center.error")
         alert.informativeText = .key("Check.you.are.logged")
