@@ -44,12 +44,6 @@ final class MultiplayerView: View, GKMatchDelegate {
         }
     }
     
-    override func play() {
-        super.play()
-        let report = Report.profile(playerId, position: wheel.player!.position, rotation: wheel.player!.zRotation, skin: profile.skin)
-        try? match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)
-    }
-    
     override func gameOver(_ score: Int) {
         super.gameOver(score)
         match.disconnect()
@@ -70,6 +64,8 @@ final class MultiplayerView: View, GKMatchDelegate {
     
     private func start(_ position: CGPoint) {
         let rotation = randomRotation
+        let report = Report.profile(playerId, position: position, rotation: rotation, skin: profile.skin)
         startPlayer(position, rotation: rotation)
+        try? match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)
     }
 }

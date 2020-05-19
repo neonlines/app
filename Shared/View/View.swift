@@ -125,7 +125,16 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         brain.position(positions, retry: 100_000)!
     }
     
+    final func play() {
+        wheel.player!.run(soundSpawn)
+        state = .play
+    }
+    
     func update(_ delta: TimeInterval) {
+        if times.radar.timeout(delta) {
+            radar()
+        }
+        
         switch state {
         case .play, .died:
             if times.move.timeout(delta) {
@@ -139,19 +148,11 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         
         switch state {
         case .play:
-            if times.radar.timeout(delta) {
-                radar()
-            }
             if times.scoring.timeout(delta) {
                 score += 1
             }
         default: break
         }
-    }
-    
-    func play() {
-        wheel.player!.run(soundSpawn)
-        state = .play
     }
     
     func gameOver(_ score: Int) {
