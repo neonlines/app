@@ -31,8 +31,12 @@ extension View {
         NSCursor.arrow.set()
     }
     
-    func finish(_ score: Int) {
-        window!.show(Score(points: score))
+    func victory() {
+        window!.show(GameOver(victory: true, seconds: seconds, ai: nil))
+    }
+    
+    func gameOver(_ ai: Int?) {
+        window!.show(GameOver(victory: false, seconds: seconds, ai: ai))
     }
 }
 

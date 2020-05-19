@@ -27,7 +27,11 @@ extension View {
         stop()
     }
     
-    func finish(_ score: Int) {
+    func gameOver(_ seconds: Int, ai: Int) {
+        controller?.navigationController?.show(Score(points: score))
+    }
+    
+    func gameOver(_ seconds: Int) {
         controller?.navigationController?.show(Score(points: score))
     }
 }

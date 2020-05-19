@@ -1,6 +1,7 @@
 import GameKit
 
 final class MultiplayerView: View, GKMatchDelegate {
+    private(set) weak var others: Others!
     private var playerId = 0
     private let match: GKMatch
     
@@ -9,6 +10,10 @@ final class MultiplayerView: View, GKMatchDelegate {
         self.match = match
         super.init(radius: radius)
         match.delegate = self
+        
+        let others = Others()
+        scene!.camera!.addChild(others)
+        self.others = others
 
         if !match.players.filter({ $0.displayName > GKLocalPlayer.local.displayName }).isEmpty {
             master()
@@ -31,6 +36,11 @@ final class MultiplayerView: View, GKMatchDelegate {
         }
     }
     
+    override func align() {
+        super.align()
+        others.align()
+    }
+    
     override func update(_ delta: TimeInterval) {
         super.update(delta)
         switch state {
@@ -42,12 +52,6 @@ final class MultiplayerView: View, GKMatchDelegate {
             }
         default: break
         }
-    }
-    
-    override func gameOver(_ score: Int) {
-        super.gameOver(score)
-        match.disconnect()
-        match.delegate = nil
     }
     
     override func explode(_ player: Player) {
@@ -67,11 +71,18 @@ final class MultiplayerView: View, GKMatchDelegate {
             
             label.run(.fadeIn(withDuration: 3)) { [weak self] in
                 self?.scene!.run(.fadeOut(withDuration: 2)) {
-//                    guard let score = self?.score else { return }
-//                    self?.gameOver(score)
+                    self?.match.disconnect()
+                    self?.match.delegate = nil
+                    self?.victory()
                 }
             }
         }
+    }
+    
+    override func gameOver() {
+        match.disconnect()
+        match.delegate = nil
+        gameOver(nil)
     }
     
     private func master() {

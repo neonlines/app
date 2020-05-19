@@ -7,16 +7,14 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     var state = State.start
     let brain: Brain
     
-    private var seconds = 0 {
+    private(set) var seconds = 0 {
         didSet {
             hud.counter(seconds)
         }
     }
     
     final var randomRotation: CGFloat { .random(in: 0 ..< .pi * 2) }
-    
     private(set) weak var wheel: Wheel!
-    private(set) weak var others: Others!
     private(set) weak var pointers: SKNode!
     private weak var hud: Hud!
     private weak var minimap: Minimap!
@@ -43,7 +41,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         let borders = Borders(radius: radius)
         let hud = Hud()
         let minimap = Minimap(radius: radius)
-        let others = Others()
         let pointers = SKNode()
         pointers.position.y = 100
         
@@ -51,7 +48,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         camera.setScale(5)
         camera.addChild(hud)
         camera.addChild(minimap)
-        camera.addChild(others)
         camera.addChild(pointers)
         camera.addChild(wheel)
         
@@ -62,7 +58,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         self.hud = hud
         self.wheel = wheel
         self.minimap = minimap
-        self.others = others
         self.pointers = pointers
         presentScene(scene)
         
@@ -89,13 +84,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     final func remove(_ line: Line) {
         players.remove(at: players.firstIndex { $0.line === line }!).remove()
-    }
-    
-    final func align() {
-        wheel.align()
-        hud.align()
-        minimap.align()
-        others.align()
     }
     
     final func startPlayer(_ position: CGPoint, rotation: CGFloat) {
@@ -127,6 +115,12 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         brain.position(positions, retry: 100_000)!
     }
     
+    func align() {
+        wheel.align()
+        hud.align()
+        minimap.align()
+    }
+    
     func update(_ delta: TimeInterval) {
         if times.radar.timeout(delta) {
             radar()
@@ -152,8 +146,8 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         }
     }
     
-    func gameOver(_ score: Int) {
-        finish(score)
+    func gameOver() {
+        
     }
     
     func beginMove(_ radians: CGFloat) {
@@ -229,8 +223,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 
                 label.run(.fadeIn(withDuration: 3)) { [weak self] in
                     self?.scene!.run(.fadeOut(withDuration: 2)) {
-//                        guard let score = self?.score else { return }
-//                        self?.gameOver(score)
+                        self?.gameOver()
                     }
                 }
             } else {

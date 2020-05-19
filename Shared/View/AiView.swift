@@ -1,10 +1,27 @@
 import SpriteKit
 
 final class AiView: View {
+    private(set) weak var defeated: Defeated!
+    
+    private var counter = 0 {
+        didSet {
+            defeated.counter(counter)
+        }
+    }
+    
     required init?(coder: NSCoder) { nil }
     override init(radius: CGFloat) {
         super.init(radius: radius)
+        let defeated = Defeated()
+        scene!.camera!.addChild(defeated)
+        self.defeated = defeated
+        
         startPlayer(certainPosition([]), rotation: randomRotation)
+    }
+    
+    override func align() {
+        super.align()
+        defeated.align()
     }
     
     override func update(_ delta: TimeInterval) {
@@ -24,9 +41,9 @@ final class AiView: View {
     override func explode(_ player: Player) {
         guard let colour = wheel.player?.line.skin.colour else { return }
         
-//        score += 150
-        let label = SKLabelNode(text: "150")
-        label.bold(30)
+        counter += 1
+        let label = SKLabelNode(text: "+")
+        label.bold(35)
         label.fontColor = colour
         label.verticalAlignmentMode = .center
         label.horizontalAlignmentMode = .center
@@ -38,6 +55,10 @@ final class AiView: View {
         label.run(.sequence([.fadeIn(withDuration: 2), .fadeOut(withDuration: 3), .run {
             label.removeFromParent()
         }]))
+    }
+    
+    override func gameOver() {
+        gameOver(counter)
     }
     
     private func foes() {

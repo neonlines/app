@@ -73,23 +73,30 @@ final class GameMaster: NSObject, GKGameCenterControllerDelegate, GKMatchmakerVi
     
     func report(seconds: Int) {
         report(.init(seconds), board: "neon.lines.seconds")
+        profile.seconds = seconds
     }
     
     func report(ai: Int) {
-        aggregate("neon.lines.ai", points: .init(ai))
+        aggregate("neon.lines.ai", points: .init(ai)) {
+            self.profile.ai = $0
+        }
     }
     
-    func report(duels: Int) {
-        aggregate("neon.lines.duels", points: .init(duels))
+    func reportDuel() {
+        aggregate("neon.lines.duels", points: 1) {
+            self.profile.duels = $0
+        }
     }
     
-    private func aggregate(_ id: String, points: Int64) {
+    private func aggregate(_ id: String, points: Int64, completion: @escaping(Int) -> Void) {
         let board = GKLeaderboard(players: [GKLocalPlayer.local])
         board.identifier = id
         board.timeScope = .allTime
         board.loadScores { scores, _ in
             scores?.first.map {
-                self.report($0.value + points, board: id)
+                let total = $0.value + points
+                self.report(total, board: id)
+                completion(.init(total))
             }
         }
     }
