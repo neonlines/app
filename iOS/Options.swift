@@ -86,7 +86,7 @@ final class Options: UIViewController {
     }
     
     private var playable: Bool {
-        profile.purchases.contains("neon.lines.premium.unlimited") || Date() > Calendar.current.date(byAdding: .hour, value: 12, to: profile.lastGame)!
+        game.profile.purchases.contains("neon.lines.premium.unlimited") || Date() > Calendar.current.date(byAdding: .hour, value: 12, to: game.profile.lastGame)!
     }
     
     @objc private func ai() {
@@ -102,7 +102,7 @@ final class Options: UIViewController {
             navigationController?.show(Froob())
             return
         }
-        (UIApplication.shared.delegate as! Window).match()
+        game.match()
     }
 
     @objc private func settings() {
@@ -114,6 +114,6 @@ final class Options: UIViewController {
     }
 
     @objc private func scores() {
-        (UIApplication.shared.delegate as! Window).leaderboards()
+        game.leaderboards()
     }
 }

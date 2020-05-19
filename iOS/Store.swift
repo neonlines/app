@@ -88,7 +88,7 @@ final class Store: UINavigationController, SKRequestDelegate, SKProductsRequestD
             case .failed:
                 SKPaymentQueue.default().finishTransaction($0)
             case .restored, .purchased:
-                profile.purchases.insert($0.payment.productIdentifier)
+                game.profile.purchases.insert($0.payment.productIdentifier)
                 SKPaymentQueue.default().finishTransaction($0)
             default: break
             }
@@ -213,7 +213,7 @@ private class Item: UIView {
         addSubview(subtitle)
         self.subtitle = subtitle
         
-        if profile.purchases.contains(product.productIdentifier) {
+        if game.profile.purchases.contains(product.productIdentifier) {
             let purchased = UIImageView(image: UIImage(named: "purchased")!)
             purchased.translatesAutoresizingMaskIntoConstraints = false
             purchased.contentMode = .scaleAspectFit
@@ -273,7 +273,7 @@ private final class PremiumItem: Item {
         super.init(product: product)
         image.image = UIImage(named: "game_" + product.productIdentifier.components(separatedBy: ".").last!)!
         
-        if profile.purchases.contains(product.productIdentifier) {
+        if game.profile.purchases.contains(product.productIdentifier) {
             subtitle.text = .key("Purchase.premium.got")
         } else {
             subtitle.text = .key("Purchase.premium." + product.productIdentifier.components(separatedBy: ".").last!)
@@ -292,7 +292,7 @@ private final class SkinItem: Item {
         super.init(product: product)
         image.image = UIImage(named: "skin_" + product.productIdentifier.components(separatedBy: ".").last!)!
         
-        if profile.purchases.contains(product.productIdentifier) {
+        if game.profile.purchases.contains(product.productIdentifier) {
             subtitle.text = .key("Purchase.skin.got")
         } else {
             subtitle.text = .key("Purchase.skin.subtitle")

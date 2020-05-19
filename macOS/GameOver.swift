@@ -1,7 +1,7 @@
 import AppKit
 
 final class GameOver: NSView {
-    let formatter = NumberFormatter()
+    private let formatter = NumberFormatter()
     
     required init?(coder: NSCoder) { nil }
     init(victory: Bool, seconds: Int, ai: Int?) {

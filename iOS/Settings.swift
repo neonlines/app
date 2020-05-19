@@ -40,11 +40,11 @@ final class Settings: UINavigationController {
             }
             
             let item = Item(id: id)
-            item.selected = id == profile.skin
+            item.selected = id == game.profile.skin
             item.target = self
             scroll.add(item)
             
-            if id == .basic || profile.purchases.contains(where: { $0.hasSuffix(id.rawValue) }) {
+            if id == .basic || game.profile.purchases.contains(where: { $0.hasSuffix(id.rawValue) }) {
                 item.action = #selector(change)
             } else {
                 item.action = #selector(store)
@@ -63,9 +63,9 @@ final class Settings: UINavigationController {
     
     @objc private func change(_ item: Item) {
         guard !item.selected else { return }
-        profile.skin = item.id
+        game.profile.skin = item.id
         scroll.views.compactMap { $0 as? Item }.forEach {
-            $0.selected = $0.id == profile.skin
+            $0.selected = $0.id == game.profile.skin
         }
     }
     

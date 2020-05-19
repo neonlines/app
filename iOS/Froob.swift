@@ -3,7 +3,7 @@ import UIKit
 final class Froob: UIViewController {
     private weak var timer: UILabel!
     private let formatter = DateComponentsFormatter()
-    private let expected = Calendar.current.date(byAdding: .hour, value: 12, to: profile.lastGame)!
+    private let expected = Calendar.current.date(byAdding: .hour, value: 12, to: game.profile.lastGame)!
     
     override func viewDidLoad() {
         super.viewDidLoad()

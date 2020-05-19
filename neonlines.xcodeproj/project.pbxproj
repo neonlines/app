@@ -42,7 +42,7 @@
 		CE5A8DD6246810EC00750A79 /* fatal3.caf in Resources */ = {isa = PBXBuildFile; fileRef = CE5A8DD3246810EC00750A79 /* fatal3.caf */; };
 		CE5D3B0C246A7DCD0044C1D3 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5D3B0B246A7DCD0044C1D3 /* Settings.swift */; };
 		CE5D3B0E246A7E920044C1D3 /* Scroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5D3B0D246A7E920044C1D3 /* Scroll.swift */; };
-		CE5E2184246BC5AA00FAD5AA /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E2183246BC5AA00FAD5AA /* Score.swift */; };
+		CE5E2184246BC5AA00FAD5AA /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E2183246BC5AA00FAD5AA /* GameOver.swift */; };
 		CE5E2186246BC88700FAD5AA /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E2185246BC88700FAD5AA /* View+.swift */; };
 		CE5E2188246BC8AA00FAD5AA /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E2187246BC8AA00FAD5AA /* Controller.swift */; };
 		CE769E69247267DF0038D0D8 /* Others.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE769E68247267DF0038D0D8 /* Others.swift */; };
@@ -142,7 +142,7 @@
 		CE5A8DD3246810EC00750A79 /* fatal3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fatal3.caf; sourceTree = "<group>"; };
 		CE5D3B0B246A7DCD0044C1D3 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		CE5D3B0D246A7E920044C1D3 /* Scroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scroll.swift; sourceTree = "<group>"; };
-		CE5E2183246BC5AA00FAD5AA /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
+		CE5E2183246BC5AA00FAD5AA /* GameOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
 		CE5E2185246BC88700FAD5AA /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		CE5E2187246BC8AA00FAD5AA /* Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		CE769E68247267DF0038D0D8 /* Others.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Others.swift; sourceTree = "<group>"; };
@@ -334,10 +334,10 @@
 				CE0E09412469AE6300FAD2C8 /* Control.swift */,
 				CE5E2187246BC8AA00FAD5AA /* Controller.swift */,
 				CED910AB246BCA79003FEE51 /* Froob.swift */,
+				CE5E2183246BC5AA00FAD5AA /* GameOver.swift */,
 				CE358AAD2469A66600C7FCAD /* Launch.swift */,
 				CE358AAF2469A86900C7FCAD /* Options.swift */,
 				CE40E01024692A0600549907 /* Scene.swift */,
-				CE5E2183246BC5AA00FAD5AA /* Score.swift */,
 				CE5D3B0D246A7E920044C1D3 /* Scroll.swift */,
 				CEAD7B11246AFFDE005A34B1 /* Separator.swift */,
 				CE5D3B0B246A7DCD0044C1D3 /* Settings.swift */,
@@ -575,7 +575,7 @@
 				CEAD7B12246AFFDE005A34B1 /* Separator.swift in Sources */,
 				CEE5DBAD246E732F00C2FE73 /* Times.swift in Sources */,
 				CED910AF246BCF0D003FEE51 /* LabelNode.swift in Sources */,
-				CE5E2184246BC5AA00FAD5AA /* Score.swift in Sources */,
+				CE5E2184246BC5AA00FAD5AA /* GameOver.swift in Sources */,
 				CEBB442624743FF500B9B107 /* GameDelegate.swift in Sources */,
 				CEBB44232474312A00B9B107 /* GameMaster.swift in Sources */,
 				CE40E01624692BEF00549907 /* Profile.swift in Sources */,

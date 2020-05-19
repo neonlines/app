@@ -29,15 +29,9 @@ let game = GameMaster()
         windows.first!.show(view)
     }
     
-    func show(_ controller: GKViewController) {
+    func show(_ controller: NSViewController & GKViewController) {
         GKDialogController.shared().parentWindow = windows.first
-        switch controller {
-        case let controller as GKMatchmakerViewController:
-            GKDialogController.shared().present(controller)
-        case let controller as GKGameCenterViewController:
-            GKDialogController.shared().present(controller)
-        default: break
-        }
+        GKDialogController.shared().present(controller)
     }
     
     func gameCenterError() {
