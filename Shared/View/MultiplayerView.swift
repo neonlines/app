@@ -88,7 +88,7 @@ final class MultiplayerView: View, GKMatchDelegate {
     
     private func start(_ position: CGPoint) {
         let rotation = randomRotation
-        let report = Report.profile(playerId, position: position, rotation: rotation, skin: profile.skin, name: GKLocalPlayer.local.displayName)
+        let report = Report.profile(playerId, position: position, rotation: rotation, skin: game.profile.skin, name: GKLocalPlayer.local.displayName)
         startPlayer(position, rotation: rotation)
         wheel.player!.id = playerId
         try? match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)

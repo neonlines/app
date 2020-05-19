@@ -80,7 +80,7 @@ final class Options: NSView {
     }
     
     private var playable: Bool {
-        profile.purchases.contains("neon.lines.premium.unlimited") || Date() > Calendar.current.date(byAdding: .hour, value: 12, to: profile.lastGame)!
+        game.profile.purchases.contains("neon.lines.premium.unlimited") || Date() > Calendar.current.date(byAdding: .hour, value: 12, to: game.profile.lastGame)!
     }
     
     @objc private func ai() {
@@ -96,7 +96,7 @@ final class Options: NSView {
             window!.show(Froob())
             return
         }
-        (NSApp as! App).match()
+        game.match()
     }
     
     @objc private func settings() {
@@ -108,6 +108,6 @@ final class Options: NSView {
     }
     
     @objc private func scores() {
-        (NSApp as! App).leaderboards()
+        game.leaderboards()
     }
 }

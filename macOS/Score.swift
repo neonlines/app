@@ -30,20 +30,20 @@ final class Score: NSView {
         next.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         next.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 150).isActive = true
         
-        if profile.maxScore < points {
-            profile.maxScore = points
-            
-            let max = Label(.key("New.max.score"), .bold(14))
-            max.textColor = .indigo
-            addSubview(max)
-            
-            label.textColor = max.textColor
-            
-            max.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-            max.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20).isActive = true
-        }
-        
-        (NSApp as! App).score(points)
+//        if profile.maxScore < points {
+//            profile.maxScore = points
+//            
+//            let max = Label(.key("New.max.score"), .bold(14))
+//            max.textColor = .indigo
+//            addSubview(max)
+//            
+//            label.textColor = max.textColor
+//            
+//            max.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+//            max.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20).isActive = true
+//        }
+//        
+//        (NSApp as! App).score(points)
     }
     
     @objc private func next() {

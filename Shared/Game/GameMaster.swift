@@ -1,74 +1,64 @@
-#if os(macOS)
-
-import AppKit
-
-#endif
-#if os(iOS)
-
-import UIKit
-
-#endif
-
 import GameKit
+import Balam
+import Combine
 
-protocol GameMaster: AnyObject, GKGameCenterControllerDelegate, GKMatchmakerViewControllerDelegate {
-    func dismissGameCenter()
-    func newGame(_ view: View)
-    func show(_ controller: GKViewController)
-    func gameCenterError()
-
-#if os(macOS)
-    
-    func auth(_ controller: NSViewController)
-    
-#endif
-#if os(iOS)
-    
-    func auth(_ controller: UIViewController)
-    
-#endif
-}
-
-extension GameMaster {
-    func playerAuth() {
-        GKLocalPlayer.local.authenticateHandler = { [weak self] controller, _ in
-            guard let controller = controller else { return }
-            self?.auth(controller)
+final class GameMaster: NSObject, GKGameCenterControllerDelegate, GKMatchmakerViewControllerDelegate {
+    var profile = Profile() {
+        didSet {
+            balam.update(profile)
         }
     }
+
+    weak var delegate: GameDelegate!
+    private var subs = Set<AnyCancellable>()
+    private let balam = Balam("lines")
     
     func matchmakerViewController(_: GKMatchmakerViewController, didFind: GKMatch) {
-        dismissGameCenter()
-        newGame(MultiplayerView(radius: 1_000, match: didFind))
+        delegate.dismissGameCenter()
+        delegate.newGame(MultiplayerView(radius: 1_000, match: didFind))
     }
     
     func matchmakerViewControllerWasCancelled(_: GKMatchmakerViewController) {
-        dismissGameCenter()
+        delegate.dismissGameCenter()
     }
     
     func matchmakerViewController(_: GKMatchmakerViewController, didFailWithError: Error) {
-        dismissGameCenter()
+        delegate.dismissGameCenter()
     }
     
     func gameCenterViewControllerDidFinish(_: GKGameCenterViewController) {
-        dismissGameCenter()
+        delegate.dismissGameCenter()
+    }
+    
+    func auth() {
+        GKLocalPlayer.local.authenticateHandler = { controller, _ in
+            guard let controller = controller else { return }
+            self.delegate.auth(controller)
+        }
+        balam.nodes(Profile.self).sink {
+            guard let stored = $0.first else {
+                self.balam.add(self.profile)
+                return
+            }
+            self.profile = stored
+        }.store(in: &subs)
     }
     
     func leaderboards() {
         guard GKLocalPlayer.local.isAuthenticated else {
-            gameCenterError()
+            delegate.gameCenterError()
             return
         }
         let controller = GKGameCenterViewController()
         controller.viewState = .leaderboards
         controller.gameCenterDelegate = self
         controller.leaderboardIdentifier = "neon.lines.top"
-        show(controller)
+        delegate.show(controller)
     }
     
     func match() {
         guard GKLocalPlayer.local.isAuthenticated else {
-            gameCenterError()
+            delegate.gameCenterError()
             return
         }
         let request = GKMatchRequest()
@@ -78,7 +68,7 @@ extension GameMaster {
         guard let controller = GKMatchmakerViewController(matchRequest: request) else { return }
         controller.matchmakerDelegate = self
         
-        show(controller)
+        delegate.show(controller)
     }
     
     func report(seconds: Int) {
@@ -97,9 +87,9 @@ extension GameMaster {
         let board = GKLeaderboard(players: [GKLocalPlayer.local])
         board.identifier = id
         board.timeScope = .allTime
-        board.loadScores { [weak self] scores, _ in
+        board.loadScores { scores, _ in
             scores?.first.map {
-                self?.report($0.value + points, board: id)
+                self.report($0.value + points, board: id)
             }
         }
     }

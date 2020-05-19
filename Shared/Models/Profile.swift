@@ -1,30 +1,12 @@
 import Foundation
 
 struct Profile: Codable, Equatable {
-    var maxScore = 0 {
-        didSet {
-            balam.update(self)
-        }
-    }
-    
-    var skin = Skin.Id.basic {
-        didSet {
-            balam.update(self)
-        }
-    }
-    
-    var purchases = Set<String>() {
-        didSet {
-            balam.update(self)
-        }
-    }
-    
-    var lastGame = Date.distantPast {
-        didSet {
-            balam.update(self)
-        }
-    }
-    
+    var seconds = 0
+    var ai = 0
+    var duels = 0
+    var skin = Skin.Id.basic
+    var purchases = Set<String>()
+    var lastGame = Date.distantPast
     let created = Date()
     
     func hash(into: inout Hasher) { }

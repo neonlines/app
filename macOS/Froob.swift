@@ -3,7 +3,7 @@ import AppKit
 final class Froob: NSView {
     private weak var timer: Label!
     private let formatter = DateComponentsFormatter()
-    private let expected = Calendar.current.date(byAdding: .hour, value: 12, to: profile.lastGame)!
+    private let expected = Calendar.current.date(byAdding: .hour, value: 12, to: game.profile.lastGame)!
     
     required init?(coder: NSCoder) { nil }
     init() {

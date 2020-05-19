@@ -27,7 +27,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     required init?(coder: NSCoder) { nil }
     init(radius: CGFloat) {
-        profile.lastGame = .init()
+        game.profile.lastGame = .init()
         brain = .init(borders: .init(radius: radius), wheel: .init(delta: .pi / 30))
         super.init(frame: .zero)
         ignoresSiblingOrder = true
@@ -99,7 +99,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     final func startPlayer(_ position: CGPoint, rotation: CGFloat) {
-        let player = spawn(position, rotation: rotation, skin: profile.skin)
+        let player = spawn(position, rotation: rotation, skin: game.profile.skin)
         wheel.player = player
         wheel.zRotation = rotation
         pointers.zRotation = -rotation

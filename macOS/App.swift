@@ -1,14 +1,9 @@
 import AppKit
-import Balam
-import Combine
 import GameKit
 
-var profile = Profile()
-let balam = Balam("lines")
+let game = GameMaster()
 
-@NSApplicationMain final class App: NSApplication, GameMaster, NSApplicationDelegate {
-    private var subs = Set<AnyCancellable>()
-    
+@NSApplicationMain final class App: NSApplication, NSApplicationDelegate, GameDelegate {
     required init?(coder: NSCoder) { nil }
     override init() {
         super.init()
@@ -16,17 +11,10 @@ let balam = Balam("lines")
     }
     
     func applicationWillFinishLaunching(_: Notification) {
-        playerAuth()
-        
+        game.delegate = self
+        game.auth()
         mainMenu = Menu()
         Window().makeKeyAndOrderFront(nil)
-        balam.nodes(Profile.self).sink {
-            guard let stored = $0.first else {
-                balam.add(profile)
-                return
-            }
-            profile = stored
-        }.store(in: &subs)
     }
     
     func auth(_ controller: NSViewController) {
