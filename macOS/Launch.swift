@@ -5,10 +5,6 @@ final class Launch: NSView {
     private var show = true
     override var canBecomeKeyView: Bool { true }
     override var acceptsFirstResponder: Bool { true }
-
-    deinit {
-        print("gone")
-    }
     
     required init?(coder: NSCoder) { nil }    
     init() {
