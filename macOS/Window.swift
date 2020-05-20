@@ -21,6 +21,7 @@ final class Window: NSWindow {
 
 extension NSWindow {
     func show(_ view: NSView) {
+        makeFirstResponder(nil)
         NSAnimationContext.runAnimationGroup({
             $0.duration = 0.4
             $0.allowsImplicitAnimation = true

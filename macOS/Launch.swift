@@ -6,6 +6,10 @@ final class Launch: NSView {
     override var canBecomeKeyView: Bool { true }
     override var acceptsFirstResponder: Bool { true }
 
+    deinit {
+        print("gone")
+    }
+    
     required init?(coder: NSCoder) { nil }    
     init() {
         super.init(frame: .zero)
