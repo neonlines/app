@@ -4,6 +4,10 @@ final class Options: NSView {
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(frame: .zero)
+        
+        layer = Rainbow()
+        wantsLayer = true
+        
         let image = NSImageView(image: NSImage(named: "logo")!)
         image.translatesAutoresizingMaskIntoConstraints = false
         image.imageScaling = .scaleNone
