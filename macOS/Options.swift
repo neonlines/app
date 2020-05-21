@@ -4,17 +4,10 @@ final class Options: NSView {
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(frame: .zero)
-        layer = Rainbow()
-        wantsLayer = true
-        
         let image = NSImageView(image: NSImage(named: "logo")!)
         image.translatesAutoresizingMaskIntoConstraints = false
         image.imageScaling = .scaleNone
         addSubview(image)
-        
-        let title = Label(.key("Neon.lines"), .bold(16))
-        title.textColor = .indigo
-        addSubview(title)
         
         let newGame = Label(.key("New.game"), .bold(14))
         newGame.textColor = .secondaryLabelColor
@@ -56,12 +49,9 @@ final class Options: NSView {
         addSubview(scores)
         
         image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        image.bottomAnchor.constraint(equalTo: title.topAnchor, constant: 35).isActive = true
-        image.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        image.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        
-        title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        title.bottomAnchor.constraint(equalTo: newGame.topAnchor, constant: -70).isActive = true
+        image.bottomAnchor.constraint(equalTo: newGame.topAnchor, constant: -60).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 104).isActive = true
+        image.heightAnchor.constraint(equalToConstant: 104).isActive = true
         
         newGame.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         newGame.bottomAnchor.constraint(equalTo: centerYAnchor, constant: -50).isActive = true

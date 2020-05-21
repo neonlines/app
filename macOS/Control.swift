@@ -33,7 +33,7 @@ class Control: NSView {
     }
     
     func hoverOn() {
-        alphaValue = 0.3
+        alphaValue = 0.5
     }
     
     func hoverOff() {
