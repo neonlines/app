@@ -4,6 +4,11 @@ final class Rainbow: CALayer {
     private weak var gradient: CAGradientLayer!
     
     required init?(coder: NSCoder) { nil }
+    
+    override init(layer: Any) {
+        super.init(layer: layer)
+    }
+    
     override init() {
         super.init()
         let gradient = CAGradientLayer()

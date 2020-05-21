@@ -75,14 +75,14 @@ final class GameMaster: NSObject, GKGameCenterControllerDelegate, GKMatchmakerVi
         let id = "neon.lines.seconds"
         report(.init(seconds), board: id)
         current(id) {
-            self.profile.seconds = max(seconds, .init($0))
+            self.profile.seconds = max(max(seconds, .init($0)), self.profile.seconds)
         }
     }
     
     func report(ai: Int) {
         let id = "neon.lines.ai"
         current(id) {
-            let total = $0 + 1
+            let total = max($0, .init(self.profile.ai)) + .init(ai)
             self.report(total, board: id)
             self.profile.ai = .init(total)
         }
@@ -91,7 +91,7 @@ final class GameMaster: NSObject, GKGameCenterControllerDelegate, GKMatchmakerVi
     func reportDuel() {
         let id = "neon.lines.duels"
         current(id) {
-            let total = $0 + 1
+            let total = max($0, .init(self.profile.duels)) + 1
             self.report(total, board: id)
             self.profile.duels = .init(total)
         }
