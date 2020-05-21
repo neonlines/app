@@ -34,7 +34,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         scene.delegate = self
         scene.anchorPoint = .init(x: 0.5, y: 0.5)
         scene.scaleMode = .resizeFill
-        scene.backgroundColor = .background
+        scene.backgroundColor = .white
         scene.physicsWorld.contactDelegate = self
         
         let wheel = Wheel()

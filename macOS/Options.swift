@@ -4,7 +4,6 @@ final class Options: NSView {
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(frame: .zero)
-        
         layer = Rainbow()
         wantsLayer = true
         

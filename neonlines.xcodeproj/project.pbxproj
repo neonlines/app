@@ -17,7 +17,6 @@
 		CE2CC6F9244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
 		CE358AAE2469A66600C7FCAD /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358AAD2469A66600C7FCAD /* Launch.swift */; };
 		CE358AB02469A86900C7FCAD /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358AAF2469A86900C7FCAD /* Options.swift */; };
-		CE382D392459CDE3004DE132 /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE382D382459CDE3004DE132 /* Launch.swift */; };
 		CE382D3B2459CFBE004DE132 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE382D3A2459CFBE004DE132 /* Label.swift */; };
 		CE382D3D2459CFF6004DE132 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE382D3C2459CFF6004DE132 /* Font.swift */; };
 		CE382D3F2459D363004DE132 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE382D3E2459D363004DE132 /* Options.swift */; };
@@ -125,7 +124,6 @@
 		CE2CC6F7244C9B0900C21893 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		CE358AAD2469A66600C7FCAD /* Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launch.swift; sourceTree = "<group>"; };
 		CE358AAF2469A86900C7FCAD /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
-		CE382D382459CDE3004DE132 /* Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launch.swift; sourceTree = "<group>"; };
 		CE382D3A2459CFBE004DE132 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		CE382D3C2459CFF6004DE132 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		CE382D3E2459D363004DE132 /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
@@ -323,7 +321,6 @@
 				CEED9C3424647B58006AA889 /* Froob.swift */,
 				CE899EB3245EBAA00066824A /* GameOver.swift */,
 				CE382D3A2459CFBE004DE132 /* Label.swift */,
-				CE382D382459CDE3004DE132 /* Launch.swift */,
 				CEFADD872467304B00A4A185 /* Menu.swift */,
 				CE382D3E2459D363004DE132 /* Options.swift */,
 				CE7CE25B2459EC9600CD8791 /* Scroll.swift */,
@@ -538,7 +535,6 @@
 				CEFADD882467304B00A4A185 /* Menu.swift in Sources */,
 				CE382D3B2459CFBE004DE132 /* Label.swift in Sources */,
 				CED910AE246BCF0D003FEE51 /* LabelNode.swift in Sources */,
-				CE382D392459CDE3004DE132 /* Launch.swift in Sources */,
 				CE7D03392455E8E0001AC44B /* Hud.swift in Sources */,
 				CE382D432459DB34004DE132 /* Button.swift in Sources */,
 				CEF23A81244C8EA200D02FD7 /* App.swift in Sources */,
