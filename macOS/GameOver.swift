@@ -19,10 +19,9 @@ final class GameOver: NSView {
         addSubview(label)
         
         let next = Button(.key("Continue"))
+        next.indigo()
         next.target = self
         next.action = #selector(self.next)
-        next.layer!.backgroundColor = .indigo
-        next.label.textColor = .black
         addSubview(next)
         
         title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true

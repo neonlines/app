@@ -30,6 +30,7 @@ let game = GameMaster()
     }
     
     func show(_ controller: NSViewController & GKViewController) {
+        controller.view.appearance = NSAppearance(named: .aqua)
         GKDialogController.shared().parentWindow = windows.first
         GKDialogController.shared().present(controller)
     }

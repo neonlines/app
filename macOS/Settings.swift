@@ -8,10 +8,9 @@ final class Settings: NSView {
     init() {
         super.init(frame: .zero)
         let done = Button(.key("Done"))
+        done.indigo()
         done.target = self
         done.action = #selector(self.done)
-        done.label.textColor = .black
-        done.layer!.backgroundColor = .indigo
         addSubview(done)
         
         let separator = Separator()

@@ -24,10 +24,9 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         addSubview(restore)
         
         let done = Button(.key("Done"))
+        done.indigo()
         done.target = self
         done.action = #selector(self.done)
-        done.label.textColor = .black
-        done.layer!.backgroundColor = .indigo
         addSubview(done)
         
         let separator = Separator()
@@ -244,7 +243,6 @@ private class Item: NSView {
             
             let purchase = Button(.key("Purchase"))
             purchase.layer!.backgroundColor = .indigo
-            purchase.label.textColor = .black
             addSubview(purchase)
             self.purchase = purchase
             

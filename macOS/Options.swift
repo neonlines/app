@@ -14,38 +14,33 @@ final class Options: NSView {
         addSubview(newGame)
         
         let againstAi = Button(.key("Against.ai"))
+        againstAi.indigo()
         againstAi.target = self
         againstAi.action = #selector(ai)
-        againstAi.label.textColor = .black
-        againstAi.layer!.backgroundColor = .indigo
         addSubview(againstAi)
         
         let againstOthers = Button(.key("Against.others"))
+        againstOthers.indigo()
         againstOthers.target = self
         againstOthers.action = #selector(multiplayer)
-        againstOthers.label.textColor = .black
-        againstOthers.layer!.backgroundColor = .indigo
         addSubview(againstOthers)
         
         let settings = Button(.key("Settings"))
+        settings.minimal()
         settings.target = self
         settings.action = #selector(self.settings)
-        settings.layer!.borderWidth = 1
-        settings.layer!.borderColor = NSColor.labelColor.cgColor
         addSubview(settings)
         
         let store = Button(.key("Store"))
+        store.minimal()
         store.target = self
         store.action = #selector(self.store)
-        store.layer!.borderWidth = 1
-        store.layer!.borderColor = NSColor.labelColor.cgColor
         addSubview(store)
         
         let scores = Button(.key("Scores"))
+        scores.minimal()
         scores.target = self
         scores.action = #selector(self.scores)
-        scores.layer!.borderWidth = 1
-        scores.layer!.borderColor = NSColor.labelColor.cgColor
         addSubview(scores)
         
         image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true

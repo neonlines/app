@@ -34,10 +34,9 @@ final class Froob: NSView {
         addSubview(option)
         
         let done = Button(.key("Done"))
+        done.indigo()
         done.target = self
         done.action = #selector(self.done)
-        done.label.textColor = .black
-        done.layer!.backgroundColor = .indigo
         addSubview(done)
         
         let store = Button(.key("Go.store"))
