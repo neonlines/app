@@ -9,10 +9,6 @@ final class Options: NSView {
         image.imageScaling = .scaleNone
         addSubview(image)
         
-        let newGame = Label(.key("New.game"), .bold(14))
-        newGame.textColor = .secondaryLabelColor
-        addSubview(newGame)
-        
         let againstAi = Button(.key("Against.ai"))
         againstAi.indigo()
         againstAi.target = self
@@ -20,7 +16,7 @@ final class Options: NSView {
         addSubview(againstAi)
         
         let againstOthers = Button(.key("Against.others"))
-        againstOthers.indigo()
+        againstOthers.red()
         againstOthers.target = self
         againstOthers.action = #selector(multiplayer)
         addSubview(againstOthers)
@@ -44,27 +40,24 @@ final class Options: NSView {
         addSubview(scores)
         
         image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        image.bottomAnchor.constraint(equalTo: newGame.topAnchor, constant: -60).isActive = true
+        image.bottomAnchor.constraint(equalTo: centerYAnchor, constant: -60).isActive = true
         image.widthAnchor.constraint(equalToConstant: 104).isActive = true
         image.heightAnchor.constraint(equalToConstant: 104).isActive = true
         
-        newGame.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        newGame.bottomAnchor.constraint(equalTo: centerYAnchor, constant: -50).isActive = true
-        
-        againstAi.topAnchor.constraint(equalTo: newGame.bottomAnchor, constant: 20).isActive = true
+        againstAi.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 100).isActive = true
         againstAi.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
         againstOthers.topAnchor.constraint(equalTo: againstAi.bottomAnchor, constant: 20).isActive = true
         againstOthers.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
-        settings.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        settings.topAnchor.constraint(equalTo: againstOthers.bottomAnchor, constant: 60).isActive = true
+        settings.rightAnchor.constraint(equalTo: scores.leftAnchor, constant: -30).isActive = true
+        settings.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
         
-        store.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        store.topAnchor.constraint(equalTo: settings.bottomAnchor, constant: 20).isActive = true
+        store.leftAnchor.constraint(equalTo: scores.rightAnchor, constant: 30).isActive = true
+        store.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
         
         scores.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        scores.topAnchor.constraint(equalTo: store.bottomAnchor, constant: 20).isActive = true
+        scores.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
     }
     
     private var playable: Bool {

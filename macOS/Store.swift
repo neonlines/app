@@ -19,8 +19,7 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         let restore = Button(.key("Restore.purchases"))
         restore.target = self
         restore.action = #selector(self.restore)
-        restore.layer!.borderColor = NSColor.labelColor.cgColor
-        restore.layer!.borderWidth = 1
+        restore.minimal()
         addSubview(restore)
         
         let done = Button(.key("Done"))
