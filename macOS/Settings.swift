@@ -3,6 +3,7 @@ import AppKit
 final class Settings: NSView {
     private weak var scroll: Scroll!
     private let itemSize = CGFloat(120)
+    private let itemSpacing = CGFloat(50)
     
     required init?(coder: NSCoder) { nil }
     init() {
@@ -24,6 +25,10 @@ final class Settings: NSView {
         title.textColor = .black
         addSubview(title)
         
+        let subtitle = Label(.key("Choose.your.skin"), .bold(14))
+        subtitle.textColor = .init(white: 0.7, alpha: 1)
+        scroll.add(subtitle)
+        
         title.centerYAnchor.constraint(equalTo: done.centerYAnchor).isActive = true
         title.leftAnchor.constraint(equalTo: leftAnchor, constant: 90).isActive = true
         
@@ -42,9 +47,11 @@ final class Settings: NSView {
         scroll.width.constraint(equalTo: scroll.widthAnchor).isActive = true
         scroll.height.constraint(greaterThanOrEqualTo: scroll.heightAnchor).isActive = true
         
+        subtitle.topAnchor.constraint(equalTo: scroll.top, constant: 50).isActive = true
+        subtitle.centerXAnchor.constraint(equalTo: scroll.centerX).isActive = true
+        
         Skin.Id.allCases.forEach { id in
             let item = Item(id: id)
-            item.selected = id == game.profile.skin
             item.target = self
             scroll.add(item)
             
@@ -53,15 +60,23 @@ final class Settings: NSView {
             } else {
                 item.action = #selector(store)
                 item.purchaseable()
+                
+                let subtitle = Label(.key("In.app"), .regular(12))
+                subtitle.textColor = .init(white: 0.2, alpha: 1)
+                scroll.add(subtitle)
+                
+                subtitle.centerXAnchor.constraint(equalTo: item.centerXAnchor).isActive = true
+                subtitle.topAnchor.constraint(equalTo: item.bottomAnchor, constant: 5).isActive = true
             }
     
+            item.selected = id == game.profile.skin
             item.widthAnchor.constraint(equalToConstant: itemSize).isActive = true
             item.heightAnchor.constraint(equalToConstant: itemSize).isActive = true
             item.top = item.topAnchor.constraint(equalTo: scroll.top)
             item.left = item.leftAnchor.constraint(equalTo: scroll.left)
         }
         
-        scroll.bottom.constraint(greaterThanOrEqualTo: scroll.views.last!.bottomAnchor, constant: 30).isActive = true
+        scroll.bottom.constraint(greaterThanOrEqualTo: scroll.views.last!.bottomAnchor, constant: itemSpacing).isActive = true
         arrange()
     }
     
@@ -71,17 +86,17 @@ final class Settings: NSView {
     
     private func arrange() {
         guard let width = NSApp.keyWindow?.frame.size.width else { return }
-        let ratio = (width + 20) / (itemSize + 20)
+        let ratio = (width - itemSpacing) / (itemSize + itemSpacing)
         let empty = Int(ratio) > Skin.Id.allCases.count ? ceil(CGFloat(.init(ratio) - Skin.Id.allCases.count)) : 0
-        let left = (ratio.truncatingRemainder(dividingBy: 1) + empty) * (itemSize / 2)
-        var point = CGPoint(x: left, y: 40)
+        let left = ((ratio.truncatingRemainder(dividingBy: 1) + empty) * ((itemSize + itemSpacing) / 2)) + itemSpacing
+        var point = CGPoint(x: left, y: 120)
         scroll.views.compactMap { $0 as? Item }.forEach {
             if point.x > width - itemSize {
-                point = .init(x: left, y: point.y + itemSize + 20)
+                point = .init(x: left, y: point.y + itemSize + itemSpacing)
             }
             $0.left.constant = point.x
             $0.top.constant = point.y
-            point.x += itemSize + 20
+            point.x += itemSize + itemSpacing
         }
         NSAnimationContext.runAnimationGroup {
             $0.duration = 0.5
@@ -108,9 +123,11 @@ final class Settings: NSView {
 }
 
 private final class Item: Control {
-    let id: Skin.Id
     weak var top: NSLayoutConstraint! { didSet { top.isActive = true } }
     weak var left: NSLayoutConstraint! { didSet { left.isActive = true } }
+    let id: Skin.Id
+    private weak var name: NSView!
+    private var greyed = CGColor(gray: 0.9, alpha: 1)
     
     required init?(coder: NSCoder) { nil }
     init(id: Skin.Id) {
@@ -137,37 +154,52 @@ private final class Item: Control {
         image.imageScaling = .scaleProportionallyUpOrDown
         addSubview(image)
         
+        let name = NSView()
+        name.translatesAutoresizingMaskIntoConstraints = false
+        name.wantsLayer = true
+        name.layer!.backgroundColor = .black
+        addSubview(name)
+        self.name = name
+        
+        let label = Label(.key("neon.lines.skin." + id.rawValue), .regular(12))
+        label.textColor = .white
+        name.addSubview(label)
+        
         image.widthAnchor.constraint(equalToConstant: 40).isActive = true
         image.heightAnchor.constraint(equalToConstant: 40).isActive = true
         image.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
         image.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
+        
+        name.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        name.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        name.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        name.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        
+        label.centerXAnchor.constraint(equalTo: name.centerXAnchor).isActive = true
+        label.centerYAnchor.constraint(equalTo: name.centerYAnchor).isActive = true
     }
     
     var selected = false {
         didSet {
-            alphaValue = selected ? 1 : 0.5
-            layer!.borderColor = selected ? .black : .init(gray: 0.9, alpha: 1)
+            name.isHidden = !selected
+            layer!.borderColor = selected ? .black : greyed
         }
     }
     
     func purchaseable() {
+        greyed = .indigoDark
+        
         let base = NSView()
         base.translatesAutoresizingMaskIntoConstraints = false
         base.wantsLayer = true
-        base.layer!.backgroundColor = .indigoLight
+        base.layer!.backgroundColor = .indigoDark
         addSubview(base)
         
-        let title = Label(.key("New.skin"), .medium(16))
-        title.textColor = .black
+        let title = Label(.key("Visit.store"), .bold(14))
+        title.textColor = .white
         title.alignment = .center
         title.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         addSubview(title)
-        
-        let subtitle = Label(.key("Purchase.on.store"), .regular(12))
-        subtitle.textColor = .black
-        subtitle.alignment = .center
-        subtitle.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        addSubview(subtitle)
         
         base.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         base.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
@@ -176,12 +208,7 @@ private final class Item: Control {
         
         title.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 10).isActive = true
         title.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor, constant: -10).isActive = true
-        title.bottomAnchor.constraint(equalTo: subtitle.topAnchor).isActive = true
+        title.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
         title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        
-        subtitle.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 10).isActive = true
-        subtitle.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor, constant: -10).isActive = true
-        subtitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12).isActive = true
-        subtitle.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 }
