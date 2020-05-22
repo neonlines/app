@@ -25,6 +25,10 @@ final class Store: NSView, StoreDelegate {
         done.action = #selector(self.done)
         addSubview(done)
         
+        let subtitle = Label(.key("Shared"), .regular(12))
+        subtitle.textColor = .init(white: 0.5, alpha: 1)
+        addSubview(subtitle)
+        
         let separator = Separator()
         addSubview(separator)
         
@@ -37,7 +41,7 @@ final class Store: NSView, StoreDelegate {
         
         separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
         separator.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
-        separator.topAnchor.constraint(equalTo: done.bottomAnchor, constant: 9).isActive = true
+        separator.topAnchor.constraint(equalTo: topAnchor, constant: 110).isActive = true
         separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         done.rightAnchor.constraint(equalTo: rightAnchor, constant: -15).isActive = true
@@ -46,13 +50,15 @@ final class Store: NSView, StoreDelegate {
         restore.rightAnchor.constraint(equalTo: done.leftAnchor, constant: -30).isActive = true
         restore.centerYAnchor.constraint(equalTo: done.centerYAnchor).isActive = true
         
+        subtitle.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
+        subtitle.topAnchor.constraint(equalTo: topAnchor, constant: 70).isActive = true
+        
         scroll.topAnchor.constraint(equalTo: separator.bottomAnchor).isActive = true
         scroll.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
         scroll.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
         scroll.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1).isActive = true
         scroll.bottom.constraint(greaterThanOrEqualTo: scroll.bottomAnchor).isActive = true
-        scroll.right.constraint(lessThanOrEqualTo: scroll.rightAnchor).isActive = true
-        scroll.width.constraint(equalToConstant: 400).isActive = true
+        scroll.right.constraint(equalTo: scroll.rightAnchor).isActive = true
         
         loading()
         store.delegate = self
@@ -62,7 +68,8 @@ final class Store: NSView, StoreDelegate {
     private func loading() {
         scroll.views.forEach { $0.removeFromSuperview() }
         
-        let label = Label(.key("Loading"), .bold(12))
+        let label = Label(.key("Loading"), .bold(20))
+        label.textColor = .init(white: 0.75, alpha: 1)
         scroll.add(label)
         
         label.leftAnchor.constraint(equalTo: scroll.left, constant: 20).isActive = true
@@ -84,17 +91,25 @@ final class Store: NSView, StoreDelegate {
     func refresh() {
         scroll.views.forEach { $0.removeFromSuperview() }
         
-        let game = header(title: .key("Premium"))
-        game.topAnchor.constraint(equalTo: scroll.top).isActive = true
-        var top = game.bottomAnchor
+        let headerPremium = Label(.key("Premium"), .bold(14))
+        headerPremium.textColor = .init(white: 0.7, alpha: 1)
+        scroll.add(headerPremium)
+        
+        headerPremium.centerXAnchor.constraint(equalTo: scroll.centerX).isActive = true
+        headerPremium.topAnchor.constraint(equalTo: scroll.top, constant: 30).isActive = true
+        var top = headerPremium.bottomAnchor
         
         store.products.filter { $0.productIdentifier.contains(".premium.") }.forEach {
             top = item(PremiumItem(product: $0), top: top)
         }
         
-        let skins = header(title: .key("Skins"))
-        skins.topAnchor.constraint(equalTo: top, constant: 40).isActive = true
-        top = skins.bottomAnchor
+        let headerSkins = Label(.key("Skins"), .bold(14))
+        headerSkins.textColor = .init(white: 0.7, alpha: 1)
+        scroll.add(headerSkins)
+        
+        headerSkins.centerXAnchor.constraint(equalTo: scroll.centerX).isActive = true
+        headerSkins.topAnchor.constraint(equalTo: top, constant: 40).isActive = true
+        top = headerSkins.bottomAnchor
         
         store.products.filter { $0.productIdentifier.contains(".skin.") }.sorted { $0.productIdentifier < $1.productIdentifier }.forEach {
             top = item(SkinItem(product: $0), top: top)
@@ -120,23 +135,6 @@ final class Store: NSView, StoreDelegate {
         item.rightAnchor.constraint(equalTo: scroll.right).isActive = true
         item.topAnchor.constraint(equalTo: separator.bottomAnchor).isActive = true
         return item.bottomAnchor
-    }
-    
-    private func header(title: String) -> NSView {
-        let header = NSView()
-        header.translatesAutoresizingMaskIntoConstraints = false
-        scroll.add(header)
-        
-        let label = Label(title, .bold(14))
-        header.addSubview(label)
-        
-        header.leftAnchor.constraint(equalTo: scroll.left, constant: 30).isActive = true
-        header.rightAnchor.constraint(equalTo: label.rightAnchor).isActive = true
-        header.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        
-        label.leftAnchor.constraint(equalTo: header.leftAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: header.bottomAnchor, constant: -15).isActive = true
-        return header
     }
     
     @objc private func purchase(_ button: Button) {
@@ -204,7 +202,6 @@ private class Item: NSView {
             addSubview(price)
             
             let purchase = Button(.key("Purchase"))
-            purchase.layer!.backgroundColor = .indigoLight
             addSubview(purchase)
             self.purchase = purchase
             
