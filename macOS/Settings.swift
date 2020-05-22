@@ -127,6 +127,9 @@ private final class Item: Control {
     weak var left: NSLayoutConstraint! { didSet { left.isActive = true } }
     let id: Skin.Id
     private weak var name: NSView!
+    private weak var shape: CAShapeLayer!
+    private weak var imageX: NSLayoutConstraint!
+    private weak var imageY: NSLayoutConstraint!
     private var greyed = CGColor(gray: 0.9, alpha: 1)
     
     required init?(coder: NSCoder) { nil }
@@ -142,12 +145,15 @@ private final class Item: Control {
         let shape = CAShapeLayer()
         shape.lineWidth = 40
         shape.strokeColor = skin.colour.cgColor
+        shape.lineCap = .round
         shape.path = {
-            $0.move(to: .init(x: 0, y: 0))
-            $0.addLine(to: .init(x: 90, y: 90))
+            $0.move(to: .init(x: 90, y: 90))
+            $0.addLine(to: .zero)
             return $0
         } (CGMutablePath())
+        shape.strokeEnd = 0
         layer!.addSublayer(shape)
+        self.shape = shape
         
         let image = NSImageView(image: NSImage(named: skin.texture)!)
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -167,8 +173,10 @@ private final class Item: Control {
         
         image.widthAnchor.constraint(equalToConstant: 40).isActive = true
         image.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        image.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
-        image.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
+        imageX = image.centerXAnchor.constraint(equalTo: centerXAnchor)
+        imageY = image.centerYAnchor.constraint(equalTo: centerYAnchor)
+        imageX.isActive = true
+        imageY.isActive = true
         
         name.heightAnchor.constraint(equalToConstant: 32).isActive = true
         name.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
@@ -183,6 +191,37 @@ private final class Item: Control {
         didSet {
             name.isHidden = !selected
             layer!.borderColor = selected ? .black : greyed
+            
+            if selected {
+                imageX.constant = 30
+                imageY.constant = -30
+                NSAnimationContext.runAnimationGroup( {
+                    $0.duration = 0.6
+                    $0.allowsImplicitAnimation = true
+                    layoutSubtreeIfNeeded()
+                }) { [weak self] in
+                    NSAnimationContext.runAnimationGroup {
+                        $0.duration = 0.3
+                        self?.shape.strokeEnd = 1
+                    }
+                }
+            } else {
+                NSAnimationContext.runAnimationGroup( {
+                    $0.duration = 0.2
+                    shape.strokeEnd = 0
+                }) { [weak self] in
+                    self?.imageX.constant = 0
+                    self?.imageY.constant = 0
+                    NSAnimationContext.runAnimationGroup ({
+                        $0.duration = 0.5
+                        $0.allowsImplicitAnimation = true
+                        self?.shape.strokeEnd = 0
+                        self?.layoutSubtreeIfNeeded()
+                    }) {
+                        self?.shape.strokeEnd = 0
+                    }
+                }
+            }
         }
     }
     
@@ -195,20 +234,16 @@ private final class Item: Control {
         base.layer!.backgroundColor = .indigoDark
         addSubview(base)
         
-        let title = Label(.key("Visit.store"), .bold(14))
+        let title = Label(.key("Visit.store"), .bold(12))
         title.textColor = .white
-        title.alignment = .center
-        title.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         addSubview(title)
         
         base.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         base.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         base.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        base.topAnchor.constraint(equalTo: title.topAnchor, constant: -10).isActive = true
+        base.topAnchor.constraint(equalTo: title.topAnchor, constant: -9).isActive = true
         
-        title.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 10).isActive = true
-        title.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor, constant: -10).isActive = true
-        title.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
+        title.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9).isActive = true
         title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 }
