@@ -6,7 +6,7 @@ final class Button: Control {
     required init?(coder: NSCoder) { nil }
     init(_ title: String) {
         super.init()
-        let label = Label(title, .bold(14))
+        let label = Label(title, .bold(12))
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         addSubview(label)
         self.label = label
@@ -14,7 +14,7 @@ final class Button: Control {
     
     func indigo() {
         large()
-        layer!.backgroundColor = .init(red: 0.101, green: 0.388, blue: 0.662, alpha: 1)
+        layer!.backgroundColor = .indigoDark
     }
     
     func red() {
@@ -26,16 +26,30 @@ final class Button: Control {
         label.textColor = .init(white: 0.5, alpha: 1)
         
         bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: 6).isActive = true
-        rightAnchor.constraint(equalTo: label.rightAnchor, constant: 9).isActive = true
+        rightAnchor.constraint(equalTo: label.rightAnchor, constant: 10).isActive = true
         
         label.topAnchor.constraint(equalTo: topAnchor, constant: 6).isActive = true
-        label.leftAnchor.constraint(equalTo: leftAnchor, constant: 9).isActive = true
+        label.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
+    }
+    
+    func small() {
+        wantsLayer = true
+        layer!.cornerRadius = 6
+        layer!.backgroundColor = .indigoDark
+        label.textColor = .white
+        
+        bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: 6).isActive = true
+        rightAnchor.constraint(equalTo: label.rightAnchor, constant: 12).isActive = true
+        
+        label.topAnchor.constraint(equalTo: topAnchor, constant: 6).isActive = true
+        label.leftAnchor.constraint(equalTo: leftAnchor, constant: 12).isActive = true
     }
     
     private func large() {
         wantsLayer = true
         layer!.cornerRadius = 10
         label.textColor = .white
+        label.font = .bold(14)
         
         heightAnchor.constraint(equalToConstant: 38).isActive = true
         widthAnchor.constraint(equalToConstant: 170).isActive = true

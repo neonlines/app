@@ -8,7 +8,7 @@ final class Pointer: SKShapeNode {
         path = .init(ellipseIn: .init(x: -8 + position.x, y: -8 + position.y, width: 12, height: 12), transform: nil)
         lineWidth = 2
         fillColor = color
-        strokeColor = UI.darkMode ? .black : .white
+        strokeColor = .white
         alpha = 0.3
         zPosition = 20
     }

@@ -11,7 +11,7 @@ final class Borders: SKShapeNode {
         lineWidth = diameter
         lineCap = .round
         lineJoin = .round
-        strokeColor = UI.darkMode ? .black : .init(white: 0.6, alpha: 1)
+        strokeColor = .init(white: 0.6, alpha: 1)
         physicsBody = .init(edgeLoopFrom: CGRect(x: -radius + padding, y: -radius + padding, width: size - diameter, height: size - diameter))
         physicsBody!.collisionBitMask = .none
         physicsBody!.contactTestBitMask = .none

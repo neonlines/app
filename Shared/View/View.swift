@@ -215,7 +215,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 let label = SKLabelNode(text: .key("Game.over"))
                 label.bold(30)
                 label.alpha = 0
-                label.fontColor = .text
+                label.fontColor = .black
                 scene!.camera!.addChild(label)
                 scene!.camera!.run(.scale(to: 10, duration: 6))
                 wheel.alpha = 0

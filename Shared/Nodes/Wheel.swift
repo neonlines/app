@@ -27,6 +27,6 @@ final class Wheel: SKSpriteNode {
     }
     
     private func update() {
-        texture = .init(imageNamed: "wheel_" + (on ? "on" : "off") + (UI.darkMode ? "_dark" : "_light"))
+        texture = .init(imageNamed: "wheel_" + (on ? "on" : "off") + "_light")
     }
 }

@@ -46,7 +46,7 @@ private final class Item: SKShapeNode {
         let label = SKLabelNode()
         label.horizontalAlignmentMode = .left
         label.bold(12)
-        label.fontColor = .background
+        label.fontColor = .white
         label.text = .init(name.prefix(16))
         label.verticalAlignmentMode = .bottom
         label.position = .init(x: 5, y: 3)

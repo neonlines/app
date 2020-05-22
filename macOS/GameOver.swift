@@ -69,7 +69,7 @@ final class GameOver: NSView {
     
     private func max() -> Label {
         let max = Label(.key("New.max"), .bold(18))
-        max.textColor = .indigo
+        max.textColor = .indigoLight
         addSubview(max)
         
         max.leftAnchor.constraint(equalTo: centerXAnchor, constant: 50).isActive = true

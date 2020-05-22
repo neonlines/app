@@ -2,13 +2,13 @@ import AppKit
 
 final class Settings: NSView {
     private weak var scroll: Scroll!
-    private let itemSize = CGFloat(180)
+    private let itemSize = CGFloat(120)
     
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(frame: .zero)
         let done = Button(.key("Done"))
-        done.indigo()
+        done.small()
         done.target = self
         done.action = #selector(self.done)
         addSubview(done)
@@ -20,19 +20,20 @@ final class Settings: NSView {
         addSubview(scroll)
         self.scroll = scroll
         
-        let title = Label(.key("Choose.your.skin"), .bold(14))
+        let title = Label(.key("Settings"), .bold(12))
+        title.textColor = .black
         addSubview(title)
         
         title.centerYAnchor.constraint(equalTo: done.centerYAnchor).isActive = true
-        title.leftAnchor.constraint(equalTo: leftAnchor, constant: 100).isActive = true
+        title.leftAnchor.constraint(equalTo: leftAnchor, constant: 90).isActive = true
         
         separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
         separator.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
-        separator.topAnchor.constraint(equalTo: topAnchor, constant: 60).isActive = true
+        separator.topAnchor.constraint(equalTo: done.bottomAnchor, constant: 9).isActive = true
         separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         done.rightAnchor.constraint(equalTo: rightAnchor, constant: -15).isActive = true
-        done.bottomAnchor.constraint(equalTo: separator.topAnchor, constant: -13).isActive = true
+        done.topAnchor.constraint(equalTo: topAnchor, constant: 9).isActive = true
         
         scroll.topAnchor.constraint(equalTo: separator.bottomAnchor).isActive = true
         scroll.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
@@ -110,49 +111,42 @@ private final class Item: Control {
     let id: Skin.Id
     weak var top: NSLayoutConstraint! { didSet { top.isActive = true } }
     weak var left: NSLayoutConstraint! { didSet { left.isActive = true } }
-    private weak var image: NSImageView!
-    private weak var border: NSView!
     
     required init?(coder: NSCoder) { nil }
     init(id: Skin.Id) {
         self.id = id
         super.init()
         wantsLayer = true
-        layer!.cornerRadius = 32
-        layer!.borderWidth = 5
+        layer!.cornerRadius = 20
+        layer!.borderWidth = 1
         
         let skin = Skin.make(id: id)
         
-        let border = NSView()
-        border.translatesAutoresizingMaskIntoConstraints = false
-        border.wantsLayer = true
-        border.layer!.cornerRadius = 25
-        border.layer!.backgroundColor = skin.colour.cgColor
-        addSubview(border)
-        self.border = border
+        let shape = CAShapeLayer()
+        shape.lineWidth = 40
+        shape.strokeColor = skin.colour.cgColor
+        shape.path = {
+            $0.move(to: .init(x: 0, y: 0))
+            $0.addLine(to: .init(x: 90, y: 90))
+            return $0
+        } (CGMutablePath())
+        layer!.addSublayer(shape)
         
         let image = NSImageView(image: NSImage(named: skin.texture)!)
         image.translatesAutoresizingMaskIntoConstraints = false
         image.imageScaling = .scaleProportionallyUpOrDown
         addSubview(image)
-        self.image = image
-        
-        border.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        border.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        border.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        border.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
         image.widthAnchor.constraint(equalToConstant: 40).isActive = true
         image.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        image.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        image.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
+        image.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
     }
     
     var selected = false {
         didSet {
-            border.alphaValue = selected ? 1 : 0
-            image.alphaValue = selected ? 1 : 0.5
-            layer!.borderColor = selected ? .indigo : NSColor.separatorColor.cgColor
+            alphaValue = selected ? 1 : 0.5
+            layer!.borderColor = selected ? .black : .init(gray: 0.9, alpha: 1)
         }
     }
     
@@ -160,7 +154,7 @@ private final class Item: Control {
         let base = NSView()
         base.translatesAutoresizingMaskIntoConstraints = false
         base.wantsLayer = true
-        base.layer!.backgroundColor = .indigo
+        base.layer!.backgroundColor = .indigoLight
         addSubview(base)
         
         let title = Label(.key("New.skin"), .medium(16))

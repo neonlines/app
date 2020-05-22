@@ -25,7 +25,7 @@ extension NSWindow {
     func show(_ view: NSView) {
         makeFirstResponder(nil)
         NSAnimationContext.runAnimationGroup({
-            $0.duration = 0.4
+            $0.duration = 0.3
             $0.allowsImplicitAnimation = true
             contentView!.alphaValue = 0
         }) { [weak self] in
@@ -33,7 +33,7 @@ extension NSWindow {
             view.alphaValue = 0
             self?.contentView = view
             NSAnimationContext.runAnimationGroup {
-                $0.duration = 0.4
+                $0.duration = 0.3
                 $0.allowsImplicitAnimation = true
                 view.alphaValue = 1
             }

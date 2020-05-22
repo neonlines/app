@@ -241,7 +241,7 @@ private class Item: NSView {
             addSubview(price)
             
             let purchase = Button(.key("Purchase"))
-            purchase.layer!.backgroundColor = .indigo
+            purchase.layer!.backgroundColor = .indigoLight
             addSubview(purchase)
             self.purchase = purchase
             
