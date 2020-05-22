@@ -75,6 +75,10 @@
 		CE9443D1244CA2E30087CDA9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9443CF244CA2E30087CDA9 /* Media.xcassets */; };
 		CE9443D3244CA5000087CDA9 /* Wheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9443D2244CA5000087CDA9 /* Wheel.swift */; };
 		CEAD7B12246AFFDE005A34B1 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD7B11246AFFDE005A34B1 /* Separator.swift */; };
+		CEAD8399247832B6007CD3EC /* StoreMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD8398247832B6007CD3EC /* StoreMaster.swift */; };
+		CEAD839A24783585007CD3EC /* StoreMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD8398247832B6007CD3EC /* StoreMaster.swift */; };
+		CEAD839C2478360F007CD3EC /* StoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD839B2478360F007CD3EC /* StoreDelegate.swift */; };
+		CEAD839D2478360F007CD3EC /* StoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD839B2478360F007CD3EC /* StoreDelegate.swift */; };
 		CEB5047A2450991E00D5B1BC /* Borders.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB504792450991E00D5B1BC /* Borders.swift */; };
 		CEBB44222474312A00B9B107 /* GameMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB44212474312A00B9B107 /* GameMaster.swift */; };
 		CEBB44232474312A00B9B107 /* GameMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB44212474312A00B9B107 /* GameMaster.swift */; };
@@ -155,6 +159,8 @@
 		CE9443CF244CA2E30087CDA9 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		CE9443D2244CA5000087CDA9 /* Wheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wheel.swift; sourceTree = "<group>"; };
 		CEAD7B11246AFFDE005A34B1 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
+		CEAD8398247832B6007CD3EC /* StoreMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMaster.swift; sourceTree = "<group>"; };
+		CEAD839B2478360F007CD3EC /* StoreDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDelegate.swift; sourceTree = "<group>"; };
 		CEB504792450991E00D5B1BC /* Borders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Borders.swift; sourceTree = "<group>"; };
 		CEBB44212474312A00B9B107 /* GameMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMaster.swift; sourceTree = "<group>"; };
 		CEBB442424743FF500B9B107 /* GameDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDelegate.swift; sourceTree = "<group>"; };
@@ -259,6 +265,8 @@
 			children = (
 				CEBB442424743FF500B9B107 /* GameDelegate.swift */,
 				CEBB44212474312A00B9B107 /* GameMaster.swift */,
+				CEAD839B2478360F007CD3EC /* StoreDelegate.swift */,
+				CEAD8398247832B6007CD3EC /* StoreMaster.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -531,6 +539,7 @@
 				CEF23AAE244C984100D02FD7 /* Window.swift in Sources */,
 				CE7D033B2455F650001AC44B /* Minimap.swift in Sources */,
 				CE382D452459DB56004DE132 /* Color.swift in Sources */,
+				CEAD839C2478360F007CD3EC /* StoreDelegate.swift in Sources */,
 				CE7CE25A2459E91400CD8791 /* Settings.swift in Sources */,
 				CEC9488E24573D3F00A458E3 /* Pointer.swift in Sources */,
 				CE899EB6245EBD930066824A /* Profile.swift in Sources */,
@@ -538,6 +547,7 @@
 				CE2CC6EE244C996C00C21893 /* View.swift in Sources */,
 				CE46A7012459596E000B1F27 /* Skin.swift in Sources */,
 				CEF10FF5246FEF5A009FA1DD /* State.swift in Sources */,
+				CEAD8399247832B6007CD3EC /* StoreMaster.swift in Sources */,
 				CE7CE25C2459EC9600CD8791 /* Scroll.swift in Sources */,
 				CE382D3F2459D363004DE132 /* Options.swift in Sources */,
 				CEB5047A2450991E00D5B1BC /* Borders.swift in Sources */,
@@ -577,6 +587,7 @@
 				CED910AC246BCA79003FEE51 /* Froob.swift in Sources */,
 				CEE5DBB6246E76E600C2FE73 /* UIResponder.swift in Sources */,
 				CE0F77B4246AFAD100EA3955 /* Store.swift in Sources */,
+				CEAD839D2478360F007CD3EC /* StoreDelegate.swift in Sources */,
 				CE769E6A247267DF0038D0D8 /* Others.swift in Sources */,
 				CE86FBBC246B14720094A54C /* Pointer.swift in Sources */,
 				CE900BF72472ED1400D80AFA /* Report.swift in Sources */,
@@ -584,6 +595,7 @@
 				CEF10FF6246FEF5A009FA1DD /* State.swift in Sources */,
 				CEBB442924744AA600B9B107 /* Defeated.swift in Sources */,
 				CEE5DBB0246E736D00C2FE73 /* AiView.swift in Sources */,
+				CEAD839A24783585007CD3EC /* StoreMaster.swift in Sources */,
 				CE40E01724692BF200549907 /* Skin.swift in Sources */,
 				CE86FBB6246B14340094A54C /* UInt32.swift in Sources */,
 				CE0E09442469B07200FAD2C8 /* Button.swift in Sources */,

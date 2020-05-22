@@ -1,21 +1,18 @@
 import AppKit
 import StoreKit
 
-final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver {
+final class Store: NSView, StoreDelegate {
     private weak var request: SKProductsRequest?
     private weak var scroll: Scroll!
-    
-    private var products = [SKProduct]() {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.refresh()
-            }
-        }
-    }
+    private let store = StoreMaster()
     
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(frame: .zero)
+        let title = Label(.key("Store"), .bold(12))
+        title.textColor = .black
+        addSubview(title)
+        
         let restore = Button(.key("Restore.purchases"))
         restore.target = self
         restore.action = #selector(self.restore)
@@ -23,7 +20,7 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         addSubview(restore)
         
         let done = Button(.key("Done"))
-        done.indigo()
+        done.small()
         done.target = self
         done.action = #selector(self.done)
         addSubview(done)
@@ -35,16 +32,19 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         addSubview(scroll)
         self.scroll = scroll
         
+        title.centerYAnchor.constraint(equalTo: done.centerYAnchor).isActive = true
+        title.leftAnchor.constraint(equalTo: leftAnchor, constant: 90).isActive = true
+        
         separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
         separator.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
-        separator.topAnchor.constraint(equalTo: topAnchor, constant: 60).isActive = true
+        separator.topAnchor.constraint(equalTo: done.bottomAnchor, constant: 9).isActive = true
         separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
-        restore.rightAnchor.constraint(equalTo: done.leftAnchor, constant: -20).isActive = true
-        restore.bottomAnchor.constraint(equalTo: separator.topAnchor, constant: -13).isActive = true
-        
         done.rightAnchor.constraint(equalTo: rightAnchor, constant: -15).isActive = true
-        done.bottomAnchor.constraint(equalTo: separator.topAnchor, constant: -13).isActive = true
+        done.topAnchor.constraint(equalTo: topAnchor, constant: 9).isActive = true
+        
+        restore.rightAnchor.constraint(equalTo: done.leftAnchor, constant: -30).isActive = true
+        restore.centerYAnchor.constraint(equalTo: done.centerYAnchor).isActive = true
         
         scroll.topAnchor.constraint(equalTo: separator.bottomAnchor).isActive = true
         scroll.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
@@ -55,27 +55,9 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         scroll.width.constraint(equalToConstant: 400).isActive = true
         
         loading()
-        
-        SKPaymentQueue.default().add(self)
-
-        let request = SKProductsRequest(productIdentifiers: .init(["neon.lines.premium.unlimited"] + Skin.Id.allCases.map {
-            "neon.lines.skin." + $0.rawValue
-        }))
-        request.delegate = self
-        self.request = request
-        request.start()
+        store.delegate = self
+        store.load()
     }
-    
-    deinit {
-        SKPaymentQueue.default().remove(self)
-    }
-    
-    func productsRequest(_: SKProductsRequest, didReceive: SKProductsResponse) { products = didReceive.products }
-    func paymentQueue(_: SKPaymentQueue, updatedTransactions: [SKPaymentTransaction]) { update(updatedTransactions) }
-    func paymentQueue(_: SKPaymentQueue, removedTransactions: [SKPaymentTransaction]) { update(removedTransactions) }
-    func paymentQueueRestoreCompletedTransactionsFinished(_: SKPaymentQueue) { DispatchQueue.main.async { [weak self] in self?.refresh() } }
-    func request(_: SKRequest, didFailWithError: Error) { DispatchQueue.main.async { [weak self] in self?.error(didFailWithError.localizedDescription) } }
-    func paymentQueue(_: SKPaymentQueue, restoreCompletedTransactionsFailedWithError: Error) { DispatchQueue.main.async { [weak self] in self?.error(restoreCompletedTransactionsFailedWithError.localizedDescription) } }
     
     private func loading() {
         scroll.views.forEach { $0.removeFromSuperview() }
@@ -87,7 +69,7 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         label.topAnchor.constraint(equalTo: scroll.top, constant: 20).isActive = true
     }
     
-    private func error(_ string: String) {
+    func error(_ string: String) {
         scroll.views.forEach { $0.removeFromSuperview() }
         
         let label = Label(string, .regular(14))
@@ -99,33 +81,14 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         label.rightAnchor.constraint(lessThanOrEqualTo: scroll.right, constant: -20).isActive = true
     }
     
-    private func update(_ transactions: [SKPaymentTransaction]) {
-        guard !transactions.contains(where: { $0.transactionState == .purchasing }) else { return }
-        transactions.forEach {
-            switch $0.transactionState {
-            case .failed:
-                SKPaymentQueue.default().finishTransaction($0)
-            case .restored, .purchased:
-                game.profile.purchases.insert($0.payment.productIdentifier)
-                SKPaymentQueue.default().finishTransaction($0)
-            default: break
-            }
-        }
-        if !products.isEmpty {
-            DispatchQueue.main.async { [weak self] in
-                self?.refresh()
-            }
-        }
-    }
-    
-    private func refresh() {
+    func refresh() {
         scroll.views.forEach { $0.removeFromSuperview() }
         
         let game = header(title: .key("Premium"))
         game.topAnchor.constraint(equalTo: scroll.top).isActive = true
         var top = game.bottomAnchor
         
-        products.filter { $0.productIdentifier.contains(".premium.") }.forEach {
+        store.products.filter { $0.productIdentifier.contains(".premium.") }.forEach {
             top = item(PremiumItem(product: $0), top: top)
         }
         
@@ -133,7 +96,7 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
         skins.topAnchor.constraint(equalTo: top, constant: 40).isActive = true
         top = skins.bottomAnchor
         
-        products.filter { $0.productIdentifier.contains(".skin.") }.sorted { $0.productIdentifier < $1.productIdentifier }.forEach {
+        store.products.filter { $0.productIdentifier.contains(".skin.") }.sorted { $0.productIdentifier < $1.productIdentifier }.forEach {
             top = item(SkinItem(product: $0), top: top)
         }
         
@@ -178,12 +141,12 @@ final class Store: NSView, SKRequestDelegate, SKProductsRequestDelegate, SKPayme
     
     @objc private func purchase(_ button: Button) {
         loading()
-        SKPaymentQueue.default().add(.init(product: (button.superview as! Item).product))
+        store.purchase((button.superview as! Item).product)
     }
     
     @objc private func restore() {
         loading()
-        SKPaymentQueue.default().restoreCompletedTransactions()
+        store.restore()
     }
     
     @objc private func done() {
