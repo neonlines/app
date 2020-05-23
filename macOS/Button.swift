@@ -45,6 +45,19 @@ final class Button: Control {
         label.leftAnchor.constraint(equalTo: leftAnchor, constant: 12).isActive = true
     }
     
+    func clean() {
+        wantsLayer = true
+        layer!.cornerRadius = 6
+        layer!.backgroundColor = .init(gray: 0.9, alpha: 1)
+        label.textColor = .indigoDark
+        
+        bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: 7).isActive = true
+        rightAnchor.constraint(equalTo: label.rightAnchor, constant: 16).isActive = true
+        
+        label.topAnchor.constraint(equalTo: topAnchor, constant: 7).isActive = true
+        label.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
+    }
+    
     private func large() {
         wantsLayer = true
         layer!.cornerRadius = 10
