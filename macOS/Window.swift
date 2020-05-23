@@ -14,7 +14,7 @@ final class Window: NSWindow {
         collectionBehavior = .fullScreenNone
         isReleasedWhenClosed = false
 //        contentView = Options()
-        contentView = GameOver.Victory(seconds: 100)
+        contentView = GameOver.Defeat(seconds: 100)
     }
     
     override func close() {

@@ -36,10 +36,10 @@ class GameOver: NSView {
         required init?(coder: NSCoder) { nil }
         override init(seconds: Int) {
             super.init(seconds: seconds)
-            title.stringValue = .key("Victory")
+            title.stringValue = .key("Defeat")
             title.textColor = .indigoLight
             
-            let image = NSImageView(image: NSImage(named: "victory")!)
+            let image = NSImageView(image: NSImage(named: "defeat")!)
             image.translatesAutoresizingMaskIntoConstraints = false
             image.imageScaling = .scaleNone
             addSubview(image)
@@ -58,8 +58,6 @@ class GameOver: NSView {
             skin.centerYAnchor.constraint(equalTo: image.centerYAnchor).isActive = true
             skin.widthAnchor.constraint(equalToConstant: 32).isActive = true
             skin.heightAnchor.constraint(equalToConstant: 32).isActive = true
-            
-            game.reportDuel()
         }
     }
     

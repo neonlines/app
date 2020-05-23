@@ -25,6 +25,7 @@ Your.can.also = "To remove this restriction get\nUnlimited In-App Purchase\non t
 Against.ai = "Single";
 Against.others = "Duel";
 Victory = "You Win!";
+Defeat = "You Loose";
 Seconds = "Seconds";
 Ai.defeated = "AI Defeated";
 Defeated = "Defeated";
