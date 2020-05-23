@@ -13,7 +13,8 @@ final class Window: NSWindow {
         toolbar!.showsBaselineSeparator = false
         collectionBehavior = .fullScreenNone
         isReleasedWhenClosed = false
-        contentView = Options()
+//        contentView = Options()
+        contentView = GameOver.Victory(seconds: 100)
     }
     
     override func close() {
