@@ -82,7 +82,7 @@ final class MultiplayerView: View, GKMatchDelegate {
     override func gameOver() {
         match.disconnect()
         match.delegate = nil
-        gameOver(nil)
+        defeat()
     }
     
     private func master() {

@@ -37,7 +37,7 @@ class GameOver: NSView {
         override init(seconds: Int) {
             super.init(seconds: seconds)
             title.stringValue = .key("Defeat")
-            title.textColor = .indigoLight
+            title.textColor = .red
             
             let image = NSImageView(image: NSImage(named: "defeat")!)
             image.translatesAutoresizingMaskIntoConstraints = false
@@ -61,6 +61,43 @@ class GameOver: NSView {
         }
     }
     
+    final class Over: GameOver {
+        required init?(coder: NSCoder) { nil }
+        init(seconds: Int, ai: Int) {
+            super.init(seconds: seconds)
+            title.stringValue = .key("Game.over")
+            title.textColor = .indigoDark
+            
+            let image = NSImageView(image: NSImage(named: "over")!)
+            image.translatesAutoresizingMaskIntoConstraints = false
+            image.imageScaling = .scaleNone
+            addSubview(image)
+            
+            let skin = NSImageView(image: NSImage(named: Skin.make(id: game.profile.skin).texture)!)
+            skin.translatesAutoresizingMaskIntoConstraints = false
+            skin.imageScaling = .scaleNone
+            addSubview(skin)
+            
+            let item = Item(title: .key("Ai.defeated"), counter: formatter.string(from: .init(value: ai))!, record: game.profile.ai < ai)
+            addSubview(item)
+            
+            image.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 50).isActive = true
+            image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+            image.widthAnchor.constraint(equalToConstant: 150).isActive = true
+            image.heightAnchor.constraint(equalToConstant: 150).isActive = true
+            
+            skin.centerXAnchor.constraint(equalTo: image.centerXAnchor).isActive = true
+            skin.centerYAnchor.constraint(equalTo: image.centerYAnchor).isActive = true
+            skin.widthAnchor.constraint(equalToConstant: 32).isActive = true
+            skin.heightAnchor.constraint(equalToConstant: 32).isActive = true
+            
+            item.centerXAnchor.constraint(equalTo: self.item.centerXAnchor).isActive = true
+            item.topAnchor.constraint(equalTo: self.item.bottomAnchor).isActive = true
+            
+            game.report(ai: ai)
+        }
+    }
+    
     private weak var title: Label!
     private weak var item: Item!
     private let formatter = NumberFormatter()
@@ -80,7 +117,7 @@ class GameOver: NSView {
         next.action = #selector(self.next)
         addSubview(next)
         
-        let item = Item(title: .key("Duration"), counter: formatter.string(from: .init(value: seconds))!, record: true)
+        let item = Item(title: .key("Duration"), counter: formatter.string(from: .init(value: seconds))!, record: game.profile.seconds < seconds)
         addSubview(item)
         self.item = item
         
@@ -93,56 +130,6 @@ class GameOver: NSView {
         next.topAnchor.constraint(equalTo: centerYAnchor, constant: 200).isActive = true
         next.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
-        
-        
-//        let subtitle = Label(.key("Seconds"), .bold(16))
-//        addSubview(subtitle)
-//
-//        let label = Label(formatter.string(from: .init(value: seconds))!, .bold(30))
-//        addSubview(label)
-//
-        
-//
-//        title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-//        title.bottomAnchor.constraint(equalTo: subtitle.topAnchor, constant: -80).isActive = true
-//
-//        subtitle.rightAnchor.constraint(equalTo: centerXAnchor, constant: 30).isActive = true
-//        subtitle.bottomAnchor.constraint(equalTo: centerYAnchor, constant: -50).isActive = true
-//
-//        label.leftAnchor.constraint(equalTo: centerXAnchor, constant: 50).isActive = true
-//        label.centerYAnchor.constraint(equalTo: subtitle.centerYAnchor).isActive = true
-//
-//        next.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-//        next.topAnchor.constraint(equalTo: centerYAnchor, constant: 160).isActive = true
-//
-//        if game.profile.seconds < seconds {
-//            max().topAnchor.constraint(equalTo: label.bottomAnchor, constant: 5).isActive = true
-//        }
-//
-//        if let ai = ai {
-//            let aiTitle = Label(.key("Ai.defeated"), .bold(16))
-//            addSubview(aiTitle)
-//
-//            let aiLabel = Label(formatter.string(from: .init(value: ai))!, .bold(30))
-//            addSubview(aiLabel)
-//
-//            aiTitle.rightAnchor.constraint(equalTo: centerXAnchor, constant: 30).isActive = true
-//            aiTitle.topAnchor.constraint(equalTo: subtitle.bottomAnchor, constant: 70).isActive = true
-//
-//            aiLabel.leftAnchor.constraint(equalTo: centerXAnchor, constant: 50).isActive = true
-//            aiLabel.centerYAnchor.constraint(equalTo: aiTitle.centerYAnchor).isActive = true
-//
-//            if game.profile.ai < ai {
-//                max().topAnchor.constraint(equalTo: aiLabel.bottomAnchor, constant: 5).isActive = true
-//            }
-//
-////            game.report(ai: ai)
-//        } else {
-//            if victory {
-////                game.reportDuel()
-//            }
-//        }
-////        game.report(seconds: seconds)
         game.report(seconds: seconds)
     }
     

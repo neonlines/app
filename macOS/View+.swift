@@ -32,11 +32,15 @@ extension View {
     }
     
     func victory() {
-//        window!.show(GameOver(victory: true, seconds: seconds, ai: nil))
+        window!.show(GameOver.Victory(seconds: seconds))
     }
     
-    func gameOver(_ ai: Int?) {
-//        window!.show(GameOver(victory: false, seconds: seconds, ai: ai))
+    func defeat() {
+        window!.show(GameOver.Defeat(seconds: seconds))
+    }
+    
+    func gameOver(_ ai: Int) {
+        window!.show(GameOver.Over(seconds: seconds, ai: ai))
     }
 }
 
