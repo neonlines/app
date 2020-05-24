@@ -111,6 +111,26 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         brain.position(positions, retry: 100_000)!
     }
     
+    final func beginMove(_ radians: CGFloat) {
+        drag = radians
+        rotation = wheel.zRotation
+        wheel.on = true
+    }
+    
+    final func update(radians: CGFloat) {
+        guard let drag = self.drag else {
+            self.drag = nil
+            self.wheel.on = false
+            return
+        }
+        wheel.zRotation = rotation - (radians - drag)
+    }
+    
+    final func stop() {
+        drag = nil
+        wheel.on = false
+    }
+    
     func align() {
         wheel.align()
         hud.align()
@@ -144,26 +164,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     func gameOver() {
         
-    }
-    
-    func beginMove(_ radians: CGFloat) {
-        drag = radians
-        rotation = wheel.zRotation
-        wheel.on = true
-    }
-    
-    func update(radians: CGFloat) {
-        guard let drag = self.drag else {
-            self.drag = nil
-            self.wheel.on = false
-            return
-        }
-        wheel.zRotation = rotation - (radians - drag)
-    }
-    
-    func stop() {
-        drag = nil
-        wheel.on = false
     }
     
     func explode(_ player: Player) {
