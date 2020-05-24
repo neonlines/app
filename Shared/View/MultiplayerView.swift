@@ -68,7 +68,6 @@ final class MultiplayerView: View, GKMatchDelegate {
             scene!.camera!.addChild(label)
             scene!.camera!.run(.scale(to: 10, duration: 6))
             wheel.alpha = 0
-            pointers.alpha = 0
             
             label.run(.fadeIn(withDuration: 3)) { [weak self] in
                 self?.scene!.run(.fadeOut(withDuration: 2)) {

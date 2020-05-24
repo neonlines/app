@@ -15,7 +15,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     final var randomRotation: CGFloat { .random(in: 0 ..< .pi * 2) }
     private(set) weak var wheel: Wheel!
-    private(set) weak var pointers: SKNode!
     private weak var hud: Hud!
     private weak var minimap: Minimap!
     private var drag: CGFloat?
@@ -58,7 +57,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         self.hud = hud
         self.wheel = wheel
         self.minimap = minimap
-        self.pointers = pointers
         presentScene(scene)
         
         let track: String
@@ -90,7 +88,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         let player = spawn(position, rotation: rotation, skin: game.profile.skin)
         wheel.player = player
         wheel.zRotation = rotation
-        pointers.zRotation = -rotation
         scene!.camera!.constraints = [.distance(.init(upperLimit: 0), to: player)]
 
         scene!.camera!.run(.sequence([.scale(to: 1, duration: 2), .run { [weak self] in
@@ -162,7 +159,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             return
         }
         wheel.zRotation = rotation - (radians - drag)
-        pointers.zRotation = -wheel.zRotation
     }
     
     func stop() {
@@ -187,19 +183,9 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     private func radar() {
-        guard let player = wheel.player else { return }
         minimap.clear()
-        pointers.children.forEach { $0.removeFromParent() }
         players.filter { $0.physicsBody != nil }.forEach {
             minimap.show($0.position, color: $0.line.skin.colour)
-            
-            guard !scene!.camera!.containedNodeSet().contains($0) else { return }
-            var position = CGPoint(x: $0.position.x - player.position.x, y: $0.position.y - player.position.y)
-            let maxDelta = max(abs(position.x), abs(position.y)) / 100
-            position.x = position.x / maxDelta
-            position.y = position.y / maxDelta
-            let pointer = Pointer(color: $0.line.skin.colour, position: position)
-            pointers.addChild(pointer)
         }
     }
     
@@ -219,7 +205,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 scene!.camera!.addChild(label)
                 scene!.camera!.run(.scale(to: 5, duration: 6))
                 wheel.alpha = 0
-                pointers.alpha = 0
                 
                 label.run(.fadeIn(withDuration: 3)) { [weak self] in
                     self?.scene!.run(.fadeOut(withDuration: 2)) {
