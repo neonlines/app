@@ -13,41 +13,34 @@ final class Wheel: SKSpriteNode {
             if rotation >= 0 {
                 if player.zRotation >= 0 {
                     if rotation >= player.zRotation {
-                        print("a")
                         player.zRotation = min(rotation, maxDelta)
                     } else {
-                        print("b")
                         player.zRotation = max(rotation, minDelta)
                     }
                 } else {
-                    if rotation > .pi {
-                        print("c")
-                        player.zRotation = max(rotation - (2 * .pi), minDelta)
+                    let inverse = (2 * .pi) + player.zRotation
+                    if rotation >= inverse {
+                        player.zRotation = min(rotation, inverse + delta)
                     } else {
-                        print("d")
-                        player.zRotation = min(rotation, maxDelta)
+                        player.zRotation = max(rotation, inverse - delta)
                     }
                 }
             } else {
-                if player.zRotation < 0 {
+                if player.zRotation <= 0 {
                     if rotation < player.zRotation {
-                        print("e")
                         player.zRotation = max(rotation, minDelta)
                     } else {
-                        print("f")
                         player.zRotation = min(rotation, maxDelta)
                     }
                 } else {
-                    if rotation < -.pi {
-                        print("g")
-                        player.zRotation = min((2 * .pi) - rotation, maxDelta)
+                    let inverse = player.zRotation - (2 * .pi)
+                    if rotation < inverse {
+                        player.zRotation = max(rotation, inverse - delta)
                     } else {
-                        print("h")
-                        player.zRotation = max(rotation, minDelta)
+                        player.zRotation = min(rotation, inverse + delta)
                     }
                 }
             }
-            print(player.zRotation)
         }
     }
     
