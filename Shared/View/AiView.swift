@@ -16,7 +16,7 @@ final class AiView: View {
         scene!.camera!.addChild(defeated)
         self.defeated = defeated
         
-        startPlayer(certainPosition([]), rotation: 0)
+        startPlayer(certainPosition([]), rotation: randomRotation)
     }
     
     override func align() {

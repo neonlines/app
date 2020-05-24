@@ -153,6 +153,9 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         
         switch state {
         case .play:
+            if times.rotate.timeout(delta) {
+                wheel.rotate()
+            }
             if times.seconds.timeout(delta) {
                 seconds += 1
             }

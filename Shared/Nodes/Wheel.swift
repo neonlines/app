@@ -2,44 +2,6 @@ import SpriteKit
 
 final class Wheel: SKSpriteNode {
     weak var player: Player?
-    private let delta = CGFloat(0.02)
-    
-    override var zRotation: CGFloat {
-        didSet {
-            guard let player = self.player else { return }
-            if zRotation <= 0 {
-                if player.zRotation >= 0 {
-                    if -zRotation >= player.zRotation {
-                        player.zRotation = min(-zRotation, player.zRotation + delta)
-                    } else {
-                        player.zRotation = max(-zRotation, player.zRotation - delta)
-                    }
-                } else {
-                    let inverse = (.pi * 2) - player.zRotation
-                    if -zRotation >= inverse {
-                        player.zRotation = min(-zRotation, inverse + delta)
-                    } else {
-                        player.zRotation = max(-zRotation, inverse - delta)
-                    }
-                }
-            } else {
-                if player.zRotation <= 0 {
-                    if -zRotation < player.zRotation {
-                        player.zRotation = max(-zRotation, player.zRotation - delta)
-                    } else {
-                        player.zRotation = min(-zRotation, player.zRotation + delta)
-                    }
-                } else {
-                    let inverse = player.zRotation - (.pi * 2)
-                    if -zRotation < inverse {
-                        player.zRotation = max(-zRotation, inverse - delta)
-                    } else {
-                        player.zRotation = min(-zRotation, inverse + delta)
-                    }
-                }
-            }
-        }
-    }
     
     var on = false {
         didSet {
@@ -56,6 +18,10 @@ final class Wheel: SKSpriteNode {
     
     func align() {
         position.y = (scene!.frame.height / -2) + 200
+    }
+    
+    func rotate() {
+        player?.zRotation = -zRotation
     }
     
     private func update() {
