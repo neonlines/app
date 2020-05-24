@@ -7,37 +7,34 @@ final class Wheel: SKSpriteNode {
     override var zRotation: CGFloat {
         didSet {
             guard let player = self.player else { return }
-            let rotation = -zRotation
-            let minDelta = player.zRotation - delta
-            let maxDelta = player.zRotation + delta
-            if rotation >= 0 {
+            if zRotation <= 0 {
                 if player.zRotation >= 0 {
-                    if rotation >= player.zRotation {
-                        player.zRotation = min(rotation, maxDelta)
+                    if -zRotation >= player.zRotation {
+                        player.zRotation = min(-zRotation, player.zRotation + delta)
                     } else {
-                        player.zRotation = max(rotation, minDelta)
+                        player.zRotation = max(-zRotation, player.zRotation - delta)
                     }
                 } else {
-                    let inverse = (2 * .pi) + player.zRotation
-                    if rotation >= inverse {
-                        player.zRotation = min(rotation, inverse + delta)
+                    let inverse = (.pi * 2) - player.zRotation
+                    if -zRotation >= inverse {
+                        player.zRotation = min(-zRotation, inverse + delta)
                     } else {
-                        player.zRotation = max(rotation, inverse - delta)
+                        player.zRotation = max(-zRotation, inverse - delta)
                     }
                 }
             } else {
                 if player.zRotation <= 0 {
-                    if rotation < player.zRotation {
-                        player.zRotation = max(rotation, minDelta)
+                    if -zRotation < player.zRotation {
+                        player.zRotation = max(-zRotation, player.zRotation - delta)
                     } else {
-                        player.zRotation = min(rotation, maxDelta)
+                        player.zRotation = min(-zRotation, player.zRotation + delta)
                     }
                 } else {
-                    let inverse = player.zRotation - (2 * .pi)
-                    if rotation < inverse {
-                        player.zRotation = max(rotation, inverse - delta)
+                    let inverse = player.zRotation - (.pi * 2)
+                    if -zRotation < inverse {
+                        player.zRotation = max(-zRotation, inverse - delta)
                     } else {
-                        player.zRotation = min(rotation, inverse + delta)
+                        player.zRotation = min(-zRotation, inverse + delta)
                     }
                 }
             }
