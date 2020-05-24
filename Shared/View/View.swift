@@ -18,7 +18,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private weak var hud: Hud!
     private weak var minimap: Minimap!
     private var drag: CGFloat?
-    private var rotation = CGFloat()
     private let soundCrash = SKAction.playSoundFileNamed("crash", waitForCompletion: false)
     private let soundSpawn = SKAction.playSoundFileNamed("spawn", waitForCompletion: false)
     
@@ -112,8 +111,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     final func beginMove(_ radians: CGFloat) {
-        drag = radians
-        rotation = wheel.zRotation
+        drag = wheel.zRotation + radians
         wheel.on = true
     }
     
@@ -123,7 +121,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             self.wheel.on = false
             return
         }
-        wheel.zRotation = rotation - (radians - drag)
+        wheel.zRotation = drag - radians
     }
     
     final func stop() {
