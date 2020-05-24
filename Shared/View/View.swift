@@ -91,8 +91,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         wheel.player = player
         wheel.zRotation = rotation
         pointers.zRotation = -rotation
-        scene!.camera!.zRotation = rotation - (.pi / 2)
-        scene!.camera!.constraints = [.orient(to: player, offset: .init(constantValue: .pi / -2)), .distance(.init(upperLimit: 100), to: player)]
+        scene!.camera!.constraints = [.distance(.init(upperLimit: 0), to: player)]
 
         scene!.camera!.run(.sequence([.scale(to: 1, duration: 2), .run { [weak self] in
             guard let self = self else { return }

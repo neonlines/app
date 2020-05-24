@@ -47,7 +47,7 @@ extension View {
 private extension NSEvent {
     var radians: CGFloat? {
         {
-            let point = CGPoint(x: $0.x - window!.contentView!.frame.midX, y: $0.y - 140)
+            let point = CGPoint(x: $0.x - window!.contentView!.frame.midX, y: $0.y - 200)
             guard point.valid else { return nil }
             return point.radians
         } (window!.contentView!.convert(locationInWindow, from: nil))

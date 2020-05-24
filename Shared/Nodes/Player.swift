@@ -22,7 +22,9 @@ final class Player: SKSpriteNode {
         warp.alpha = 0
         warp.zPosition = -1
         addChild(warp)
-        warp.run(.sequence([.group([.fadeAlpha(to: 0.5, duration: 4), .scale(to: 0.1, duration: 4)])]))
+        warp.run(.sequence([.group([.fadeAlpha(to: 1, duration: 4), .scale(to: 0.1, duration: 4)])])) {
+            warp.removeFromParent()
+        }
     }
     
     func move() {

@@ -23,7 +23,7 @@ final class Wheel: SKSpriteNode {
     }
     
     func align() {
-        position.y = (scene!.frame.height / -2) + 140
+        position.y = (scene!.frame.height / -2) + 200
     }
     
     private func update() {

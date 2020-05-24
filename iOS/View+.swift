@@ -28,10 +28,12 @@ extension View {
     }
     
     func victory() {
+        // vibrate
         controller?.navigationController?.show(GameOver(victory: true, seconds: seconds, ai: nil))
     }
     
     func gameOver(_ ai: Int?) {
+        // vibrate
         controller?.navigationController?.show(GameOver(victory: false, seconds: seconds, ai: ai))
     }
 }
