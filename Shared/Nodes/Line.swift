@@ -26,7 +26,7 @@ final class Line: SKShapeNode {
     init(skin: Skin.Id) {
         self.skin = .make(id: skin)
         super.init()
-        lineWidth = 12
+        lineWidth = 32
         lineCap = .round
         zPosition = 1
         strokeColor = self.skin.colour
@@ -42,6 +42,6 @@ final class Line: SKShapeNode {
             (scene!.view as! View).remove(self)
             return
         }
-        points.removeFirst(points.count >= 5 ? 5 : points.count)
+        points.removeFirst(points.count >= 3 ? 3 : points.count)
     }
 }

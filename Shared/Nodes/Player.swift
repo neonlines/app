@@ -8,9 +8,9 @@ final class Player: SKSpriteNode {
     required init?(coder: NSCoder) { nil }
     init(line: Line) {
         self.line = line
-        super.init(texture: .init(imageNamed: line.skin.texture), color: .clear, size: .init(width: 16, height: 16))
+        super.init(texture: .init(imageNamed: line.skin.texture), color: .clear, size: .init(width: 32, height: 32))
         zPosition = 2
-        physicsBody = .init(circleOfRadius: 14)
+        physicsBody = .init(circleOfRadius: 16)
         physicsBody!.affectedByGravity = false
         physicsBody!.collisionBitMask = .none
         physicsBody!.contactTestBitMask = .all
@@ -22,7 +22,7 @@ final class Player: SKSpriteNode {
         warp.alpha = 0
         warp.zPosition = -1
         addChild(warp)
-        warp.run(.sequence([.group([.fadeAlpha(to: 0.5, duration: 4), .scale(to: 0.2, duration: 4)])]))
+        warp.run(.sequence([.group([.fadeAlpha(to: 0.5, duration: 4), .scale(to: 0.1, duration: 4)])]))
     }
     
     func move() {

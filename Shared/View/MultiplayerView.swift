@@ -61,9 +61,10 @@ final class MultiplayerView: View, GKMatchDelegate {
             state = .victory
             
             let label = SKLabelNode(text: .key("Victory"))
-            label.bold(30)
+            label.bold(25)
             label.alpha = 0
             label.fontColor = .black
+            label.zPosition = 30
             scene!.camera!.addChild(label)
             scene!.camera!.run(.scale(to: 10, duration: 6))
             wheel.alpha = 0

@@ -69,7 +69,7 @@ final class AiView: View {
     }
     
     private func spawn() {
-        guard players.filter({ $0.physicsBody != nil }).count < 5, let position = brain.position(players.flatMap({ $0.line.points })) else { return }
+        guard players.filter({ $0.physicsBody != nil }).count < 5, let position = brain.position(players.flatMap({ $0.line.points }), retry: 10) else { return }
         let skin: Skin.Id
         switch Int.random(in: 0 ... 4) {
         case 1: skin = .foe1

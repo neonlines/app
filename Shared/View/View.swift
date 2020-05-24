@@ -34,7 +34,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         scene.delegate = self
         scene.anchorPoint = .init(x: 0.5, y: 0.5)
         scene.scaleMode = .resizeFill
-        scene.backgroundColor = .white
+        scene.backgroundColor = .init(white: 0.95, alpha: 1)
         scene.physicsWorld.contactDelegate = self
         
         let wheel = Wheel()
@@ -45,7 +45,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         pointers.position.y = 100
         
         let camera = SKCameraNode()
-        camera.setScale(5)
+        camera.setScale(3)
         camera.addChild(hud)
         camera.addChild(minimap)
         camera.addChild(pointers)
@@ -213,11 +213,12 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 state = .died
                 $0.run(soundCrash)
                 let label = SKLabelNode(text: .key("Game.over"))
-                label.bold(30)
+                label.bold(25)
                 label.alpha = 0
                 label.fontColor = .black
+                label.zPosition = 30
                 scene!.camera!.addChild(label)
-                scene!.camera!.run(.scale(to: 10, duration: 6))
+                scene!.camera!.run(.scale(to: 5, duration: 6))
                 wheel.alpha = 0
                 pointers.alpha = 0
                 

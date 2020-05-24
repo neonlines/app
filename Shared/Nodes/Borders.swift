@@ -4,15 +4,14 @@ final class Borders: SKShapeNode {
     required init?(coder: NSCoder) { nil }
     init(radius: CGFloat) {
         let size = radius * 2
-        let padding = CGFloat(16)
-        let diameter = padding * 2
         super.init()
         path = .init(rect: .init(x: -radius, y: -radius, width: size, height: size), transform: nil)
-        lineWidth = diameter
+        lineWidth = 2
         lineCap = .round
         lineJoin = .round
-        strokeColor = .init(white: 0.6, alpha: 1)
-        physicsBody = .init(edgeLoopFrom: CGRect(x: -radius + padding, y: -radius + padding, width: size - diameter, height: size - diameter))
+        strokeColor = .init(white: 0.9, alpha: 1)
+        fillColor = .white
+        physicsBody = .init(edgeLoopFrom: CGRect(x: -radius, y: -radius, width: size, height: size))
         physicsBody!.collisionBitMask = .none
         physicsBody!.contactTestBitMask = .none
         physicsBody!.categoryBitMask = .border
