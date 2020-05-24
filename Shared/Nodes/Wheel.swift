@@ -7,15 +7,47 @@ final class Wheel: SKSpriteNode {
     override var zRotation: CGFloat {
         didSet {
             guard let player = self.player else { return }
-            let rotation = zRotation <= 0 ? -zRotation : (.pi * 2) - zRotation
-            let current = player.zRotation >= 0 ? player.zRotation : (.pi * 2) - player.zRotation
-            if rotation >= current {
-                player.zRotation = min(rotation, current + delta)
+            let rotation = -zRotation
+            let minDelta = player.zRotation - delta
+            let maxDelta = player.zRotation + delta
+            if rotation >= 0 {
+                if player.zRotation >= 0 {
+                    if rotation >= player.zRotation {
+                        print("a")
+                        player.zRotation = min(rotation, maxDelta)
+                    } else {
+                        print("b")
+                        player.zRotation = max(rotation, minDelta)
+                    }
+                } else {
+                    if rotation > .pi {
+                        print("c")
+                        player.zRotation = max(rotation - (2 * .pi), minDelta)
+                    } else {
+                        print("d")
+                        player.zRotation = min(rotation, maxDelta)
+                    }
+                }
             } else {
-                player.zRotation = max(rotation, current - delta)
+                if player.zRotation < 0 {
+                    if rotation < player.zRotation {
+                        print("e")
+                        player.zRotation = max(rotation, minDelta)
+                    } else {
+                        print("f")
+                        player.zRotation = min(rotation, maxDelta)
+                    }
+                } else {
+                    if rotation < -.pi {
+                        print("g")
+                        player.zRotation = min((2 * .pi) - rotation, maxDelta)
+                    } else {
+                        print("h")
+                        player.zRotation = max(rotation, minDelta)
+                    }
+                }
             }
-            
-            print("rotation: \(rotation)  \(rotation >= current) : \(player.zRotation)")
+            print(player.zRotation)
         }
     }
     
