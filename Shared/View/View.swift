@@ -99,7 +99,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     final func spawn(_ position: CGPoint, rotation: CGFloat, skin: Skin.Id) -> Player {
         let player = Player(line: .init(skin: skin))
         player.position = position
-        player.zRotation = randomRotation
+        player.zRotation = rotation
         scene!.addChild(player.line)
         scene!.addChild(player)
         players.insert(player)
