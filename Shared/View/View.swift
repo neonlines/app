@@ -206,16 +206,18 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 state = .died
                 $0.run(soundCrash)
                 let label = SKLabelNode(text: .key("Game.over"))
-                label.bold(25)
+                label.bold(50)
                 label.alpha = 0
-                label.fontColor = .black
+                label.fontColor = .init(white: 0, alpha: 0.5)
                 label.zPosition = 30
                 scene!.camera!.addChild(label)
-                scene!.camera!.run(.scale(to: 5, duration: 6))
+                scene!.camera!.position = $0.position
+                scene!.camera!.constraints = nil
+                scene!.camera!.run(.scale(to: 5, duration: 10))
                 wheel.alpha = 0
                 
-                label.run(.fadeIn(withDuration: 3)) { [weak self] in
-                    self?.scene!.run(.fadeOut(withDuration: 2)) {
+                label.run(.fadeIn(withDuration: 4)) { [weak self] in
+                    self?.scene!.run(.fadeOut(withDuration: 3)) {
                         self?.gameOver()
                     }
                 }
