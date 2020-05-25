@@ -38,26 +38,7 @@ final class Player: SKSpriteNode {
     func explode() {
         guard physicsBody != nil else { return }
         physicsBody = nil
-        
-        let emitter = SKEmitterNode()
-        emitter.particleTexture = .init(imageNamed: "particle")
-        emitter.particleSize = .init(width: 10, height: 10)
-        emitter.particleBirthRate = 50
-        emitter.emissionAngleRange = .pi * 2
-        emitter.particleRotationRange = .pi * 2
-        emitter.particleColor = line.skin.colour
-        emitter.particleColorBlendFactor = 1
-        emitter.particleSpeed = 60
-        emitter.particleLifetime = 5
-        emitter.numParticlesToEmit = 50
-        emitter.particleAlphaSpeed = -0.2
-        emitter.particleRotationSpeed = 0.5
-        emitter.particlePosition = .zero
-        emitter.particlePositionRange = .zero
-        emitter.zPosition = 3
-        addChild(emitter)
         texture = nil
-        color = .clear
     }
     
     func remove() {

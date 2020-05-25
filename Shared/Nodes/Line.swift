@@ -20,6 +20,8 @@ final class Line: SKShapeNode {
         }
     }
     
+    private weak var emitter: SKEmitterNode?
+    
     let skin: Skin
     
     required init?(coder: NSCoder) { nil }
@@ -30,18 +32,44 @@ final class Line: SKShapeNode {
         lineCap = .round
         zPosition = 1
         strokeColor = self.skin.colour
-        points.reserveCapacity(600)
+        points.reserveCapacity(500)
     }
     
     func append(_ position: CGPoint) {
-        points = (points + [position]).suffix(600)
+        points = (points + [position]).suffix(500)
     }
     
     func recede() {
-        guard points.count > 0 else {
+        guard !points.isEmpty else {
             (scene!.view as! View).remove(self)
             return
         }
-        points.removeFirst(points.count >= 3 ? 3 : points.count)
+        if points.count < 130 {
+            emit()
+        }
+        points.removeFirst(points.count >= 10 ? 10 : points.count)
+    }
+    
+    private func emit() {
+        guard emitter == nil else { return }
+        let emitter = SKEmitterNode()
+        emitter.particleTexture = .init(imageNamed: "particle")
+        emitter.particleSize = .init(width: 10, height: 10)
+        emitter.particleBirthRate = 30
+        emitter.emissionAngleRange = .pi * 2
+        emitter.particleRotationRange = .pi * 2
+        emitter.particleColor = skin.colour
+        emitter.particleColorBlendFactor = 1
+        emitter.particleSpeed = 25
+        emitter.particleLifetime = 1.5
+        emitter.numParticlesToEmit = 30
+        emitter.particleAlphaSpeed = -0.2
+        emitter.particleRotationSpeed = 0.5
+        emitter.particlePosition = .zero
+        emitter.particlePositionRange = .zero
+        emitter.zPosition = 3
+        emitter.position = points.last!
+        scene!.addChild(emitter)
+        self.emitter = emitter
     }
 }
