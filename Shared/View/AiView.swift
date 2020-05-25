@@ -39,22 +39,7 @@ final class AiView: View {
     }
     
     override func explode(_ player: Player) {
-        guard let colour = self.player?.line.skin.colour else { return }
-        
         counter += 1
-        let label = SKLabelNode(text: "+")
-        label.bold(35)
-        label.fontColor = colour
-        label.verticalAlignmentMode = .center
-        label.horizontalAlignmentMode = .center
-        label.position = player.position
-        label.alpha = 0
-        label.zPosition = 4
-        
-        scene!.addChild(label)
-        label.run(.sequence([.fadeIn(withDuration: 2), .fadeOut(withDuration: 3), .run {
-            label.removeFromParent()
-        }]))
     }
     
     override func gameOver() {

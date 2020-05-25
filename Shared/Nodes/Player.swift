@@ -41,16 +41,16 @@ final class Player: SKSpriteNode {
         
         let emitter = SKEmitterNode()
         emitter.particleTexture = .init(imageNamed: "particle")
-        emitter.particleSize = .init(width: 8, height: 8)
+        emitter.particleSize = .init(width: 10, height: 10)
         emitter.particleBirthRate = 50
         emitter.emissionAngleRange = .pi * 2
         emitter.particleRotationRange = .pi * 2
         emitter.particleColor = line.skin.colour
         emitter.particleColorBlendFactor = 1
-        emitter.particleSpeed = 30
-        emitter.particleLifetime = 15
+        emitter.particleSpeed = 60
+        emitter.particleLifetime = 5
         emitter.numParticlesToEmit = 50
-        emitter.particleAlphaSpeed = -0.3
+        emitter.particleAlphaSpeed = -0.2
         emitter.particleRotationSpeed = 0.5
         emitter.particlePosition = .zero
         emitter.particlePositionRange = .zero
