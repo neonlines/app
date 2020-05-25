@@ -6,6 +6,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     var players = Set<Player>()
     var state = State.start
     let brain: Brain
+    private(set) weak var player: Player?
     
     private(set) var seconds = 0 {
         didSet {
@@ -85,7 +86,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     final func startPlayer(_ position: CGPoint, rotation: CGFloat) {
         let player = spawn(position, rotation: rotation, skin: game.profile.skin)
-        wheel.player = player
+        self.player = player
         wheel.zRotation = rotation
         scene!.camera!.constraints = [.distance(.init(upperLimit: 0), to: player)]
 
@@ -154,7 +155,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         switch state {
         case .play:
             if times.rotate.timeout(delta) {
-                wheel.rotate()
+                rotate()
             }
             if times.seconds.timeout(delta) {
                 seconds += 1
@@ -169,6 +170,11 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     func explode(_ player: Player) {
 
+    }
+    
+    func rotate() {
+        guard let player = self.player, player.zRotation != -wheel.zRotation else { return }
+        player.zRotation = -wheel.zRotation
     }
     
     private func move() {
@@ -195,7 +201,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             $0.explode()
             guard state == .play else { return }
             
-            if $0 === wheel.player {
+            if $0 === player {
                 state = .died
                 $0.run(soundCrash)
                 let label = SKLabelNode(text: .key("Game.over"))

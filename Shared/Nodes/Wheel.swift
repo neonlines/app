@@ -1,8 +1,6 @@
 import SpriteKit
 
 final class Wheel: SKSpriteNode {
-    weak var player: Player?
-    
     var on = false {
         didSet {
             update()
@@ -18,10 +16,6 @@ final class Wheel: SKSpriteNode {
     
     func align() {
         position.y = (scene!.frame.height / -2) + 200
-    }
-    
-    func rotate() {
-        player?.zRotation = -zRotation
     }
     
     private func update() {

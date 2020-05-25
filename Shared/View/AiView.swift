@@ -39,7 +39,7 @@ final class AiView: View {
     }
     
     override func explode(_ player: Player) {
-        guard let colour = wheel.player?.line.skin.colour else { return }
+        guard let colour = self.player?.line.skin.colour else { return }
         
         counter += 1
         let label = SKLabelNode(text: "+")
@@ -62,7 +62,7 @@ final class AiView: View {
     }
     
     private func foes() {
-        guard let player = wheel.player else { return }
+        guard let player = self.player else { return }
         players.filter { $0.physicsBody != nil }.filter { $0 !== player }.forEach { foe in
             foe.zRotation = brain.orient(foe.position, current: foe.zRotation, player: player.position)
         }

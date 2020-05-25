@@ -41,19 +41,6 @@ final class MultiplayerView: View, GKMatchDelegate {
         others.align()
     }
     
-    override func update(_ delta: TimeInterval) {
-        super.update(delta)
-        switch state {
-        case .play:
-            if times.send.timeout(delta) {
-                guard let player = wheel.player else { return }
-                let report = Report.move(playerId, rotation: player.zRotation)
-                try? match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)
-            }
-        default: break
-        }
-    }
-    
     override func explode(_ player: Player) {
         others.explode(player.id)
         
@@ -85,6 +72,13 @@ final class MultiplayerView: View, GKMatchDelegate {
         defeat()
     }
     
+    override func rotate() {
+        guard let player = self.player, player.zRotation != -wheel.zRotation else { return }
+        let report = Report.move(playerId, rotation: -wheel.zRotation)
+        try? match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)
+        super.rotate()
+    }
+    
     private func master() {
         var positions = [CGPoint]()
         match.players.forEach {
@@ -101,7 +95,7 @@ final class MultiplayerView: View, GKMatchDelegate {
         let rotation = randomRotation
         let report = Report.profile(playerId, position: position, rotation: rotation, skin: game.profile.skin, name: GKLocalPlayer.local.displayName)
         startPlayer(position, rotation: rotation)
-        wheel.player!.id = playerId
+        player!.id = playerId
         try? match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)
     }
 }

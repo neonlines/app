@@ -19,13 +19,12 @@ struct Times {
     }
     
     var move = Item(0.05)
-    var rotate = Item(0.02)
+    var rotate = Item(0.01)
     var lines = Item(0.02)
     var foes = Item(0.02)
     var spawn = Item(0.05)
     var radar = Item(0.5)
     var seconds = Item(1)
-    var send = Item(0.02)
     private var last = TimeInterval()
     
     mutating func delta(_ time: TimeInterval) -> TimeInterval {
