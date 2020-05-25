@@ -44,7 +44,7 @@ final class Line: SKShapeNode {
             (scene!.view as! View).remove(self)
             return
         }
-        if points.count < 130 {
+        if points.count < 160 {
             emit()
         }
         points.removeFirst(points.count >= 10 ? 10 : points.count)
@@ -70,6 +70,9 @@ final class Line: SKShapeNode {
         emitter.zPosition = 3
         emitter.position = points.last!
         scene!.addChild(emitter)
+        emitter.run(.wait(forDuration: 5)) {
+            emitter.removeFromParent()
+        }
         self.emitter = emitter
     }
 }

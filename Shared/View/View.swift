@@ -28,6 +28,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         brain = .init(borders: .init(radius: radius), wheel: .init(delta: .pi / 30))
         super.init(frame: .zero)
         ignoresSiblingOrder = true
+        showsNodeCount = true
         
         let scene = SKScene()
         scene.delegate = self
