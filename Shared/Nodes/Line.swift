@@ -7,16 +7,16 @@ final class Line: SKShapeNode {
                 $0.addLines(between: self.points)
                 return $0
             } (CGMutablePath())
-            
-            let points = self.points.dropLast(6)
-            guard !points.isEmpty else { return }
-            physicsBody = .init(edgeChainFrom: {
-                $0.addLines(between: .init(points))
-                return $0
-            } (CGMutablePath()))
-            physicsBody!.collisionBitMask = .none
-            physicsBody!.contactTestBitMask = .player
-            physicsBody!.categoryBitMask = .line
+
+//            let points = self.points.dropLast(6)
+//            guard !points.isEmpty else { return }
+//            physicsBody = .init(edgeChainFrom: {
+//                $0.addLines(between: .init(points))
+//                return $0
+//            } (CGMutablePath()))
+//            physicsBody!.collisionBitMask = .none
+//            physicsBody!.contactTestBitMask = .player
+//            physicsBody!.categoryBitMask = .line
         }
     }
     

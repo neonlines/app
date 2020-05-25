@@ -29,6 +29,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         super.init(frame: .zero)
         ignoresSiblingOrder = true
         showsNodeCount = true
+        showsPhysics = true
         
         let scene = SKScene()
         scene.delegate = self
@@ -147,17 +148,11 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             if times.move.timeout(delta) {
                 move()
             }
-            if times.lines.timeout(delta) {
-                lines()
-            }
         default: break
         }
         
         switch state {
         case .play:
-            if times.rotate.timeout(delta) {
-                rotate()
-            }
             if times.seconds.timeout(delta) {
                 seconds += 1
             }
@@ -178,14 +173,13 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     private func move() {
-        players.filter { $0.physicsBody != nil }.forEach {
-            $0.move()
+        if state == .play && player?.zRotation != -wheel.zRotation {
+            player?.zRotation = -wheel.zRotation
+            rotated()
         }
-    }
-    
-    private func lines() {
+        
         players.forEach {
-            $0.physicsBody == nil ? $0.line.recede() : $0.line.append($0.position)
+            $0.move()
         }
     }
     
@@ -227,11 +221,5 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 explode($0)
             }
         }
-    }
-    
-    private func rotate() {
-        guard player?.zRotation != -wheel.zRotation else { return }
-        player?.zRotation = -wheel.zRotation
-        rotated()
     }
 }

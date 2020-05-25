@@ -28,11 +28,16 @@ final class Player: SKSpriteNode {
     }
     
     func move() {
-        let dx = sin(zRotation)
-        let dy = cos(zRotation)
-        let speedY = (1 - abs(dx)) * maxSpeed
-        let speedX = maxSpeed - speedY
-        physicsBody!.velocity = .init(dx: dx * speedX, dy: dy * speedY)
+        if physicsBody != nil {
+            let dx = sin(zRotation)
+            let dy = cos(zRotation)
+            let speedY = (1 - abs(dx)) * maxSpeed
+            let speedX = maxSpeed - speedY
+            physicsBody!.velocity = .init(dx: dx * speedX, dy: dy * speedY)
+            line.append(position)
+        } else {
+            line.recede()
+        }
     }
     
     func explode() {

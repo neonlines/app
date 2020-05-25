@@ -31,9 +31,6 @@ final class AiView: View {
             if times.foes.timeout(delta) {
                 foes()
             }
-            if times.spawn.timeout(delta) {
-                spawn()
-            }
         default: break
         }
     }
@@ -48,13 +45,11 @@ final class AiView: View {
     
     private func foes() {
         guard let player = self.player else { return }
-        players.filter { $0.physicsBody != nil }.filter { $0 !== player }.forEach { foe in
+        let foes = players.filter { $0.physicsBody != nil }.filter { $0 !== player }
+        foes.forEach { foe in
             foe.zRotation = brain.orient(foe.position, current: foe.zRotation, player: player.position)
         }
-    }
-    
-    private func spawn() {
-        guard players.filter({ $0.physicsBody != nil }).count < 5, let position = brain.position(players.flatMap({ $0.line.points }), retry: 10) else { return }
+        guard foes.count < 4, let position = brain.position(players.flatMap({ $0.line.points }), retry: 10) else { return }
         let skin: Skin.Id
         switch Int.random(in: 0 ... 4) {
         case 1: skin = .foe1
