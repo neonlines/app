@@ -72,11 +72,10 @@ final class MultiplayerView: View, GKMatchDelegate {
         defeat()
     }
     
-    override func rotate() {
-        guard let player = self.player, player.zRotation != -wheel.zRotation else { return }
-        let report = Report.move(playerId, rotation: -wheel.zRotation)
+    override func rotated() {
+        guard let player = self.player else { return }
+        let report = Report.move(playerId, rotation: player.zRotation)
         try? match.sendData(toAllPlayers: JSONEncoder().encode(report), with: .reliable)
-        super.rotate()
     }
     
     private func master() {

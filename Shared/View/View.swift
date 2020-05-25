@@ -88,7 +88,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     final func startPlayer(_ position: CGPoint, rotation: CGFloat) {
         let player = spawn(position, rotation: rotation, skin: game.profile.skin)
         self.player = player
-        wheel.zRotation = rotation
+        wheel.zRotation = -rotation
         scene!.camera!.constraints = [.distance(.init(upperLimit: 0), to: player)]
 
         scene!.camera!.run(.sequence([.scale(to: 1, duration: 2), .run { [weak self] in
@@ -173,9 +173,8 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
 
     }
     
-    func rotate() {
-        guard let player = self.player, player.zRotation != -wheel.zRotation else { return }
-        player.zRotation = -wheel.zRotation
+    func rotated() {
+        
     }
     
     private func move() {
@@ -228,5 +227,11 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 explode($0)
             }
         }
+    }
+    
+    private func rotate() {
+        guard player?.zRotation != -wheel.zRotation else { return }
+        player?.zRotation = -wheel.zRotation
+        rotated()
     }
 }
