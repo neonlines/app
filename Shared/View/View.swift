@@ -30,6 +30,8 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         ignoresSiblingOrder = true
         showsNodeCount = true
         showsPhysics = true
+        showsDrawCount = true
+        showsFPS = true
         
         let scene = SKScene()
         scene.delegate = self
