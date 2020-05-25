@@ -44,10 +44,10 @@ final class Line: SKShapeNode {
             (scene!.view as! View).remove(self)
             return
         }
-        if points.count < 160 {
+        if points.count < 250 {
             emit()
         }
-        points.removeFirst(points.count >= 10 ? 10 : points.count)
+        points.removeFirst(points.count >= 15 ? 15 : points.count)
     }
     
     private func emit() {
@@ -61,16 +61,16 @@ final class Line: SKShapeNode {
         emitter.particleColor = skin.colour
         emitter.particleColorBlendFactor = 1
         emitter.particleSpeed = 25
-        emitter.particleLifetime = 1.5
+        emitter.particleLifetime = 3
         emitter.numParticlesToEmit = 30
-        emitter.particleAlphaSpeed = -0.2
+        emitter.particleAlphaSpeed = -0.1
         emitter.particleRotationSpeed = 0.5
         emitter.particlePosition = .zero
         emitter.particlePositionRange = .zero
         emitter.zPosition = 3
         emitter.position = points.last!
         scene!.addChild(emitter)
-        emitter.run(.wait(forDuration: 5)) {
+        emitter.run(.wait(forDuration: 7)) {
             emitter.removeFromParent()
         }
         self.emitter = emitter

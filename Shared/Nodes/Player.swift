@@ -3,7 +3,7 @@ import SpriteKit
 final class Player: SKSpriteNode {
     var id = -1
     let line: Line
-    private let maxSpeed = CGFloat(300)
+    private let maxSpeed = CGFloat(500)
     
     required init?(coder: NSCoder) { nil }
     init(line: Line) {
