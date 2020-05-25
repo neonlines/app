@@ -2,8 +2,8 @@ import SpriteKit
 
 final class Minimap: SKShapeNode {
     private let radius: CGFloat
-    private let size = CGFloat(50)
     private let ratio: CGFloat
+    private let size = CGFloat(80)
     
     required init?(coder: NSCoder) { nil }
     init(radius: CGFloat) {
@@ -11,25 +11,26 @@ final class Minimap: SKShapeNode {
         self.radius = radius
         super.init()
         path = .init(rect: .init(x: size / -2, y: size / -2, width: size, height: size), transform: nil)
-        fillColor = .init(white: 0.7, alpha: 0.2)
-        lineWidth = 0
+        fillColor = .init(white: 1, alpha: 0.95)
+        lineWidth = 1
+        strokeColor = .init(white: 0.9, alpha: 1)
         zPosition = 12
     }
     
     func align() {
-        position = .init(x: (scene!.frame.width / 2) - 30, y: (scene!.frame.height / -2) + 40)
+        position = .init(x: (scene!.frame.width / 2) - 60, y: (scene!.frame.height / -2) + 60)
     }
     
     func clear() {
         children.forEach { $0.removeFromParent() }
     }
     
-    func show(_ point: CGPoint, color: SKColor) {
-        let node = SKShapeNode(circleOfRadius: 4)
+    func show(_ point: CGPoint, color: SKColor, me: Bool) {
+        let node = SKShapeNode(circleOfRadius: me ? 7 : 4)
         node.fillColor = color
         node.lineWidth = 1
-        node.strokeColor = .init(white: 0.7, alpha: 1)
-        node.zPosition = 13
+        node.strokeColor = .init(white: me ? 0 : 0.4, alpha: 1)
+        node.zPosition = me ? 13 : 14
         node.position = .init(x: point.x * ratio, y: point.y * ratio)
         addChild(node)
     }

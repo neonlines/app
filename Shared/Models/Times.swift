@@ -23,7 +23,7 @@ struct Times {
     var lines = Item(0.02)
     var foes = Item(0.02)
     var spawn = Item(0.05)
-    var radar = Item(0.5)
+    var radar = Item(0.25)
     var seconds = Item(1)
     private var last = TimeInterval()
     

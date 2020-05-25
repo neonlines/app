@@ -192,7 +192,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private func radar() {
         minimap.clear()
         players.filter { $0.physicsBody != nil }.forEach {
-            minimap.show($0.position, color: $0.line.skin.colour)
+            minimap.show($0.position, color: $0.line.skin.colour, me: $0 === player)
         }
     }
     
