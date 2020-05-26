@@ -39,6 +39,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         scene.scaleMode = .resizeFill
         scene.backgroundColor = .init(white: 0.95, alpha: 1)
         scene.physicsWorld.contactDelegate = self
+        scene.physicsWorld.gravity = .zero
         
         let wheel = Wheel()
         let borders = Borders(radius: radius)
@@ -76,23 +77,27 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     final func didBegin(_ contact: SKPhysicsContact) {
-        contact.bodyA.node.map(crash)
-        contact.bodyB.node.map(crash)
+        contact.bodyA.node.map {
+            crash($0, other: contact.bodyB.node)
+        }
+        contact.bodyB.node.map {
+            crash($0, other: contact.bodyA.node)
+        }
     }
     
     final func update(_ time: TimeInterval, for: SKScene) {
         update(times.delta(time))
     }
     
-    final func remove(_ line: Line) {
-        players.remove(at: players.firstIndex { $0.line === line }!).remove()
+    final func remove(_ player: Player) {
+        players.remove(player)
     }
     
     final func startPlayer(_ position: CGPoint, rotation: CGFloat) {
         let player = spawn(position, rotation: rotation, skin: game.profile.skin)
         self.player = player
         wheel.zRotation = -rotation
-        scene!.camera!.constraints = [.distance(.init(upperLimit: 0), to: player)]
+        scene!.camera!.constraints = [.distance(.init(upperLimit: 0), to: player.sprite)]
 
         scene!.camera!.run(.sequence([.scale(to: 1, duration: 2), .run { [weak self] in
             guard let self = self else { return }
@@ -102,11 +107,11 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     }
     
     final func spawn(_ position: CGPoint, rotation: CGFloat, skin: Skin.Id) -> Player {
-        let player = Player(line: .init(skin: skin))
+        let player = Player(skin: .make(id: skin))
         player.position = position
         player.zRotation = rotation
-        scene!.addChild(player.line)
         scene!.addChild(player)
+        player.prepare()
         players.insert(player)
         return player
     }
@@ -188,40 +193,39 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     private func radar() {
         minimap.clear()
         players.filter { $0.physicsBody != nil }.forEach {
-            minimap.show($0.position, color: $0.line.skin.colour, me: $0 === player)
+            minimap.show($0.position, color: $0.skin.colour, me: $0 === player)
         }
     }
     
-    private func crash(_ node: SKNode) {
-        (node as? Player).map {
-            $0.explode()
-            guard state == .play else { return }
+    private func crash(_ node: SKNode, other: SKNode?) {
+        guard let player = node as? Player, !player.mine(other) else { return }
+        player.explode()
+        guard state == .play else { return }
+        
+        if player === self.player {
+            state = .died
+            player.run(soundCrash)
+            let label = SKLabelNode(text: .key("Game.over"))
+            label.bold(50)
+            label.alpha = 0
+            label.fontColor = .init(white: 0, alpha: 0.5)
+            label.zPosition = 30
+            scene!.camera!.addChild(label)
+            scene!.camera!.position = player.position
+            scene!.camera!.constraints = nil
+            scene!.camera!.run(.scale(to: 5, duration: 10))
+            wheel.alpha = 0
             
-            if $0 === player {
-                state = .died
-                $0.run(soundCrash)
-                let label = SKLabelNode(text: .key("Game.over"))
-                label.bold(50)
-                label.alpha = 0
-                label.fontColor = .init(white: 0, alpha: 0.5)
-                label.zPosition = 30
-                scene!.camera!.addChild(label)
-                scene!.camera!.position = $0.position
-                scene!.camera!.constraints = nil
-                scene!.camera!.run(.scale(to: 5, duration: 10))
-                wheel.alpha = 0
-                
-                label.run(.fadeIn(withDuration: 4)) { [weak self] in
-                    self?.scene!.run(.fadeOut(withDuration: 3)) {
-                        self?.gameOver()
-                    }
+            label.run(.fadeIn(withDuration: 4)) { [weak self] in
+                self?.scene!.run(.fadeOut(withDuration: 3)) {
+                    self?.gameOver()
                 }
-            } else {
-                if scene!.camera!.containedNodeSet().contains($0) {
-                    $0.run(soundCrash)
-                }
-                explode($0)
             }
+        } else {
+            if scene!.camera!.containedNodeSet().contains(player) {
+                player.run(soundCrash)
+            }
+            explode(player)
         }
     }
 }

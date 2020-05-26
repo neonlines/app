@@ -15,9 +15,7 @@ final class AiView: View {
         let defeated = Defeated()
         scene!.camera!.addChild(defeated)
         self.defeated = defeated
-        
-//        startPlayer(certainPosition([]), rotation: randomRotation)
-        startPlayer(certainPosition([]), rotation: 0)
+        startPlayer(certainPosition([]), rotation: randomRotation)
     }
     
     override func align() {
@@ -50,7 +48,7 @@ final class AiView: View {
         foes.forEach { foe in
             foe.zRotation = brain.orient(foe.position, current: foe.zRotation, player: player.position)
         }
-        guard foes.count < 4, let position = brain.position(players.flatMap({ $0.line.points }), retry: 10) else { return }
+        guard foes.count < 4, let position = brain.position(players.flatMap({ $0.points }), retry: 10) else { return }
         let skin: Skin.Id
         switch Int.random(in: 0 ... 4) {
         case 1: skin = .foe1
