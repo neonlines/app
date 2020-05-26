@@ -18,6 +18,7 @@ struct Times {
         }
     }
     
+    var follow = Item(0.02)
     var move = Item(0.05)
     var foes = Item(0.05)
     var radar = Item(0.1)

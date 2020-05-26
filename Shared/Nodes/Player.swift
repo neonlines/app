@@ -55,13 +55,8 @@ final class Player: SKNode {
         self.line = line
     }
     
-    func move() {
+    func follow() {
         if physicsBody != nil {
-            let dx = sin(zRotation)
-            let dy = cos(zRotation)
-            let speedY = (1 - abs(dx)) * maxSpeed
-            let speedX = maxSpeed - speedY
-            physicsBody!.velocity = .init(dx: dx * speedX, dy: dy * speedY)
             sprite.position = position
             sprite.zRotation = zRotation
             
@@ -87,6 +82,17 @@ final class Player: SKNode {
                 emit()
             }
             points.removeFirst(points.count >= 7 ? 7 : points.count)
+        }
+    }
+    
+    func move() {
+        if physicsBody != nil {
+            let dx = sin(zRotation)
+            let dy = cos(zRotation)
+            let speedY = (1 - abs(dx)) * maxSpeed
+            let speedX = maxSpeed - speedY
+            physicsBody!.velocity = .init(dx: dx * speedX, dy: dy * speedY)
+            sprite.zRotation = zRotation
         }
     }
     

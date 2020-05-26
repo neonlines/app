@@ -151,6 +151,9 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         
         switch state {
         case .play, .died, .victory:
+            if times.follow.timeout(delta) {
+                follow()
+            }
             if times.move.timeout(delta) {
                 move()
             }
@@ -176,6 +179,12 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
     
     func rotated() {
         
+    }
+    
+    private func follow() {
+        players.forEach {
+            $0.follow()
+        }
     }
     
     private func move() {
