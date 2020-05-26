@@ -8,7 +8,7 @@ final class Player: SKNode {
     private weak var line: Line!
     private var chain = [Chain]()
     private let maxSpeed = CGFloat(500)
-    private let length = 500
+    private let length = 250
     
     private(set) var points = [CGPoint]() {
         didSet {
@@ -32,19 +32,19 @@ final class Player: SKNode {
         points.reserveCapacity(length)
         chain.reserveCapacity(length)
         
-//        let warp = SKShapeNode(rect: .init(x: -60, y: -60, width: 120, height: 120), cornerRadius: 60)
-//        warp.fillColor = line.skin.colour
-//        warp.lineWidth = 0
-//        warp.alpha = 0
-//        addChild(warp)
-//        warp.run(.sequence([.group([.fadeAlpha(to: 1, duration: 4), .scale(to: 0.1, duration: 4)])])) {
-//            warp.removeFromParent()
-//        }
+        let warp = SKShapeNode(rect: .init(x: -60, y: -60, width: 120, height: 120), cornerRadius: 60)
+        warp.fillColor = skin.colour
+        warp.lineWidth = 0
+        addChild(warp)
+        warp.run(.sequence([.group([.fadeAlpha(to: 0, duration: 2), .scale(to: 0.3, duration: 2)])])) {
+            warp.removeFromParent()
+        }
     }
     
     func prepare() {
         let sprite = SKSpriteNode(texture: .init(imageNamed: skin.texture))
         sprite.position = position
+        sprite.zRotation = zRotation
         sprite.zPosition = 2
         scene!.addChild(sprite)
         self.sprite = sprite
@@ -62,6 +62,7 @@ final class Player: SKNode {
             let speedX = maxSpeed - speedY
             physicsBody!.velocity = .init(dx: dx * speedX, dy: dy * speedY)
             sprite.position = position
+            sprite.zRotation = zRotation
             
             var points = self.points
             if points.count > length - 1 {
@@ -81,10 +82,10 @@ final class Player: SKNode {
                 removeFromParent()
                 return
             }
-            if points.count < length / 2 {
+            if points.count < length / 3 {
                 emit()
             }
-            points.removeFirst(points.count >= 15 ? 15 : points.count)
+            points.removeFirst(points.count >= 7 ? 7 : points.count)
         }
     }
     

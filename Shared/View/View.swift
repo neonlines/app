@@ -29,7 +29,6 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         super.init(frame: .zero)
         ignoresSiblingOrder = true
         showsNodeCount = true
-        showsPhysics = true
         showsDrawCount = true
         showsFPS = true
         
