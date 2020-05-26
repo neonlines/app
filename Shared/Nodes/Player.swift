@@ -6,6 +6,7 @@ final class Player: SKNode {
     let skin: Skin
     private weak var emitter: SKEmitterNode?
     private weak var line: Line!
+    private weak var warp: SKShapeNode!
     private var chain = [Chain]()
     private let maxSpeed = CGFloat(500)
     private let length = 250
@@ -31,14 +32,6 @@ final class Player: SKNode {
         
         points.reserveCapacity(length)
         chain.reserveCapacity(length)
-        
-        let warp = SKShapeNode(rect: .init(x: -60, y: -60, width: 120, height: 120), cornerRadius: 60)
-        warp.fillColor = skin.colour
-        warp.lineWidth = 0
-        addChild(warp)
-        warp.run(.sequence([.group([.fadeAlpha(to: 0, duration: 2), .scale(to: 0.3, duration: 2)])])) {
-            warp.removeFromParent()
-        }
     }
     
     func prepare() {
@@ -48,6 +41,14 @@ final class Player: SKNode {
         sprite.zPosition = 2
         scene!.addChild(sprite)
         self.sprite = sprite
+        
+        let warp = SKShapeNode(rect: .init(x: -60, y: -60, width: 120, height: 120), cornerRadius: 60)
+        warp.fillColor = skin.colour
+        warp.lineWidth = 0
+        warp.position = position
+        scene!.addChild(warp)
+        warp.run(.group([.fadeOut(withDuration: 2), .scale(to: 0.3, duration: 2)]))
+        self.warp = warp
         
         let line = Line(color: skin.colour)
         scene!.addChild(line)
@@ -95,6 +96,9 @@ final class Player: SKNode {
         sprite.alpha = 0
         chain.forEach { $0.removeFromParent() }
         chain = []
+        warp.position = position
+        warp.alpha = 0.5
+        warp.run(.sequence([.group([.fadeOut(withDuration: 2), .scale(to: 1, duration: 2)]), .removeFromParent()]))
     }
     
     func mine(_ node: SKNode?) -> Bool {
@@ -121,9 +125,7 @@ final class Player: SKNode {
         emitter.zPosition = 3
         emitter.position = points.last!
         scene!.addChild(emitter)
-        emitter.run(.wait(forDuration: 7)) {
-            emitter.removeFromParent()
-        }
+        emitter.run(.sequence([.wait(forDuration: 7), .removeFromParent()]))
         self.emitter = emitter
     }
 }
