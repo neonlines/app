@@ -26,7 +26,6 @@ Against.ai = "Single";
 Against.others = "Duel";
 Victory = "You Win!";
 Defeat = "You Loose";
-Seconds = "Seconds";
 Ai.defeated = "Defeated";
 Defeated = "Defeated";
 Duel = "Duel";

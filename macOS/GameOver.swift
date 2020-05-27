@@ -117,7 +117,11 @@ class GameOver: NSView {
         next.action = #selector(self.next)
         addSubview(next)
         
-        let item = Item(title: .key("Duration"), counter: formatter.string(from: .init(value: seconds))!, record: game.profile.seconds < seconds)
+        let dates = DateComponentsFormatter()
+        dates.allowedUnits = [.minute, .second]
+        dates.zeroFormattingBehavior = .pad
+        
+        let item = Item(title: .key("Duration"), counter: dates.string(from: .init(seconds))!, record: game.profile.seconds < seconds)
         addSubview(item)
         self.item = item
         

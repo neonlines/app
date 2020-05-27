@@ -103,8 +103,8 @@ final class Player: SKNode {
         chain.forEach { $0.removeFromParent() }
         chain = []
         warp.position = position
-        warp.alpha = 0.5
-        warp.run(.sequence([.group([.fadeOut(withDuration: 2), .scale(to: 1, duration: 2)]), .removeFromParent()]))
+        warp.alpha = 1
+        warp.run(.sequence([.group([.fadeOut(withDuration: 2), .scale(to: 0.7, duration: 2)]), .removeFromParent()]))
     }
     
     func mine(_ node: SKNode?) -> Bool {
