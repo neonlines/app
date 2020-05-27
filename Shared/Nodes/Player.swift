@@ -42,7 +42,7 @@ final class Player: SKNode {
         scene!.addChild(sprite)
         self.sprite = sprite
         
-        let warp = SKShapeNode(rect: .init(x: -60, y: -60, width: 120, height: 120), cornerRadius: 60)
+        let warp = SKShapeNode(circleOfRadius: 60)
         warp.fillColor = skin.colour
         warp.lineWidth = 0
         warp.position = position
