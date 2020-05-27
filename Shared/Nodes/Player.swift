@@ -81,7 +81,10 @@ final class Player: SKNode {
             if points.count < length / 3 {
                 emit()
             }
-            points.removeFirst(points.count >= 7 ? 7 : points.count)
+            let delta = points.count >= 5 ? 5 : points.count
+            points.removeFirst(delta)
+            chain.prefix(delta).forEach { $0.removeFromParent() }
+            chain.removeFirst(delta)
         }
     }
     
@@ -100,8 +103,6 @@ final class Player: SKNode {
         guard physicsBody != nil else { return }
         physicsBody = nil
         sprite.alpha = 0
-        chain.forEach { $0.removeFromParent() }
-        chain = []
         warp.position = position
         warp.alpha = 1
         warp.run(.sequence([.group([.fadeOut(withDuration: 2), .scale(to: 0.7, duration: 2)]), .removeFromParent()]))
