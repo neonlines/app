@@ -47,7 +47,6 @@ final class Froob: UIViewController {
         done.target = self
         done.action = #selector(self.done)
         done.label.textColor = .black
-        done.base.backgroundColor = .indigo
         view.addSubview(done)
         
         let store = Button(.key("Go.store"))

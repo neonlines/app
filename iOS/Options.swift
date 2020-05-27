@@ -13,7 +13,6 @@ final class Options: UIViewController {
         title.translatesAutoresizingMaskIntoConstraints = false
         title.text = .key("Neon.lines")
         title.font = .preferredFont(forTextStyle: .headline)
-        title.textColor = .indigo
         view.addSubview(title)
         
         let newGame = UILabel()
@@ -27,14 +26,12 @@ final class Options: UIViewController {
         againstAi.target = self
         againstAi.action = #selector(ai)
         againstAi.label.textColor = .black
-        againstAi.base.backgroundColor = .indigo
         view.addSubview(againstAi)
         
         let againstOthers = Button(.key("Against.others"))
         againstOthers.target = self
         againstOthers.action = #selector(multiplayer)
         againstOthers.label.textColor = .black
-        againstOthers.base.backgroundColor = .indigo
         view.addSubview(againstOthers)
         
         let settings = Button(.key("Settings"))

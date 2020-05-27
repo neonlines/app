@@ -27,7 +27,6 @@ final class GameOver: UIViewController {
         let next = Button(.key("Continue"))
         next.target = self
         next.action = #selector(done)
-        next.base.backgroundColor = .indigo
         next.label.textColor = .black
         view.addSubview(next)
         
@@ -82,7 +81,6 @@ final class GameOver: UIViewController {
     private func max() -> UILabel {
         let max = UILabel()
         max.translatesAutoresizingMaskIntoConstraints = false
-        max.textColor = .indigo
         max.font = .preferredFont(forTextStyle: .headline)
         max.text = .key("New.max")
         view.addSubview(max)

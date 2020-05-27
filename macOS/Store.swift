@@ -2,7 +2,6 @@ import AppKit
 import StoreKit
 
 final class Store: NSView, StoreDelegate {
-    private weak var request: SKProductsRequest?
     private weak var scroll: Scroll!
     private let store = StoreMaster()
     

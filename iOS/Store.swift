@@ -238,7 +238,6 @@ private class Item: UIView {
             addSubview(price)
             
             let purchase = Button(.key("Purchase"))
-            purchase.base.backgroundColor = .indigo
             purchase.label.textColor = .black
             addSubview(purchase)
             self.purchase = purchase

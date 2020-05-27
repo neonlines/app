@@ -7,7 +7,24 @@ let game = GameMaster()
         game.delegate = self
         game.auth()
         backgroundColor = .systemBackground
-        return true
+        return false
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        print("here")
+    }
+    
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        print("here")
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        print("here")
+    }
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        print("here")
+        return false
     }
     
     func auth(_ controller: UIViewController) {

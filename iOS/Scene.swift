@@ -1,6 +1,16 @@
 import UIKit
 
+let game = GameMaster()
+
 final class Scene: UINavigationController, UIWindowSceneDelegate {
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        print("here")
+    }
+    
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        print("here")
+    }
+    
     func scene(_ scene: UIScene, willConnectTo: UISceneSession, options: UIScene.ConnectionOptions) {
         setNavigationBarHidden(true, animated: false)
         setViewControllers([Launch()], animated: false)
