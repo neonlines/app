@@ -32,6 +32,7 @@ final class MultiplayerView: View, GKMatchDelegate {
         case .move:
             players.first { $0.id == report.player }.map {
                 $0.zRotation = report.rotation
+                $0.move()
             }
         }
     }
