@@ -17,7 +17,6 @@
 		CE2CC6F0244C997100C21893 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEF23AAF244C98EA00D02FD7 /* Localizable.strings */; };
 		CE2CC6F8244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
 		CE2CC6F9244C9B0900C21893 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CC6F7244C9B0900C21893 /* String.swift */; };
-		CE358AAE2469A66600C7FCAD /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358AAD2469A66600C7FCAD /* Launch.swift */; };
 		CE358AB02469A86900C7FCAD /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358AAF2469A86900C7FCAD /* Options.swift */; };
 		CE382D3B2459CFBE004DE132 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE382D3A2459CFBE004DE132 /* Label.swift */; };
 		CE382D3D2459CFF6004DE132 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE382D3C2459CFF6004DE132 /* Font.swift */; };
@@ -91,6 +90,7 @@
 		CED910AC246BCA79003FEE51 /* Froob.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED910AB246BCA79003FEE51 /* Froob.swift */; };
 		CED910AE246BCF0D003FEE51 /* LabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED910AD246BCF0D003FEE51 /* LabelNode.swift */; };
 		CED910AF246BCF0D003FEE51 /* LabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED910AD246BCF0D003FEE51 /* LabelNode.swift */; };
+		CEDAFDED247ED83F008A0DBB /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE382D3C2459CFF6004DE132 /* Font.swift */; };
 		CEDDDE1A2451C6F800C97E0A /* UInt32.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDDE192451C6F800C97E0A /* UInt32.swift */; };
 		CEE5DBAC246E732F00C2FE73 /* Times.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE5DBAB246E732F00C2FE73 /* Times.swift */; };
 		CEE5DBAD246E732F00C2FE73 /* Times.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE5DBAB246E732F00C2FE73 /* Times.swift */; };
@@ -104,7 +104,6 @@
 		CEF10FF6246FEF5A009FA1DD /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF10FF4246FEF5A009FA1DD /* State.swift */; };
 		CEF23A81244C8EA200D02FD7 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23A80244C8EA200D02FD7 /* App.swift */; };
 		CEF23A85244C8EA200D02FD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF23A84244C8EA200D02FD7 /* Assets.xcassets */; };
-		CEF23A95244C8EB100D02FD7 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF23A94244C8EB100D02FD7 /* Window.swift */; };
 		CEF23A9E244C8EB100D02FD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF23A9D244C8EB100D02FD7 /* Assets.xcassets */; };
 		CEF23AA1244C8EB100D02FD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEF23A9F244C8EB100D02FD7 /* LaunchScreen.storyboard */; };
 		CEF23AAC244C97F000D02FD7 /* Balam in Frameworks */ = {isa = PBXBuildFile; productRef = CEF23AAB244C97F000D02FD7 /* Balam */; };
@@ -123,7 +122,6 @@
 		CE0F77B3246AFAD100EA3955 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		CE2CC6ED244C996C00C21893 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		CE2CC6F7244C9B0900C21893 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
-		CE358AAD2469A66600C7FCAD /* Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launch.swift; sourceTree = "<group>"; };
 		CE358AAF2469A86900C7FCAD /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		CE382D3A2459CFBE004DE132 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		CE382D3C2459CFF6004DE132 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -182,7 +180,6 @@
 		CEF23A89244C8EA200D02FD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEF23A8A244C8EA200D02FD7 /* mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mac.entitlements; sourceTree = "<group>"; };
 		CEF23A92244C8EB100D02FD7 /* Lines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lines.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEF23A94244C8EB100D02FD7 /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 		CEF23A9D244C8EB100D02FD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEF23AA0244C8EB100D02FD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEF23AA2244C8EB100D02FD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -252,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				CE382D442459DB56004DE132 /* Color.swift */,
+				CE382D3C2459CFF6004DE132 /* Font.swift */,
 				CED910AD246BCF0D003FEE51 /* LabelNode.swift */,
 				CE42523B246B190300FA14D5 /* Point.swift */,
 				CE2CC6F7244C9B0900C21893 /* String.swift */,
@@ -311,7 +309,6 @@
 				CEF23A80244C8EA200D02FD7 /* App.swift */,
 				CE382D422459DB34004DE132 /* Button.swift */,
 				CE382D402459DAF1004DE132 /* Control.swift */,
-				CE382D3C2459CFF6004DE132 /* Font.swift */,
 				CEED9C3424647B58006AA889 /* Froob.swift */,
 				CE899EB3245EBAA00066824A /* GameOver.swift */,
 				CE382D3A2459CFBE004DE132 /* Label.swift */,
@@ -337,7 +334,6 @@
 				CE5E2187246BC8AA00FAD5AA /* Controller.swift */,
 				CED910AB246BCA79003FEE51 /* Froob.swift */,
 				CE5E2183246BC5AA00FAD5AA /* GameOver.swift */,
-				CE358AAD2469A66600C7FCAD /* Launch.swift */,
 				CE358AAF2469A86900C7FCAD /* Options.swift */,
 				CE40E01024692A0600549907 /* Scene.swift */,
 				CE5D3B0D246A7E920044C1D3 /* Scroll.swift */,
@@ -346,7 +342,6 @@
 				CE0F77B3246AFAD100EA3955 /* Store.swift */,
 				CEE5DBB4246E76E600C2FE73 /* UIResponder.swift */,
 				CE5E2185246BC88700FAD5AA /* View+.swift */,
-				CEF23A94244C8EB100D02FD7 /* Window.swift */,
 				CEF23A9D244C8EB100D02FD7 /* Assets.xcassets */,
 				CEF23A9F244C8EB100D02FD7 /* LaunchScreen.storyboard */,
 			);
@@ -565,7 +560,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEF23A95244C8EB100D02FD7 /* Window.swift in Sources */,
 				CE0E09422469AE6300FAD2C8 /* Control.swift in Sources */,
 				CE86FBB5246B142B0094A54C /* View.swift in Sources */,
 				CE86FBBA246B146C0094A54C /* Minimap.swift in Sources */,
@@ -578,6 +572,7 @@
 				CED910AF246BCF0D003FEE51 /* LabelNode.swift in Sources */,
 				CE5E2184246BC5AA00FAD5AA /* GameOver.swift in Sources */,
 				CEBB442624743FF500B9B107 /* GameDelegate.swift in Sources */,
+				CEDAFDED247ED83F008A0DBB /* Font.swift in Sources */,
 				CEBB44232474312A00B9B107 /* GameMaster.swift in Sources */,
 				CE40E01624692BEF00549907 /* Profile.swift in Sources */,
 				CE5E2186246BC88700FAD5AA /* View+.swift in Sources */,
@@ -591,7 +586,6 @@
 				CEAD839D2478360F007CD3EC /* StoreDelegate.swift in Sources */,
 				CE769E6A247267DF0038D0D8 /* Others.swift in Sources */,
 				CE900BF72472ED1400D80AFA /* Report.swift in Sources */,
-				CE358AAE2469A66600C7FCAD /* Launch.swift in Sources */,
 				CEF10FF6246FEF5A009FA1DD /* State.swift in Sources */,
 				CEBB442924744AA600B9B107 /* Defeated.swift in Sources */,
 				CEE5DBB0246E736D00C2FE73 /* AiView.swift in Sources */,
