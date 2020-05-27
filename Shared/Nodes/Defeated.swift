@@ -3,6 +3,7 @@ import SpriteKit
 final class Defeated: SKNode {
     private weak var label: SKLabelNode!
     private weak var title: SKLabelNode!
+    private weak var icon: SKSpriteNode!
     private let formatter = NumberFormatter()
     
     required init?(coder: NSCoder) { nil }
@@ -10,6 +11,10 @@ final class Defeated: SKNode {
         super.init()
         zPosition = 11
         formatter.numberStyle = .decimal
+        
+        let icon = SKSpriteNode(texture: .init(imageNamed: "counter"))
+        addChild(icon)
+        self.icon = icon
         
         let title = SKLabelNode()
         title.horizontalAlignmentMode = .left
@@ -28,6 +33,7 @@ final class Defeated: SKNode {
     }
     
     func align() {
+        icon.position = .init(x: (scene!.frame.width / -2) + 35, y: (scene!.frame.height / 2) - 60)
         title.position = .init(x: (scene!.frame.width / -2) + 12, y: (scene!.frame.height / -2) + 100)
         label.position = .init(x: (scene!.frame.width / -2) + 14, y: (scene!.frame.height / -2) + 75)
     }
