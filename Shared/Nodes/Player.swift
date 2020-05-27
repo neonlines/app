@@ -109,7 +109,7 @@ final class Player: SKNode {
     }
     
     func mine(_ node: SKNode?) -> Bool {
-        node === chain.last
+        (node as? Chain).map { chain.suffix(10).contains($0) } ?? false
     }
     
     private func emit() {
