@@ -8,6 +8,10 @@ final class GameMaster: NSObject, GKGameCenterControllerDelegate, GKMatchmakerVi
             balam.update(profile)
         }
     }
+    
+    var playable: Bool {
+        profile.purchases.contains("neon.lines.premium.unlimited") || Date() > Calendar.current.date(byAdding: .hour, value: 12, to: profile.lastGame)!
+    }
 
     weak var delegate: GameDelegate!
     private var subs = Set<AnyCancellable>()

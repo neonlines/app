@@ -12,7 +12,6 @@ final class Button: Control {
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         addSubview(label)
         self.label = label
-        
     }
     
     func indigo() {
@@ -43,7 +42,7 @@ final class Button: Control {
         base.isUserInteractionEnabled = false
         base.layer.cornerRadius = 6
         base.backgroundColor = .indigoDark
-        addSubview(base)
+        insertSubview(base, at: 0)
         
         bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: 16).isActive = true
         rightAnchor.constraint(equalTo: label.rightAnchor, constant: 22).isActive = true
@@ -66,7 +65,7 @@ final class Button: Control {
         base.isUserInteractionEnabled = false
         base.layer.cornerRadius = 6
         base.backgroundColor = .init(white: 0.9, alpha: 1)
-        addSubview(base)
+        insertSubview(base, at: 0)
         
         bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: 17).isActive = true
         rightAnchor.constraint(equalTo: label.rightAnchor, constant: 26).isActive = true
@@ -89,7 +88,7 @@ final class Button: Control {
         base.isUserInteractionEnabled = false
         base.layer.cornerRadius = 10
         base.backgroundColor = color
-        addSubview(base)
+        insertSubview(base, at: 0)
         
         heightAnchor.constraint(equalToConstant: 50).isActive = true
         widthAnchor.constraint(equalToConstant: 170).isActive = true

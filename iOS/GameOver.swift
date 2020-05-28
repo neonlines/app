@@ -27,7 +27,6 @@ final class GameOver: UIViewController {
         let next = Button(.key("Continue"))
         next.target = self
         next.action = #selector(done)
-        next.label.textColor = .black
         view.addSubview(next)
         
         title.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

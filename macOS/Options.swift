@@ -50,22 +50,18 @@ final class Options: NSView {
         againstOthers.topAnchor.constraint(equalTo: againstAi.bottomAnchor, constant: 20).isActive = true
         againstOthers.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
+        scores.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        scores.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
+        
         settings.rightAnchor.constraint(equalTo: scores.leftAnchor, constant: -30).isActive = true
         settings.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
         
         store.leftAnchor.constraint(equalTo: scores.rightAnchor, constant: 30).isActive = true
         store.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
-        
-        scores.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        scores.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
-    }
-    
-    private var playable: Bool {
-        game.profile.purchases.contains("neon.lines.premium.unlimited") || Date() > Calendar.current.date(byAdding: .hour, value: 12, to: game.profile.lastGame)!
     }
     
     @objc private func ai() {
-        guard playable else {
+        guard game.playable else {
             window!.show(Froob())
             return
         }
@@ -73,7 +69,7 @@ final class Options: NSView {
     }
     
     @objc private func multiplayer() {
-        guard playable else {
+        guard game.playable else {
             window!.show(Froob())
             return
         }
