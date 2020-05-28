@@ -39,17 +39,15 @@ final class Settings: UINavigationController {
             item.target = self
             scroll.add(item)
             
-            
-            
-            
-            
             if game.active(id) {
                 item.action = #selector(change)
             } else {
                 item.action = #selector(store)
                 item.purchaseable()
                 
-                let subtitle = Label(.key("In.app"), .regular(12))
+                let subtitle = UILabel()
+                subtitle.translatesAutoresizingMaskIntoConstraints = false
+                subtitle.font = .regular(12)
                 subtitle.textColor = .init(white: 0.2, alpha: 1)
                 scroll.add(subtitle)
                 
@@ -69,40 +67,27 @@ final class Settings: UINavigationController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        refresh()
+        arrange()
     }
     
-    private func refresh() {
-        scroll.views.forEach { $0.removeFromSuperview() }
-        let ratio = (viewControllers.first!.view.frame.width + 10) / (itemSize + 10)
+    private func arrange() {
+        let width = viewControllers.first!.view.frame.width
+        let ratio = (width - itemSpacing) / (itemSize + itemSpacing)
         let empty = Int(ratio) > Skin.Id.allCases.count ? ceil(CGFloat(.init(ratio) - Skin.Id.allCases.count)) : 0
-        let left = (ratio.truncatingRemainder(dividingBy: 1) + empty) * (itemSize / 2)
-        var point = CGPoint(x: left, y: 40)
-        Skin.Id.allCases.forEach { id in
-            if point.x > viewControllers.first!.view.frame.width - itemSize {
-                point = .init(x: left, y: point.y + itemSize + 10)
+        let left = ((ratio.truncatingRemainder(dividingBy: 1) + empty) * ((itemSize + itemSpacing) / 2)) + itemSpacing
+        var point = CGPoint(x: left, y: 120)
+        scroll.views.compactMap { $0 as? Item }.forEach {
+            if point.x > width - itemSize {
+                point = .init(x: left, y: point.y + itemSize + itemSpacing)
             }
-            
-            let item = Item(id: id)
-            item.selected = id == game.profile.skin
-            item.target = self
-            scroll.add(item)
-            
-            if id == .basic || game.profile.purchases.contains(where: { $0.hasSuffix(id.rawValue) }) {
-                item.action = #selector(change)
-            } else {
-                item.action = #selector(store)
-                item.purchaseable()
-            }
-    
-            item.widthAnchor.constraint(equalToConstant: itemSize).isActive = true
-            item.heightAnchor.constraint(equalToConstant: itemSize).isActive = true
-            item.topAnchor.constraint(equalTo: scroll.top, constant: point.y).isActive = true
-            item.leftAnchor.constraint(equalTo: scroll.left, constant: point.x).isActive = true
-            point.x += itemSize + 10
+            $0.left.constant = point.x
+            $0.top.constant = point.y
+            point.x += itemSize + itemSpacing
         }
-        
-        scroll.bottom.constraint(greaterThanOrEqualTo: scroll.views.last!.bottomAnchor, constant: 40).isActive = true
+    }
+    
+    @objc private func done() {
+        super.dismiss(animated: true)
     }
     
     @objc private func change(_ item: Item) {
@@ -113,31 +98,36 @@ final class Settings: UINavigationController {
         }
     }
     
-    @objc private func done() {
-        super.dismiss(animated: true)
-    }
-    
     @objc private func store() {
         present(Store(), animated: true)
     }
     
     override func dismiss(animated: Bool, completion: (() -> Void)?) {
         super.dismiss(animated: animated, completion: completion)
-        refresh()
+        done()
     }
 }
 
 private final class Item: Control {
+    weak var top: NSLayoutConstraint! { didSet { top.isActive = true } }
+    weak var left: NSLayoutConstraint! { didSet { left.isActive = true } }
     let id: Skin.Id
-    private weak var image: UIImageView!
-    private weak var border: UIView!
+    private weak var name: UIView!
+    private weak var shape: CAShapeLayer!
+    private weak var imageX: NSLayoutConstraint!
+    private weak var imageY: NSLayoutConstraint!
+    private var greyed = CGColor(genericGrayGamma2_2Gray: 0.9, alpha: 1)
     
     required init?(coder: NSCoder) { nil }
     init(id: Skin.Id) {
         self.id = id
         super.init()
         clipsToBounds = true
-        layer.cornerRadius = 32
+        layer.cornerRadius = 20
+        
+        
+        
+        
         
         let skin = Skin.make(id: id)
         
