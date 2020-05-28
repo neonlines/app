@@ -2,14 +2,10 @@ import AppKit
 
 final class Froob: NSView {
     private weak var timer: Label!
-    private let formatter = DateComponentsFormatter()
-    private let expected = Calendar.current.date(byAdding: .hour, value: 12, to: game.profile.lastGame)!
     
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(frame: .zero)
-        formatter.allowedUnits = [.hour, .minute, .second]
-        
         let title = Label(.key("You.have.a.limit"), .medium(14))
         title.alignment = .center
         title.textColor = .init(white: 0.4, alpha: 1)
@@ -73,14 +69,13 @@ final class Froob: NSView {
     }
     
     private func update() {
-        let now = Date()
-        if now > expected {
+        guard let time = game.timer else {
             done()
-        } else {
-            timer.stringValue = formatter.string(from: now, to: expected) ?? ""
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-                self?.update()
-            }
+            return
+        }
+        timer.stringValue = time
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            self?.update()
         }
     }
     

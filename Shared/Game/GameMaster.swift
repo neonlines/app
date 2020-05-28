@@ -12,10 +12,22 @@ final class GameMaster: NSObject, GKGameCenterControllerDelegate, GKMatchmakerVi
     var playable: Bool {
         profile.purchases.contains("neon.lines.premium.unlimited") || Date() > Calendar.current.date(byAdding: .hour, value: 12, to: profile.lastGame)!
     }
+    
+    var timer: String? {
+        let expected = Calendar.current.date(byAdding: .hour, value: 12, to: profile.lastGame)!
+        let now = Date()
+        return now <= expected ? formatter.string(from: now, to: expected) : nil
+    }
 
     weak var delegate: GameDelegate!
     private var subs = Set<AnyCancellable>()
     private let balam = Balam("lines")
+    private let formatter = DateComponentsFormatter()
+    
+    override init() {
+        super.init()
+        formatter.allowedUnits = [.hour, .minute, .second]
+    }
     
     func matchmakerViewController(_: GKMatchmakerViewController, didFind: GKMatch) {
         delegate.dismissGameCenter()
