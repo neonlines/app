@@ -113,6 +113,10 @@ final class GameMaster: NSObject, GKGameCenterControllerDelegate, GKMatchmakerVi
         }
     }
     
+    func active(_ skin: Skin.Id) -> Bool {
+        skin == .basic || profile.purchases.contains(where: { $0.hasSuffix(skin.rawValue) })
+    }
+    
     private func current(_ id: String, completion: @escaping(Int64) -> Void) {
         let board = GKLeaderboard(players: [GKLocalPlayer.local])
         board.identifier = id

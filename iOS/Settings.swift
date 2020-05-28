@@ -2,18 +2,27 @@ import UIKit
 
 final class Settings: UINavigationController {
     private weak var scroll: Scroll!
-    private let itemSize = CGFloat(160)
+    private let itemSize = CGFloat(120)
+    private let itemSpacing = CGFloat(50)
     
     required init?(coder: NSCoder) { nil }
     init() {
         super.init(rootViewController: UIViewController())
         viewControllers.first!.view.backgroundColor = .systemBackground
         viewControllers.first!.navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .done, target: self, action: #selector(done))
-        viewControllers.first!.navigationItem.title = .key("Choose.your.skin")
+        viewControllers.first!.navigationItem.title = .key("Settings")
+        navigationBar.tintColor = .indigoDark
         
         let scroll = Scroll()
         viewControllers.first!.view.addSubview(scroll)
         self.scroll = scroll
+        
+        let subtitle = UILabel()
+        subtitle.translatesAutoresizingMaskIntoConstraints = false
+        subtitle.font = .bold(14)
+        subtitle.text = .key("Choose.your.skin")
+        subtitle.textColor = .init(white: 0.7, alpha: 1)
+        scroll.add(subtitle)
         
         scroll.topAnchor.constraint(equalTo: viewControllers.first!.view.safeAreaLayoutGuide.topAnchor).isActive = true
         scroll.leftAnchor.constraint(equalTo: viewControllers.first!.view.safeAreaLayoutGuide.leftAnchor).isActive = true
@@ -21,6 +30,41 @@ final class Settings: UINavigationController {
         scroll.bottomAnchor.constraint(equalTo: viewControllers.first!.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         scroll.width.constraint(equalTo: scroll.widthAnchor).isActive = true
         scroll.height.constraint(greaterThanOrEqualTo: scroll.heightAnchor).isActive = true
+        
+        subtitle.topAnchor.constraint(equalTo: scroll.top, constant: 10).isActive = true
+        subtitle.centerXAnchor.constraint(equalTo: scroll.centerX).isActive = true
+        
+        Skin.Id.allCases.forEach { id in
+            let item = Item(id: id)
+            item.target = self
+            scroll.add(item)
+            
+            
+            
+            
+            
+            if game.active(id) {
+                item.action = #selector(change)
+            } else {
+                item.action = #selector(store)
+                item.purchaseable()
+                
+                let subtitle = Label(.key("In.app"), .regular(12))
+                subtitle.textColor = .init(white: 0.2, alpha: 1)
+                scroll.add(subtitle)
+                
+                subtitle.centerXAnchor.constraint(equalTo: item.centerXAnchor).isActive = true
+                subtitle.topAnchor.constraint(equalTo: item.bottomAnchor, constant: 5).isActive = true
+            }
+
+            item.selected = id == game.profile.skin
+            item.widthAnchor.constraint(equalToConstant: itemSize).isActive = true
+            item.heightAnchor.constraint(equalToConstant: itemSize).isActive = true
+            item.top = item.topAnchor.constraint(equalTo: scroll.top)
+            item.left = item.leftAnchor.constraint(equalTo: scroll.left)
+        }
+        
+        scroll.bottom.constraint(greaterThanOrEqualTo: scroll.views.last!.bottomAnchor, constant: itemSpacing).isActive = true
     }
     
     override func viewDidAppear(_ animated: Bool) {

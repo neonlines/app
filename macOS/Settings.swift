@@ -55,7 +55,7 @@ final class Settings: NSView {
             item.target = self
             scroll.add(item)
             
-            if id == .basic || game.profile.purchases.contains(where: { $0.hasSuffix(id.rawValue) }) {
+            if game.active(id) {
                 item.action = #selector(change)
             } else {
                 item.action = #selector(store)
