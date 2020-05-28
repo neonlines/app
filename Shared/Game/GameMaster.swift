@@ -56,7 +56,7 @@ final class GameMaster: NSObject, GKGameCenterControllerDelegate, GKMatchmakerVi
         let controller = GKGameCenterViewController()
         controller.viewState = .leaderboards
         controller.gameCenterDelegate = self
-        controller.leaderboardIdentifier = "neon.lines.top"
+        controller.leaderboardIdentifier = "neon.lines.duration"
         delegate.show(controller)
     }
     
@@ -76,7 +76,7 @@ final class GameMaster: NSObject, GKGameCenterControllerDelegate, GKMatchmakerVi
     }
     
     func report(seconds: Int) {
-        let id = "neon.lines.seconds"
+        let id = "neon.lines.duration"
         report(.init(seconds), board: id)
         current(id) {
             self.profile.seconds = max(max(seconds, .init($0)), self.profile.seconds)
