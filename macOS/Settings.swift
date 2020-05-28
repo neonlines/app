@@ -167,7 +167,7 @@ private final class Item: Control {
         addSubview(name)
         self.name = name
         
-        let label = Label(.key("neon.lines.skin." + id.rawValue), .regular(12))
+        let label = Label(.key("neon.lines.skin." + id.rawValue), .medium(12))
         label.textColor = .white
         name.addSubview(label)
         
