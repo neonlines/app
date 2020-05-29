@@ -28,7 +28,6 @@ Victory = "You Win!";
 Defeat = "You Loose";
 Ai.defeated = "Defeated";
 Cancel = "Cancel";
-Duel = "Duel";
 About = "About";
 Hide = "Hide";
 Hide.others = "Hide Others";

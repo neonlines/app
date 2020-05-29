@@ -1,29 +1,18 @@
 import SpriteKit
 
 final class Others: SKNode {
-    private var y = CGFloat(30)
-    
     required init?(coder: NSCoder) { nil }
     override init() {
         super.init()
         zPosition = 11
-        
-        let label = SKLabelNode()
-        label.horizontalAlignmentMode = .left
-        label.bold(12)
-        label.text = .key("Duel")
-        label.verticalAlignmentMode = .bottom
-        label.position = .init(x: 5, y: 5)
-        addChild(label)
     }
     
     func align() {
-        position = .init(x: (scene!.frame.width / -2) + 10, y: (scene!.frame.height / -2) + 80)
+        position = .init(x: (scene!.frame.width / -2) + 10, y: (scene!.frame.height / 2) - 60)
     }
     
     func player(_ id: Int, skin: Skin.Id, name: String) {
-        addChild(Item(id: id, skin: skin, name: name, y: y))
-        y += 28
+        addChild(Item(id: id, skin: skin, name: name))
     }
     
     func explode(_ player: Int) {
@@ -35,21 +24,20 @@ private final class Item: SKShapeNode {
     let id: Int
     
     required init?(coder: NSCoder) { nil }
-    init(id: Int, skin: Skin.Id, name: String, y: CGFloat) {
+    init(id: Int, skin: Skin.Id, name: String) {
         self.id = id
         super.init()
         lineWidth = 0
         fillColor = Skin.make(id: skin).colour.withAlphaComponent(0.95)
-        position.y = y
-        path = .init(roundedRect: .init(x: 0, y: 0, width: 110, height: 22), cornerWidth: 6, cornerHeight: 6, transform: nil)
+        path = .init(roundedRect: .init(x: 0, y: 0, width: 150, height: 26), cornerWidth: 7, cornerHeight: 7, transform: nil)
         
         let label = SKLabelNode()
         label.horizontalAlignmentMode = .left
-        label.bold(12)
-        label.fontColor = .white
-        label.text = .init(name.prefix(16))
-        label.verticalAlignmentMode = .bottom
-        label.position = .init(x: 5, y: 3)
+        label.bold(13)
+        label.fontColor = .black
+        label.text = name
+        label.verticalAlignmentMode = .center
+        label.position = .init(x: 7, y: 13)
         addChild(label)
     }
 }
