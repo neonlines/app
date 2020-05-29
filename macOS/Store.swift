@@ -64,17 +64,6 @@ final class Store: NSView, StoreDelegate {
         store.load()
     }
     
-    private func loading() {
-        scroll.views.forEach { $0.removeFromSuperview() }
-        
-        let label = Label(.key("Loading"), .bold(20))
-        label.textColor = .init(white: 0.75, alpha: 1)
-        scroll.add(label)
-        
-        label.leftAnchor.constraint(equalTo: scroll.left, constant: 30).isActive = true
-        label.topAnchor.constraint(equalTo: scroll.top, constant: 30).isActive = true
-    }
-    
     func error(_ string: String) {
         scroll.views.forEach { $0.removeFromSuperview() }
         
@@ -127,6 +116,17 @@ final class Store: NSView, StoreDelegate {
         }
         
         scroll.bottom.constraint(greaterThanOrEqualTo: top, constant: 10).isActive = true
+    }
+    
+    private func loading() {
+        scroll.views.forEach { $0.removeFromSuperview() }
+        
+        let label = Label(.key("Loading"), .bold(20))
+        label.textColor = .init(white: 0.75, alpha: 1)
+        scroll.add(label)
+        
+        label.leftAnchor.constraint(equalTo: scroll.left, constant: 30).isActive = true
+        label.topAnchor.constraint(equalTo: scroll.top, constant: 30).isActive = true
     }
     
     private func item(_ item: Item, top: NSLayoutYAxisAnchor) -> NSLayoutYAxisAnchor {
@@ -209,7 +209,6 @@ private class Item: NSView {
             
             let purchase = Button(.key("Purchase"))
             purchase.clean()
-            
             addSubview(purchase)
             self.purchase = purchase
             

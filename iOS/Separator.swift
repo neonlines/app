@@ -6,6 +6,6 @@ final class Separator: UIView {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         isUserInteractionEnabled = false
-        backgroundColor = .separator
+        backgroundColor = .init(white: 0.9, alpha: 1)
     }
 }
