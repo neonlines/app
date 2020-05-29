@@ -151,6 +151,7 @@ private final class Item: UIView {
         
         if record {
             let record = UILabel()
+            record.translatesAutoresizingMaskIntoConstraints = false
             record.font = .medium(12)
             record.text = .key("New.max")
             record.textColor = .indigoDark

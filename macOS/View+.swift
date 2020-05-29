@@ -42,6 +42,10 @@ extension View {
     func gameOver(_ ai: Int) {
         window!.show(GameOver.Over(seconds: seconds, ai: ai))
     }
+    
+    func vibrate() {
+        
+    }
 }
 
 private extension NSEvent {

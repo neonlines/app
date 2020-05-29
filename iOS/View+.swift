@@ -28,21 +28,18 @@ extension View {
     }
     
     func victory() {
-        vibrate()
         controller?.navigationController?.show(GameOver.Victory(seconds: seconds))
     }
     
     func defeat() {
-        vibrate()
         controller?.navigationController?.show(GameOver.Defeat(seconds: seconds))
     }
     
     func gameOver(_ ai: Int) {
-        vibrate()
         controller?.navigationController?.show(GameOver.Over(seconds: seconds, ai: ai))
     }
     
-    private func vibrate() {
+    func vibrate() {
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
     }
 }
@@ -50,7 +47,7 @@ extension View {
 private extension UITouch {
     var radians: CGFloat? {
         {
-            let point = CGPoint(x: $0.x - view!.frame.midX, y: (view!.frame.maxY - 140) - $0.y)
+            let point = CGPoint(x: $0.x - view!.frame.midX, y: (view!.frame.maxY - 200) - $0.y)
             guard point.valid else { return nil }
             return point.radians
         } (location(in: view!))
