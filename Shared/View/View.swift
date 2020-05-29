@@ -228,7 +228,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
                 }
             }
         } else {
-            if scene!.camera!.containedNodeSet().contains(player) {
+            if scene!.camera!.containedNodeSet().contains(player.sprite) {
                 player.run(soundCrash)
             }
             explode(player)
