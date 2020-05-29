@@ -212,7 +212,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
             player.run(soundCrash)
             vibrate()
             let label = SKLabelNode(text: .key("Game.over"))
-            label.bold(40)
+            label.bold(35)
             label.alpha = 0
             label.fontColor = .init(white: 0, alpha: 0.5)
             label.zPosition = 30

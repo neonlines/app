@@ -12,7 +12,7 @@ final class Hud: SKNode {
         formatter.zeroFormattingBehavior = .pad
         
         let label = SKLabelNode()
-        label.horizontalAlignmentMode = .left
+        label.horizontalAlignmentMode = .center
         label.fontColor = .init(white: 0.7, alpha: 1)
         label.bold(14)
         addChild(label)
@@ -22,7 +22,7 @@ final class Hud: SKNode {
     }
     
     func align() {
-        label.position = .init(x: (scene!.frame.width / -2) + 20, y: (scene!.frame.height / -2) + 25)
+        label.position.y = (scene!.frame.height / 2) - 55
     }
     
     func counter(_ count: Int) {

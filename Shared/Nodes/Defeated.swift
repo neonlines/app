@@ -33,8 +33,8 @@ final class Defeated: SKNode {
     }
     
     func align() {
-        icon.position = .init(x: (scene!.frame.width / -2) + 35, y: (scene!.frame.height / 2) - 60)
-        label.position = .init(x: (scene!.frame.width / -2) + 55, y: (scene!.frame.height / 2) - 60)
+        icon.position = .init(x: (scene!.frame.width / -2) + 30, y: (scene!.frame.height / 2) - 50)
+        label.position = .init(x: (scene!.frame.width / -2) + 50, y: (scene!.frame.height / 2) - 50)
         beamer.position = icon.position
     }
     

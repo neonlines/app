@@ -3,7 +3,7 @@ import SpriteKit
 final class Minimap: SKShapeNode {
     private let radius: CGFloat
     private let ratio: CGFloat
-    private let size = CGFloat(80)
+    private let size = CGFloat(70)
     
     required init?(coder: NSCoder) { nil }
     init(radius: CGFloat) {
@@ -18,7 +18,7 @@ final class Minimap: SKShapeNode {
     }
     
     func align() {
-        position = .init(x: (scene!.frame.width / 2) - 60, y: (scene!.frame.height / -2) + 60)
+        position = .init(x: (scene!.frame.width / 2) - 45, y: (scene!.frame.height / 2) - 70)
     }
     
     func clear() {
