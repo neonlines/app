@@ -28,13 +28,22 @@ extension View {
     }
     
     func victory() {
-        // vibrate
-        controller?.navigationController?.show(GameOver(victory: true, seconds: seconds, ai: nil))
+        vibrate()
+        controller?.navigationController?.show(GameOver.Victory(seconds: seconds))
     }
     
-    func gameOver(_ ai: Int?) {
-        // vibrate
-        controller?.navigationController?.show(GameOver(victory: false, seconds: seconds, ai: ai))
+    func defeat() {
+        vibrate()
+        controller?.navigationController?.show(GameOver.Defeat(seconds: seconds))
+    }
+    
+    func gameOver(_ ai: Int) {
+        vibrate()
+        controller?.navigationController?.show(GameOver.Over(seconds: seconds, ai: ai))
+    }
+    
+    private func vibrate() {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
     }
 }
 

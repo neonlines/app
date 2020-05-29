@@ -5,8 +5,8 @@ class GameOver: NSView {
         required init?(coder: NSCoder) { nil }
         override init(seconds: Int) {
             super.init(seconds: seconds)
-            title.stringValue = .key("Victory")
-            title.textColor = .indigoLight
+            titleLabel.stringValue = .key("Victory")
+            titleLabel.textColor = .indigoLight
             
             let image = NSImageView(image: NSImage(named: "victory")!)
             image.translatesAutoresizingMaskIntoConstraints = false
@@ -36,8 +36,8 @@ class GameOver: NSView {
         required init?(coder: NSCoder) { nil }
         override init(seconds: Int) {
             super.init(seconds: seconds)
-            title.stringValue = .key("Defeat")
-            title.textColor = .red
+            titleLabel.stringValue = .key("Defeat")
+            titleLabel.textColor = .red
             
             let image = NSImageView(image: NSImage(named: "defeat")!)
             image.translatesAutoresizingMaskIntoConstraints = false
@@ -65,8 +65,8 @@ class GameOver: NSView {
         required init?(coder: NSCoder) { nil }
         init(seconds: Int, ai: Int) {
             super.init(seconds: seconds)
-            title.stringValue = .key("Game.over")
-            title.textColor = .indigoDark
+            titleLabel.stringValue = .key("Game.over")
+            titleLabel.textColor = .indigoDark
             
             let image = NSImageView(image: NSImage(named: "over")!)
             image.translatesAutoresizingMaskIntoConstraints = false
@@ -98,7 +98,7 @@ class GameOver: NSView {
         }
     }
     
-    private weak var title: Label!
+    private weak var titleLabel: Label!
     private weak var item: Item!
     private let formatter = NumberFormatter()
     
@@ -107,9 +107,9 @@ class GameOver: NSView {
         super.init(frame: .zero)
         formatter.numberStyle = .decimal
         
-        let title = Label("", .bold(16))
-        addSubview(title)
-        self.title = title
+        let titleLabel = Label("", .bold(16))
+        addSubview(titleLabel)
+        self.titleLabel = titleLabel
         
         let next = Button(.key("Continue"))
         next.indigo()
@@ -125,8 +125,8 @@ class GameOver: NSView {
         addSubview(item)
         self.item = item
         
-        title.bottomAnchor.constraint(equalTo: centerYAnchor, constant: -200).isActive = true
-        title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        titleLabel.bottomAnchor.constraint(equalTo: centerYAnchor, constant: -200).isActive = true
+        titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
         item.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 30).isActive = true
         item.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 50).isActive = true
@@ -148,13 +148,13 @@ private final class Item: NSView {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         
-        let title = Label(title, .bold(14))
-        title.textColor = .init(white: 0.7, alpha: 1)
-        addSubview(title)
+        let titleLabel = Label(title, .bold(14))
+        titleLabel.textColor = .init(white: 0.7, alpha: 1)
+        addSubview(titleLabel)
         
-        let counter = Label(counter, .regular(12))
-        counter.textColor = .black
-        addSubview(counter)
+        let counterLabel = Label(counter, .regular(12))
+        counterLabel.textColor = .black
+        addSubview(counterLabel)
         
         let separator = Separator()
         addSubview(separator)
@@ -162,15 +162,15 @@ private final class Item: NSView {
         heightAnchor.constraint(equalToConstant: 40).isActive = true
         widthAnchor.constraint(equalToConstant: 200).isActive = true
         
-        title.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        title.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
-        counter.rightAnchor.constraint(equalTo: rightAnchor, constant: -60).isActive = true
-        counter.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        counterLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -60).isActive = true
+        counterLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
         separator.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
-        separator.rightAnchor.constraint(equalTo: counter.rightAnchor, constant: -10).isActive = true
+        separator.rightAnchor.constraint(equalTo: counterLabel.rightAnchor, constant: -10).isActive = true
         separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         if record {
@@ -178,7 +178,7 @@ private final class Item: NSView {
             record.textColor = .indigoDark
             addSubview(record)
             
-            record.leftAnchor.constraint(equalTo: counter.rightAnchor, constant: 5).isActive = true
+            record.leftAnchor.constraint(equalTo: counterLabel.rightAnchor, constant: 5).isActive = true
             record.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         }
     }
