@@ -7,26 +7,7 @@ class GameOver: NSView {
             super.init(seconds: seconds)
             titleLabel.stringValue = .key("Victory")
             titleLabel.textColor = .indigoLight
-            
-            let image = NSImageView(image: NSImage(named: "victory")!)
-            image.translatesAutoresizingMaskIntoConstraints = false
-            image.imageScaling = .scaleNone
-            addSubview(image)
-            
-            let skin = NSImageView(image: NSImage(named: Skin.make(id: game.profile.skin).texture)!)
-            skin.translatesAutoresizingMaskIntoConstraints = false
-            skin.imageScaling = .scaleNone
-            addSubview(skin)
-            
-            image.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 50).isActive = true
-            image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-            image.widthAnchor.constraint(equalToConstant: 150).isActive = true
-            image.heightAnchor.constraint(equalToConstant: 150).isActive = true
-            
-            skin.centerXAnchor.constraint(equalTo: image.centerXAnchor).isActive = true
-            skin.centerYAnchor.constraint(equalTo: image.centerYAnchor).isActive = true
-            skin.widthAnchor.constraint(equalToConstant: 32).isActive = true
-            skin.heightAnchor.constraint(equalToConstant: 32).isActive = true
+            image.image = NSImage(named: "victory")!
             
             game.reportDuel()
         }
@@ -38,26 +19,7 @@ class GameOver: NSView {
             super.init(seconds: seconds)
             titleLabel.stringValue = .key("Defeat")
             titleLabel.textColor = .red
-            
-            let image = NSImageView(image: NSImage(named: "defeat")!)
-            image.translatesAutoresizingMaskIntoConstraints = false
-            image.imageScaling = .scaleNone
-            addSubview(image)
-            
-            let skin = NSImageView(image: NSImage(named: Skin.make(id: game.profile.skin).texture)!)
-            skin.translatesAutoresizingMaskIntoConstraints = false
-            skin.imageScaling = .scaleNone
-            addSubview(skin)
-            
-            image.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 50).isActive = true
-            image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-            image.widthAnchor.constraint(equalToConstant: 150).isActive = true
-            image.heightAnchor.constraint(equalToConstant: 150).isActive = true
-            
-            skin.centerXAnchor.constraint(equalTo: image.centerXAnchor).isActive = true
-            skin.centerYAnchor.constraint(equalTo: image.centerYAnchor).isActive = true
-            skin.widthAnchor.constraint(equalToConstant: 32).isActive = true
-            skin.heightAnchor.constraint(equalToConstant: 32).isActive = true
+            image.image = NSImage(named: "defeat")!
         }
     }
     
@@ -67,30 +29,11 @@ class GameOver: NSView {
             super.init(seconds: seconds)
             titleLabel.stringValue = .key("Game.over")
             titleLabel.textColor = .indigoDark
-            
-            let image = NSImageView(image: NSImage(named: "over")!)
-            image.translatesAutoresizingMaskIntoConstraints = false
-            image.imageScaling = .scaleNone
-            addSubview(image)
-            
-            let skin = NSImageView(image: NSImage(named: Skin.make(id: game.profile.skin).texture)!)
-            skin.translatesAutoresizingMaskIntoConstraints = false
-            skin.imageScaling = .scaleNone
-            addSubview(skin)
+            image.image = NSImage(named: "over")!
             
             let item = Item(title: .key("Ai.defeated"), counter: formatter.string(from: .init(value: ai))!, record: game.profile.ai < ai)
             addSubview(item)
-            
-            image.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 50).isActive = true
-            image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-            image.widthAnchor.constraint(equalToConstant: 150).isActive = true
-            image.heightAnchor.constraint(equalToConstant: 150).isActive = true
-            
-            skin.centerXAnchor.constraint(equalTo: image.centerXAnchor).isActive = true
-            skin.centerYAnchor.constraint(equalTo: image.centerYAnchor).isActive = true
-            skin.widthAnchor.constraint(equalToConstant: 32).isActive = true
-            skin.heightAnchor.constraint(equalToConstant: 32).isActive = true
-            
+        
             item.centerXAnchor.constraint(equalTo: self.item.centerXAnchor).isActive = true
             item.topAnchor.constraint(equalTo: self.item.bottomAnchor).isActive = true
             
@@ -100,6 +43,7 @@ class GameOver: NSView {
     
     private weak var titleLabel: Label!
     private weak var item: Item!
+    private weak var image: NSImageView!
     private let formatter = NumberFormatter()
     
     required init?(coder: NSCoder) { nil }
@@ -111,11 +55,16 @@ class GameOver: NSView {
         addSubview(titleLabel)
         self.titleLabel = titleLabel
         
-        let next = Button(.key("Continue"))
-        next.indigo()
-        next.target = self
-        next.action = #selector(self.next)
-        addSubview(next)
+        let image = NSImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.imageScaling = .scaleNone
+        addSubview(image)
+        self.image = image
+        
+        let skin = NSImageView(image: NSImage(named: Skin.make(id: game.profile.skin).texture)!)
+        skin.translatesAutoresizingMaskIntoConstraints = false
+        skin.imageScaling = .scaleNone
+        addSubview(skin)
         
         let dates = DateComponentsFormatter()
         dates.allowedUnits = [.minute, .second]
@@ -125,8 +74,24 @@ class GameOver: NSView {
         addSubview(item)
         self.item = item
         
+        let next = Button(.key("Continue"))
+        next.indigo()
+        next.target = self
+        next.action = #selector(self.next)
+        addSubview(next)
+        
         titleLabel.bottomAnchor.constraint(equalTo: centerYAnchor, constant: -200).isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        
+        image.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 50).isActive = true
+        image.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        image.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        skin.centerXAnchor.constraint(equalTo: image.centerXAnchor).isActive = true
+        skin.centerYAnchor.constraint(equalTo: image.centerYAnchor).isActive = true
+        skin.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        skin.heightAnchor.constraint(equalToConstant: 32).isActive = true
         
         item.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 30).isActive = true
         item.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 50).isActive = true
