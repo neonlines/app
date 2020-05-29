@@ -81,7 +81,7 @@ final class Options: UIViewController {
     }
 
     @objc private func store() {
-        present(Store(), animated: true)
+        present(Store(refreshable: nil), animated: true)
     }
 
     @objc private func scores() {

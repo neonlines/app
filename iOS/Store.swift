@@ -3,15 +3,17 @@ import StoreKit
 
 final class Store: UINavigationController, StoreDelegate {
     private weak var scroll: Scroll!
+    private weak var refreshable: Refreshable?
     private let store = StoreMaster()
     
     required init?(coder: NSCoder) { nil }
-    init() {
+    init(refreshable: Refreshable?) {
         super.init(rootViewController: UIViewController())
         viewControllers.first!.view.backgroundColor = .systemBackground
         viewControllers.first!.navigationItem.leftBarButtonItem = .init(title: .key("Restore.purchases"), style: .plain, target: self, action: #selector(restore))
         viewControllers.first!.navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .done, target: self, action: #selector(done))
         navigationBar.tintColor = .indigoDark
+        self.refreshable = refreshable
         
         let scroll = Scroll()
         viewControllers.first!.view.addSubview(scroll)
@@ -89,7 +91,7 @@ final class Store: UINavigationController, StoreDelegate {
             top = item(SkinItem(product: $0), top: top)
         }
         
-        scroll.bottom.constraint(greaterThanOrEqualTo: top).isActive = true
+        scroll.bottom.constraint(greaterThanOrEqualTo: top, constant: 20).isActive = true
     }
     
     private func loading() {
@@ -128,7 +130,9 @@ final class Store: UINavigationController, StoreDelegate {
     }
     
     @objc private func done() {
-        dismiss(animated: true)
+        dismiss(animated: true) { [weak self] in
+            self?.refreshable?.refresh()
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 import UIKit
 
-final class Froob: UIViewController {
+final class Froob: UIViewController, Refreshable {
     private weak var timer: UILabel!
     
     override func viewDidLoad() {
@@ -80,6 +80,10 @@ final class Froob: UIViewController {
         update()
     }
     
+    func refresh() {
+        done()
+    }
+    
     private func update() {
         guard let time = game.timer else {
             done()
@@ -92,7 +96,7 @@ final class Froob: UIViewController {
     }
     
     @objc private func store() {
-        present(Store(), animated: true)
+        present(Store(refreshable: self), animated: true)
     }
     
     @objc private func done() {

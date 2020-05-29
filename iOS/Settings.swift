@@ -1,6 +1,6 @@
 import UIKit
 
-final class Settings: UINavigationController {
+final class Settings: UINavigationController, Refreshable {
     private weak var scroll: Scroll!
     private let itemSize = CGFloat(120)
     private let itemSpacing = CGFloat(20)
@@ -40,7 +40,7 @@ final class Settings: UINavigationController {
         refresh()
     }
     
-    private func refresh() {
+    func refresh() {
         scroll.views.compactMap { $0 as? Item }.forEach { $0.removeFromSuperview() }
         
         let width = viewControllers.first!.view.frame.width
@@ -87,7 +87,7 @@ final class Settings: UINavigationController {
     }
     
     @objc private func done() {
-        super.dismiss(animated: true)
+        dismiss(animated: true)
     }
     
     @objc private func change(_ item: Item) {
@@ -99,12 +99,7 @@ final class Settings: UINavigationController {
     }
     
     @objc private func store() {
-        present(Store(), animated: true)
-    }
-    
-    override func dismiss(animated: Bool, completion: (() -> Void)?) {
-        super.dismiss(animated: animated, completion: completion)
-        refresh()
+        present(Store(refreshable: self), animated: true)
     }
 }
 
