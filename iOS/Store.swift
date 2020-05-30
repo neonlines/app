@@ -31,6 +31,11 @@ final class Store: UINavigationController, StoreDelegate {
         store.load()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        refreshable?.refresh()
+    }
+    
     func error(_ string: String) {
         scroll.views.forEach { $0.removeFromSuperview() }
         
@@ -130,9 +135,7 @@ final class Store: UINavigationController, StoreDelegate {
     }
     
     @objc private func done() {
-        dismiss(animated: true) { [weak self] in
-            self?.refreshable?.refresh()
-        }
+        dismiss(animated: true)
     }
 }
 
