@@ -31,7 +31,7 @@ class GameOver: NSView {
             titleLabel.textColor = .indigoDark
             image.image = NSImage(named: "over")!
             
-            let item = Item(title: .key("Ai.defeated"), counter: formatter.string(from: .init(value: ai))!, record: game.profile.ai < ai)
+            let item = Item(title: .key("Ai.defeated"), counter: formatter.string(from: .init(value: ai))!, record: game.profile.aiPerMatch < ai)
             addSubview(item)
         
             item.centerXAnchor.constraint(equalTo: self.item.centerXAnchor).isActive = true

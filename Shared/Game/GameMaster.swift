@@ -101,6 +101,9 @@ final class GameMaster: NSObject, GKGameCenterControllerDelegate, GKMatchmakerVi
             let total = max($0, .init(self.profile.ai)) + .init(ai)
             self.report(total, board: id)
             self.profile.ai = .init(total)
+            if self.profile.aiPerMatch < ai {
+                self.profile.aiPerMatch = ai
+            }
         }
     }
     

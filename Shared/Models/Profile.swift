@@ -3,6 +3,7 @@ import Foundation
 struct Profile: Codable, Equatable {
     var seconds = 0
     var ai = 0
+    var aiPerMatch = 0
     var duels = 0
     var skin = Skin.Id.basic
     var purchases = Set<String>()
