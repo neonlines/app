@@ -13,7 +13,7 @@ final class Minimap: SKShapeNode {
         path = .init(rect: .init(x: size / -2, y: size / -2, width: size, height: size), transform: nil)
         fillColor = .init(white: 1, alpha: 0.95)
         lineWidth = 1
-        strokeColor = .init(white: 0.9, alpha: 1)
+        strokeColor = .init(white: 0.85, alpha: 1)
         zPosition = 12
     }
     

@@ -33,7 +33,7 @@ class View: SKView, SKSceneDelegate, SKPhysicsContactDelegate {
         scene.delegate = self
         scene.anchorPoint = .init(x: 0.5, y: 0.5)
         scene.scaleMode = .resizeFill
-        scene.backgroundColor = .init(white: 0.95, alpha: 1)
+        scene.backgroundColor = .init(white: 0.9, alpha: 1)
         scene.physicsWorld.contactDelegate = self
         scene.physicsWorld.gravity = .zero
         

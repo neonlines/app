@@ -47,7 +47,7 @@ extension View {
 private extension UITouch {
     var radians: CGFloat? {
         {
-            let point = CGPoint(x: $0.x - view!.frame.midX, y: (view!.frame.maxY - 200) - $0.y)
+            let point = CGPoint(x: $0.x - view!.frame.midX, y: (view!.frame.maxY - 120) - $0.y)
             guard point.valid else { return nil }
             return point.radians
         } (location(in: view!))

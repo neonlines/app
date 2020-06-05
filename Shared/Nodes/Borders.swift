@@ -9,7 +9,7 @@ final class Borders: SKShapeNode {
         lineWidth = 2
         lineCap = .round
         lineJoin = .round
-        strokeColor = .init(white: 0.9, alpha: 1)
+        strokeColor = .init(white: 0.85, alpha: 1)
         fillColor = .white
         physicsBody = .init(edgeLoopFrom: CGRect(x: -radius, y: -radius, width: size, height: size))
         physicsBody!.collisionBitMask = .none
