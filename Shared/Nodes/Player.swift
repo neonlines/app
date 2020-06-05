@@ -8,7 +8,7 @@ final class Player: SKNode {
     private weak var line: Line!
     private weak var warp: SKShapeNode!
     private var chain = [Chain]()
-    private let maxSpeed = CGFloat(300)
+    private let maxSpeed = CGFloat(400)
     private let length = 250
     
     private(set) var points = [CGPoint]() {
